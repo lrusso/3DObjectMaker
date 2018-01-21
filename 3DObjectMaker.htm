@@ -80,6 +80,7 @@
 						<option class="panel_selectbox_option_red" id="labelRed" value="0"></option>
 						<option class="panel_selectbox_option_green" id="labelGreen" value="0"></option>
 						<option class="panel_selectbox_option_blue" id="labelBlue" value="0"></option>
+						<option class="panel_selectbox_option_navyblue" id="labelNavyBlue" value="0"></option>
 						<option class="panel_selectbox_option_yellow" id="labelYellow" value="0"></option>
 						<option class="panel_selectbox_option_gold" id="labelGold" value ="0"></option>
 						<option class="panel_selectbox_option_pink" id="labelPink" value="0"></option>
@@ -409,29 +410,33 @@
 						{
 						document.getElementById("objectColor").selectedIndex = 4;
 						}
-					else if (objectColorValue.indexOf("ffff00")>-1) // YELLOW
+					else if (objectColorValue.indexOf("4682b4")>-1) // NAVY BLUE
 						{
 						document.getElementById("objectColor").selectedIndex = 5;
 						}
-					else if (objectColorValue.indexOf("ffd700")>-1) // GOLD
+					else if (objectColorValue.indexOf("ffff00")>-1) // YELLOW
 						{
 						document.getElementById("objectColor").selectedIndex = 6;
 						}
-					else if (objectColorValue.indexOf("ffc0cb")>-1) // PINK
+					else if (objectColorValue.indexOf("ffd700")>-1) // GOLD
 						{
 						document.getElementById("objectColor").selectedIndex = 7;
 						}
-					else if (objectColorValue.indexOf("ee82ee")>-1) // VIOLET
+					else if (objectColorValue.indexOf("ffc0cb")>-1) // PINK
 						{
 						document.getElementById("objectColor").selectedIndex = 8;
 						}
-					else if (objectColorValue.indexOf("ffa500")>-1) // ORANGE
+					else if (objectColorValue.indexOf("ee82ee")>-1) // VIOLET
 						{
 						document.getElementById("objectColor").selectedIndex = 9;
 						}
-					else if (objectColorValue.indexOf("8b4513")>-1) // BROWN
+					else if (objectColorValue.indexOf("ffa500")>-1) // ORANGE
 						{
 						document.getElementById("objectColor").selectedIndex = 10;
+						}
+					else if (objectColorValue.indexOf("8b4513")>-1) // BROWN
+						{
+						document.getElementById("objectColor").selectedIndex = 11;
 						}
 
 					document.getElementById("objectWidth").value = widthFinal;
@@ -517,27 +522,31 @@
 						{
 						selectedObject.material.color.setHex(0x0000ff);
 						}
-					else if (document.getElementById("objectColor").selectedIndex==5) // YELLOW
+					else if (document.getElementById("objectColor").selectedIndex==5) // NAVY BLUE
+						{
+						selectedObject.material.color.setHex(0x4682b4);
+						}
+					else if (document.getElementById("objectColor").selectedIndex==6) // YELLOW
 						{
 						selectedObject.material.color.setHex(0xffff00);
 						}
-					else if (document.getElementById("objectColor").selectedIndex==6) // GOLD
+					else if (document.getElementById("objectColor").selectedIndex==7) // GOLD
 						{
 						selectedObject.material.color.setHex(0xffd700);
 						}
-					else if (document.getElementById("objectColor").selectedIndex==7) // PINK
+					else if (document.getElementById("objectColor").selectedIndex==8) // PINK
 						{
 						selectedObject.material.color.setHex(0xffc0cb);
 						}
-					else if (document.getElementById("objectColor").selectedIndex==8) // VIOLET
+					else if (document.getElementById("objectColor").selectedIndex==9) // VIOLET
 						{
 						selectedObject.material.color.setHex(0xee82ee);
 						}
-					else if (document.getElementById("objectColor").selectedIndex==9) // ORANGE
+					else if (document.getElementById("objectColor").selectedIndex==10) // ORANGE
 						{
 						selectedObject.material.color.setHex(0xffa500);
 						}
-					else if (document.getElementById("objectColor").selectedIndex==10) // BROWN
+					else if (document.getElementById("objectColor").selectedIndex==11) // BROWN
 						{
 						selectedObject.material.color.setHex(0x8b4513);
 						}
