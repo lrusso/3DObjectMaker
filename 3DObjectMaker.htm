@@ -204,6 +204,15 @@
 
 				document.getElementById("container").addEventListener("mousedown",onDocumentMouseDown,false);
 				document.getElementById("container").addEventListener("touchstart",onDocumentMouseDown,false);
+				/*
+				document.getElementById("container").addEventListener('touchstart', function(e)
+					{
+					var touchobj = e.changedTouches[0];
+        			alert(touchobj.clientX);
+					e.preventDefault()
+					}, false);
+				*/
+ 
 				window.addEventListener("resize",onWindowResize,false);
 				}
 
@@ -351,7 +360,7 @@
 					mouse.x = (event.clientX/renderer.domElement.clientWidth) * 2 - 1;
 					mouse.y = - ((event.clientY - 49)/renderer.domElement.clientHeight) * 2 + 1;
 					}
-
+				
 				raycaster.setFromCamera(mouse,camera);
 				var intersects = raycaster.intersectObjects(objects);
 				if (intersects.length>0)
