@@ -202,6 +202,7 @@
 				requestAnimationFrame(animate);
 
 				document.getElementById("container").addEventListener("mousedown",onDocumentMouseDown,false);
+				document.getElementById("container").addEventListener("touchstart",onDocumentMouseDown,false);
 				window.addEventListener("resize",onWindowResize,false);
 				}
 
@@ -338,8 +339,18 @@
 			function onDocumentMouseDown(event)
 				{
 				event.preventDefault();
-				mouse.x = (event.clientX/renderer.domElement.clientWidth) * 2 - 1;
-				mouse.y = - ((event.clientY - 49)/renderer.domElement.clientHeight) * 2 + 1;
+
+				if (event.clientX==undefined)
+					{
+					mouse.x = (parseInt(event.changedTouches[0].clientX)/renderer.domElement.clientWidth) * 20 - 1;
+					mouse.y = ((parseInt(event.changedTouches[0].clientY) - 49)/renderer.domElement.clientHeight) * 20 + 1;
+					}
+					else
+					{
+					mouse.x = (event.clientX/renderer.domElement.clientWidth) * 2 - 1;
+					mouse.y = - ((event.clientY - 49)/renderer.domElement.clientHeight) * 2 + 1;
+					}
+
 				raycaster.setFromCamera(mouse,camera);
 				var intersects = raycaster.intersectObjects(objects);
 				if (intersects.length>0)
