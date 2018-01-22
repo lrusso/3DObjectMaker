@@ -1,0 +1,109 @@
+<html>
+	<head>
+		<title>Models Picture Generator</title>
+		<style>
+		body
+			{
+			text-align:center;
+			overflow:hidden;
+			margin:0;
+			padding:0;
+			}
+		#container
+			{
+			position:absolute;
+			left:0;
+			right:0;
+			height:100%;
+			overflow:hidden;
+			text-align:center;
+			z-index:0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container"></div>
+		<script src="3DObjectMaker.js"></script>
+		<script>
+			var container, camera, scene, renderer, controls, light, lightFocus, lightFocus2, lightFocus3;
+
+			function init()
+				{
+				container = document.getElementById("container");
+				container.innerHTML= "";
+
+				camera = new THREE.PerspectiveCamera(37.8,container.offsetWidth/container.offsetHeight,1,100000);
+				camera.up = new THREE.Vector3(0,0,1);
+				camera.position.set(0, -345, 170);
+
+				renderer = new THREE.WebGLRenderer({antialias:true});
+				renderer.setSize(container.offsetWidth,container.offsetHeight);
+
+				renderer.setClearColor(0x000000, 0.0);
+
+				container.appendChild(renderer.domElement);
+				
+				scene = new THREE.Scene();
+				scene.background = new THREE.Color(0xF2F2F2);
+
+				light = new THREE.HemisphereLight(0xE8E8E8,0x000000,1);
+				light.position.set(0,0,0);
+				scene.add(light);
+
+				var a = 10;
+				var lightFocusIntensity = 200;
+				var lightFocusY = 100;
+				
+				lightFocus = new THREE.PointLight(0xc0c0c0,1,parseFloat(lightFocusIntensity));
+				lightFocus.position.set(0,0,parseFloat(lightFocusY));
+				
+				lightFocus2 = new THREE.PointLight(0xc0c0c0,1,parseFloat(lightFocusIntensity));
+				lightFocus2.position.set(60,60,60);
+
+				lightFocus3 = new THREE.PointLight(0xc0c0c0,1,parseFloat(lightFocusIntensity));
+				lightFocus3.position.set(-60,-160,60);
+				
+				scene.add(lightFocus);
+				scene.add(lightFocus2);
+				scene.add(lightFocus3);
+				
+				controls = new THREE.OrbitControls(camera,document.getElementById("container"));
+				controls.update();
+
+				addShape(MODEL_PARABOLOIDE);
+
+				requestAnimationFrame(animate);
+				}
+
+			function animate()
+				{
+				requestAnimationFrame(animate);
+				light.position.copy(camera.getWorldPosition());
+				renderer.render(scene,camera);
+				}
+
+			function addShape(a)
+				{
+				var geometry = new THREE.STLLoader().parse(a);
+				geometry.computeFaceNormals();
+				geometry.computeVertexNormals();
+				geometry.center();
+
+				var material = new THREE.MeshPhongMaterial({color:0x4682B4});
+				var mesh = new THREE.Mesh(geometry, material);
+
+				var box = new THREE.Box3().setFromObject(mesh);
+				var height = box.max.z - box.min.z;
+
+				mesh.position.x = 0;
+				mesh.position.y = 0;
+				mesh.position.z = height / 2;
+				mesh.rotation.z = 2.5;
+
+				scene.add(mesh);
+				}
+
+			init();
+		</script>
+	</body>
+</html>
