@@ -1,0 +1,1055 @@
+<html>
+	<head>
+		<title>3D Object Maker</title>
+		<meta name="viewport" content="width=2560" />
+		<link rel="stylesheet" type="text/css" href="3DObjectMaker.css">
+	</head>
+	<body>
+		<div class="menubar">
+			<div class="menubar_holder">
+				<div class="menubar_button" id="buttonNew" onclick="newProject();"></div>
+			</div>
+			<div class="menubar_holder">
+				<label for="fileOpener" id="buttonImpor"><div class="menubar_button" id="buttonImport"></div></label>
+				<input type="file" class="menubar_buttonHidden" id="fileOpener" onChange="addModel(document.getElementById('fileOpener').files[0]);">
+			</div>
+			<div class="menubar_holder">
+				<div class="menubar_button" id="buttonExportSTL" onclick="exportToSTL();"></div>
+			</div>
+			<div class="menubar_holder">
+				<div class="menubar_button" id="buttonExportScene" onclick="exportToScene();"></div>
+			</div>
+			<div class="menubar_separator"></div>
+			<div class="menubar_holder">
+				<div class="menubar_button_move_disabled" id="buttonMove" onclick="changeControlTypeMove();"></div>
+			</div>
+			<div class="menubar_holder">
+				<div class="menubar_button_scale_disabled" id="buttonScale" onclick="changeControlTypeScale();"></div>
+			</div>
+			<div class="menubar_holder">
+				<div class="menubar_button_rotate_disabled" id="buttonRotate" onclick="changeControlTypeRotate();"></div>
+			</div>
+			<div class="menubar_holder">
+				<div class="menubar_button_copy_disabled" id="buttonDuplicate" onclick="duplicateObject();"></div>
+			</div>
+			<div class="menubar_holder">
+				<div class="menubar_button_trash_disabled" id="buttonDelete" onclick="deleteObject();"></div>
+			</div>
+		</div>
+		<div class="content1" id="container"></div>
+		<div class="content2">
+			<div class="models_container1">
+				<div class="models_container2">
+					<div class="models_cube" onclick="addShape(MODEL_CUBE);"></div>
+					<div class="models_cylinder" onclick="addShape(MODEL_CYLINDER);"></div>
+					<div class="models_cone" onclick="addShape(MODEL_CONE);"></div>
+					<div class="models_pyramid" onclick="addShape(MODEL_PYRAMID);"></div>
+					<div class="models_sphere" onclick="addShape(MODEL_SPHERE);"></div>
+					<div class="models_halfsphere" onclick="addShape(MODEL_HALFSPHERE);"></div>
+					<div class="models_tube" onclick="addShape(MODEL_TUBE);"></div>
+					<div class="models_roof1" onclick="addShape(MODEL_ROOF1);"></div>
+					<div class="models_roof2" onclick="addShape(MODEL_ROOF2);"></div>
+					<div class="models_hexagon" onclick="addShape(MODEL_HEXAGON);"></div>
+					<div class="models_wedge" onclick="addShape(MODEL_WEDGE);"></div>
+					<div class="models_paraboloide" onclick="addShape(MODEL_PARABOLOIDE);"></div>
+				</div>
+			</div>
+
+			<div class="panel_fieldseparator"><hr class="panel_hr"></div>
+
+			<div class="panel_field1">
+				<div class="panel_field2"><span id="labelGrid"></span></div>
+				<div class="panel_field3">
+					<select class="panel_selectbox" id="gridSize" onchange="changeGridSize(document.getElementById('gridSize').value)">
+						<option value="10">10 cm&sup2;</option>
+						<option selected value="20">20 cm&sup2;</option>
+						<option value="30">30 cm&sup2;</option>
+						<option value="40">40 cm&sup2;</option>
+						<option value="50">50 cm&sup2;</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="panel_fieldseparator"><hr class="panel_hr"></div>
+
+			<div class="panel_field1">
+				<div class="panel_field2"><span id="labelColor"></span></div>
+				<div class="panel_field3">
+					<select class="panel_selectbox" id="objectColor" onchange="changeObjectColor()" disabled>
+						<option class="panel_selectbox_option_silver" id="labelSilver" value="0"></option>
+						<option class="panel_selectbox_option_gray" id="labelGray" value="0"></option>
+						<option class="panel_selectbox_option_red" id="labelRed" value="0"></option>
+						<option class="panel_selectbox_option_green" id="labelGreen" value="0"></option>
+						<option class="panel_selectbox_option_greenlight" id="labelGreenLight" value="0"></option>
+						<option class="panel_selectbox_option_blue" id="labelBlue" value="0"></option>
+						<option class="panel_selectbox_option_navyblue" id="labelNavyBlue" value="0"></option>
+						<option class="panel_selectbox_option_yellow" id="labelYellow" value="0"></option>
+						<option class="panel_selectbox_option_gold" id="labelGold" value ="0"></option>
+						<option class="panel_selectbox_option_pink" id="labelPink" value="0"></option>
+						<option class="panel_selectbox_option_violet" id="labelViolet" value="0"></option>
+						<option class="panel_selectbox_option_orange" id="labelOrange" value="0"></option>
+						<option class="panel_selectbox_option_brown" id="labelBrown" value="0"></option>
+					</select>
+				</div>
+			</div>
+
+			<div class="panel_field1">
+				<div class="panel_field2"><span id="labelWidth"></span></div>
+				<div class="panel_field3"><input type="text" id="objectWidth" onkeydown="return changeObjectWidth(event)" class="panel_textbox" disabled></div>
+			</div>
+
+			<div class="panel_field1">
+				<div class="panel_field2"><span id="labelHeight"></span></div>
+				<div class="panel_field3"><input type="text" id="objectHeight" onkeydown="return changeObjectHeight(event)" class="panel_textbox" disabled></div>
+			</div>
+
+			<div class="panel_field1">
+				<div class="panel_field2"><span id="labelDepth"></span></div>
+				<div class="panel_field3"><input type="text" id="objectDepth" onkeydown="return changeObjectDepth(event)" class="panel_textbox" disabled></div>
+			</div>
+
+			<div class="panel_field1">
+				<div class="panel_field2"><span id="labelPositionX"></span></div>
+				<div class="panel_field3"><input type="text" id="objectPositionX" onkeydown="return changeObjectPositionX(event)" class="panel_textbox" disabled></div>
+			</div>
+
+			<div class="panel_field1">
+				<div class="panel_field2"><span id="labelPositionY"></span></div>
+				<div class="panel_field3"><input type="text" id="objectPositionY" onkeydown="return changeObjectPositionY(event)" class="panel_textbox" disabled></div>
+			</div>
+
+			<div class="panel_field1">
+				<div class="panel_field2"><span id="labelPositionZ"></span></div>
+				<div class="panel_field3"><input type="text" id="objectPositionZ" onkeydown="return changeObjectPositionZ(event)" class="panel_textbox" disabled></div>
+			</div>
+
+			<div class="panel_field1">
+				<div class="panel_field2"><span id="labelRotationX"></span></div>
+				<div class="panel_field3"><input type="text" id="objectRotationX" onkeydown="return changeObjectRotationX(event)" class="panel_textbox" disabled></div>
+			</div>
+
+			<div class="panel_field1">
+				<div class="panel_field2"><span id="labelRotationY"></span></div>
+				<div class="panel_field3"><input type="text" id="objectRotationY" onkeydown="return changeObjectRotationY(event)" class="panel_textbox" disabled></div>
+			</div>
+
+			<div class="panel_field1">
+				<div class="panel_field2"><span id="labelRotationZ"></span></div>
+				<div class="panel_field3"><input type="text" id="objectRotationZ" onkeydown="return changeObjectRotationZ(event)" class="panel_textbox" disabled></div>
+			</div>
+
+		</div>
+
+		<script src="3DObjectMaker.js"></script>
+		<script>
+			var TYPE_MOVE = 1;
+			var TYPE_SCALE = 2;
+			var TYPE_ROTATE = 3;
+			var TYPE_CONTROL;
+			var container, camera, scene, renderer, controls, controls2, raycaster, mouse, light, lightFocus, printer, plane;
+
+			var extensionFinal;
+			var gridSizeValue = 20;
+
+			var objects = [];
+			var selectedObject;
+
+			function init()
+				{
+				initLanguage();
+
+				objects = [];
+
+				objectPropertiesPanelEnabled(false);
+
+				document.getElementById("gridSize").value = 20;
+				gridSizeValue = 20;
+
+				TYPE_CONTROL = TYPE_MOVE;
+				
+				document.getElementById("buttonMove").classList.add("menubar_button_move_disabled");
+				document.getElementById("buttonMove").classList.remove("menubar_button_move_enabled");
+				
+				document.getElementById("buttonScale").classList.add("menubar_button_scale_disabled");
+				document.getElementById("buttonScale").classList.remove("menubar_button_scale_enabled");
+
+				document.getElementById("buttonRotate").classList.add("menubar_button_rotate_disabled");
+				document.getElementById("buttonRotate").classList.remove("menubar_button_rotate_enabled");
+
+				container = document.getElementById("container");
+				container.innerHTML= "";
+
+				camera = new THREE.PerspectiveCamera(37.8,container.offsetWidth/container.offsetHeight,1,100000);
+				camera.up = new THREE.Vector3(0,0,1);
+				camera.position.set(0, -325, 170);
+
+				renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
+				renderer.setSize(container.offsetWidth,container.offsetHeight);
+
+				renderer.setClearColor(0x000000, 0.0);
+
+				container.appendChild(renderer.domElement);
+				
+				addScene();
+				addLight();
+				addLightFocus(gridSizeValue);
+				addPrinter();
+				addWirePlane(gridSizeValue,0);
+				addRaycaster();
+				addMouse();
+				addControls();
+
+				requestAnimationFrame(animate);
+
+				document.getElementById("container").addEventListener("mousedown",onDocumentMouseDown,false);
+				document.getElementById("container").addEventListener("touchstart",onDocumentMouseDown,false); 
+				window.addEventListener("resize",onWindowResize,false);
+				}
+
+			function addModel(file)
+				{
+				var filename = file.name;
+				var extension = filename.split(".").pop().toLowerCase();
+				extensionFinal = extension;
+				var reader = new FileReader();
+
+				if (extension=="stl")
+					{
+					reader.readAsArrayBuffer(file);
+					}
+				else if (extension=="3ds")
+					{
+					reader.readAsArrayBuffer(file);
+					}
+				else if (extension=="obj")
+					{
+					reader.readAsText(file);
+					}
+				else if (extension=="scene")
+					{
+					reader.readAsText(file);
+					}
+					else
+					{
+					alert(STRING_ERROR_MODEL);
+					}
+
+				reader.addEventListener("load", function (event)
+					{
+					try
+						{
+						var contents = event.target.result;
+						if (extension=="scene")
+							{
+							// LOADING THE SIZE OF THE GRID
+							var limitGrid = contents.indexOf("|");
+							var gridSizeData = contents.substring(0, limitGrid);
+							changeEnvironment(parseFloat(gridSizeData));
+							gridSizeValue = parseFloat(gridSizeData);
+							document.getElementById("gridSize").value = parseFloat(gridSizeData);
+
+							// LOADING EVERY MODEL STORED IN THE FILE
+							var models = contents.substring(limitGrid + 1, contents.length)
+							models = models.split("3D_OBJECT_MAKER_SEPARATOR");
+							for (var i = 0; i < models.length - 1; i++)
+								{
+								// GETTING THE LOCATION OF THE MODEL
+								var limit = models[i].indexOf("|");
+								var objectData = models[i].substring(0, limit);
+								var objectDataValues = objectData.split(",");
+								
+								// GETTING THE MODEL DATA
+								var modelData = models[i].substring(limit+1, models[i].length);
+
+								var geometry = loadObjectGeometry(extension,modelData);
+								var material = loadObjectMaterial();
+								var mesh = new THREE.Mesh(geometry, material);
+
+								// SETTING THE COLOR OF THE MODEL
+								var colorModelImported = "0x" + objectDataValues[0];
+								mesh.material.color.setHex(colorModelImported);
+
+								// SETTING THE SIZE OF THE MODEL
+								mesh.scale.x = 1;							
+								mesh.scale.y = 1;
+								mesh.scale.z = 1;
+
+								var box = new THREE.Box3().setFromObject(mesh);
+								var height = box.max.z - box.min.z;
+								var width = box.max.x - box.min.x;
+								var depth = box.max.y - box.min.y;
+
+								var storedWidth = parseFloat(objectDataValues[1]);
+								var storedHeight = parseFloat(objectDataValues[2]);
+								var storedDepth = parseFloat(objectDataValues[3]);
+								
+								mesh.scale.x = storedWidth * 1 / width;
+								mesh.scale.z = storedHeight * 1 / height;
+								mesh.scale.y = storedDepth * 1 / depth;
+								
+								// SETTING THE POSITION OF THE MODEL
+								mesh.position.x = parseFloat(objectDataValues[4]);
+								mesh.position.y = parseFloat(objectDataValues[5]);
+								mesh.position.z = parseFloat(objectDataValues[6]);
+								
+								// SETTING THE ROTATION OF THE MODEL
+
+								scene.add(mesh);
+								objects.push(mesh);
+								}
+							}
+							else
+							{
+							var geometry = loadObjectGeometry(extension,contents);
+							var material = loadObjectMaterial();
+							var mesh = new THREE.Mesh(geometry, material);
+							var box = new THREE.Box3().setFromObject(mesh);
+							var height = box.max.z - box.min.z;
+							mesh.material.color.setHex(0xffffff);
+							mesh.position.x = 0;
+							mesh.position.y = 0;
+							mesh.position.z = height / 2;
+
+							scene.add(mesh);
+							objects.push(mesh);
+							}
+						}
+						catch(err)
+						{
+						alert(STRING_ERROR_MODEL);
+						}
+					}, false);
+				}
+
+			function animate()
+				{
+				requestAnimationFrame(animate);
+				light.position.copy(camera.getWorldPosition());
+				renderer.render(scene,camera);
+				}
+
+			function onWindowResize()
+				{
+				camera.aspect = container.offsetWidth / container.offsetHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize(container.offsetWidth, container.offsetHeight);
+				}
+
+			function onDocumentMouseDown(event)
+				{
+				event.preventDefault();
+
+				if (event.clientX==undefined)
+					{
+					mouse.x = (parseInt(event.changedTouches[0].clientX)/renderer.domElement.clientWidth) * 20 - 1;
+					mouse.y = ((parseInt(event.changedTouches[0].clientY) - 49)/renderer.domElement.clientHeight) * 20 + 1;
+					}
+					else
+					{
+					mouse.x = (event.clientX/renderer.domElement.clientWidth) * 2 - 1;
+					mouse.y = - ((event.clientY - 49)/renderer.domElement.clientHeight) * 2 + 1;
+					}
+				
+				raycaster.setFromCamera(mouse,camera);
+				var intersects = raycaster.intersectObjects(objects);
+				if (intersects.length>0)
+					{
+					// IF AN OBJECT IS SELECTED
+					selectedObject = intersects[0].object;
+
+					// ATTACHING THE DRAGGING CONTROL TO THE SELECTED OBJECT
+					controls2.addEventListener("change",function ()
+						{
+						var box = new THREE.Box3().setFromObject(selectedObject);
+						var height = box.max.z - box.min.z;
+						var width = box.max.x - box.min.x;
+						var depth = box.max.y - box.min.y;
+
+						document.getElementById("objectWidth").value = parseFloat(width).toFixed(2);
+						document.getElementById("objectHeight").value = parseFloat(height).toFixed(2);
+						document.getElementById("objectDepth").value = parseFloat(depth).toFixed(2);
+
+						document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
+						var finalPositionY = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - height / 2).toFixed(2);
+						if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY)).toFixed(2);}
+						document.getElementById("objectPositionY").value = finalPositionY;
+						document.getElementById("objectPositionZ").value = parseFloat(selectedObject.position.y).toFixed(2);
+
+						document.getElementById("objectRotationX").value = (selectedObject.rotation.x * 180 / Math.PI).toFixed(2);
+						document.getElementById("objectRotationY").value = (selectedObject.rotation.y * 180 / Math.PI).toFixed(2);
+						document.getElementById("objectRotationZ").value = (selectedObject.rotation.z * 180 / Math.PI).toFixed(2);
+						});
+
+					controls2.attach(selectedObject);
+					controls2.update();
+					controls2.visible = true;
+
+					// LOADING THE OBJECT VALUES
+					var box = new THREE.Box3().setFromObject(selectedObject);
+					var height = box.max.z - box.min.z;
+					var width = box.max.x - box.min.x;
+					var depth = box.max.y - box.min.y;
+
+					var heightFinal = height;heightFinal = heightFinal.toFixed(2);
+					var widthFinal = width;widthFinal = widthFinal.toFixed(2);
+					var depthFinal = depth;depthFinal = depthFinal.toFixed(2);
+
+					// ENABLING ALL THE panel_textbox
+					objectPropertiesPanelEnabled(true);
+
+					// GETTING THE COLOR OF THE OBJECT
+					var objectColorValue = String(selectedObject.material.color.getHexString());
+					
+					if (objectColorValue.indexOf("ffffff")>-1) // WHITE
+						{
+						document.getElementById("objectColor").selectedIndex = 0;
+						}
+					else if (objectColorValue.indexOf("808080")>-1) // GRAY
+						{
+						document.getElementById("objectColor").selectedIndex = 1;
+						}
+					else if (objectColorValue.indexOf("ff0000")>-1) // RED
+						{
+						document.getElementById("objectColor").selectedIndex = 2;
+						}
+					else if (objectColorValue.indexOf("008000")>-1) // GREEN
+						{
+						document.getElementById("objectColor").selectedIndex = 3;
+						}
+					else if (objectColorValue.indexOf("93DB70")>-1) // LIGHT GREEN
+						{
+						document.getElementById("objectColor").selectedIndex = 4;
+						}
+					else if (objectColorValue.indexOf("0000ff")>-1) // BLUE
+						{
+						document.getElementById("objectColor").selectedIndex = 5;
+						}
+					else if (objectColorValue.indexOf("4682b4")>-1) // NAVY BLUE
+						{
+						document.getElementById("objectColor").selectedIndex = 6;
+						}
+					else if (objectColorValue.indexOf("ffff00")>-1) // YELLOW
+						{
+						document.getElementById("objectColor").selectedIndex = 7;
+						}
+					else if (objectColorValue.indexOf("ffd700")>-1) // GOLD
+						{
+						document.getElementById("objectColor").selectedIndex = 8;
+						}
+					else if (objectColorValue.indexOf("ffc0cb")>-1) // PINK
+						{
+						document.getElementById("objectColor").selectedIndex = 9;
+						}
+					else if (objectColorValue.indexOf("ee82ee")>-1) // VIOLET
+						{
+						document.getElementById("objectColor").selectedIndex = 10;
+						}
+					else if (objectColorValue.indexOf("ffa500")>-1) // ORANGE
+						{
+						document.getElementById("objectColor").selectedIndex = 11;
+						}
+					else if (objectColorValue.indexOf("8b4513")>-1) // BROWN
+						{
+						document.getElementById("objectColor").selectedIndex = 12;
+						}
+
+					document.getElementById("objectWidth").value = widthFinal;
+					document.getElementById("objectHeight").value = heightFinal;
+					document.getElementById("objectDepth").value = depthFinal;
+					document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
+					var finalPositionY = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - height / 2).toFixed(2);
+					if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY)).toFixed(2);}
+					document.getElementById("objectPositionY").value = finalPositionY;
+					document.getElementById("objectPositionZ").value = parseFloat(selectedObject.position.y).toFixed(2);
+					document.getElementById("objectRotationX").value = (selectedObject.rotation.x * 180 / Math.PI).toFixed(2);
+					document.getElementById("objectRotationY").value = (selectedObject.rotation.y * 180 / Math.PI).toFixed(2);
+					document.getElementById("objectRotationZ").value = (selectedObject.rotation.z * 180 / Math.PI).toFixed(2);
+					}
+					else
+					{
+					// IF NO OBJECTS ARE SELECTED
+					if (controls2!=null)
+						{
+						controls2.detach();
+						controls2.update();
+						controls2.visible = false;
+						selectedObject = null;
+						}
+
+					// DISABLING ALL THE TEXTBOXS AND BUTTONS
+					objectPropertiesPanelEnabled(false);
+					}
+				}
+
+			function addShape(a)
+				{
+				var geometry = new THREE.STLLoader().parse(a);
+				geometry.computeFaceNormals();
+				geometry.computeVertexNormals();
+				geometry.center();
+
+				var material = loadObjectMaterial();
+				var mesh = new THREE.Mesh(geometry, material);
+				mesh.material.color.setHex(0xffffff);
+				var box = new THREE.Box3().setFromObject(mesh);
+				var height = box.max.z - box.min.z;
+
+				mesh.position.x = 0;
+				mesh.position.y = 0;
+				mesh.position.z = height / 2;
+
+				scene.add(mesh);
+				objects.push(mesh);
+				}
+
+			function changeGridSize(a)
+				{
+				document.getElementById("gridSize").blur();
+				changeEnvironment(a);
+				gridSizeValue = a;
+				}
+
+			function changeObjectColor()
+				{
+				if (selectedObject!=null)
+					{
+					if (document.getElementById("objectColor").selectedIndex==0) // WHITE
+						{
+						selectedObject.material.color.setHex(0xffffff);
+						}
+					else if (document.getElementById("objectColor").selectedIndex==1) // GRAY
+						{
+						selectedObject.material.color.setHex(0x808080);
+						}
+					else if (document.getElementById("objectColor").selectedIndex==2) // RED
+						{
+						selectedObject.material.color.setHex(0xff0000);
+						}
+					else if (document.getElementById("objectColor").selectedIndex==3) // GREEN
+						{
+						selectedObject.material.color.setHex(0x008000);
+						}
+					else if (document.getElementById("objectColor").selectedIndex==4) // LIGHT GREEN
+						{
+						selectedObject.material.color.setHex(0x93DB70);
+						}
+					else if (document.getElementById("objectColor").selectedIndex==5) // BLUE
+						{
+						selectedObject.material.color.setHex(0x0000ff);
+						}
+					else if (document.getElementById("objectColor").selectedIndex==6) // NAVY BLUE
+						{
+						selectedObject.material.color.setHex(0x4682b4);
+						}
+					else if (document.getElementById("objectColor").selectedIndex==7) // YELLOW
+						{
+						selectedObject.material.color.setHex(0xffff00);
+						}
+					else if (document.getElementById("objectColor").selectedIndex==8) // GOLD
+						{
+						selectedObject.material.color.setHex(0xffd700);
+						}
+					else if (document.getElementById("objectColor").selectedIndex==9) // PINK
+						{
+						selectedObject.material.color.setHex(0xffc0cb);
+						}
+					else if (document.getElementById("objectColor").selectedIndex==10) // VIOLET
+						{
+						selectedObject.material.color.setHex(0xee82ee);
+						}
+					else if (document.getElementById("objectColor").selectedIndex==11) // ORANGE
+						{
+						selectedObject.material.color.setHex(0xffa500);
+						}
+					else if (document.getElementById("objectColor").selectedIndex==12) // BROWN
+						{
+						selectedObject.material.color.setHex(0x8b4513);
+						}
+					}
+				}
+
+			function changeObjectWidth(e)
+				{
+				if (selectedObject!=null)
+					{
+					if (e.keyCode == 13 || e.keyCode == 9)
+						{
+						var value = document.getElementById("objectWidth").value;
+						if(isDouble(value)==true)
+							{
+							var box = new THREE.Box3().setFromObject(selectedObject);
+							var oldWidth = box.max.x - box.min.x;
+							var originalX = parseFloat(parseFloat(selectedObject.position.x).toFixed(2) - oldWidth / 2 - 0.01).toFixed(2);
+
+							selectedObject.scale.x = 1;							
+							var tempBox = new THREE.Box3().setFromObject(selectedObject);
+							var tempWidth = tempBox.max.x - tempBox.min.x;
+							var newWidth = parseFloat(value);
+							selectedObject.scale.x = newWidth * 1 / tempWidth;
+
+							// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION
+							selectedObject.position.x = parseFloat(parseFloat(newWidth /2 + 0.01 + parseFloat(originalX)).toFixed(2));
+
+							document.getElementById("objectWidth").value = parseFloat(value).toFixed(2);
+							controls2.update();
+							}
+							else
+							{
+							alert(STRING_ERROR_DOUBLE);
+							}
+						}
+					}
+				}
+
+			function changeObjectHeight(e)
+				{
+				if (selectedObject!=null)
+					{
+					if (e.keyCode == 13 || e.keyCode == 9)
+						{
+						var value = document.getElementById("objectHeight").value;
+						if(isDouble(value)==true)
+							{
+							var box = new THREE.Box3().setFromObject(selectedObject);
+							var oldHeight = box.max.z - box.min.z;
+							var originalZ = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - oldHeight / 2 - 0.01).toFixed(2);
+						
+							selectedObject.scale.z = 1;
+							var tempBox = new THREE.Box3().setFromObject(selectedObject);
+							var tempHeight = tempBox.max.z - tempBox.min.z;
+							var newHeight = parseFloat(value);
+							selectedObject.scale.z = newHeight * 1 / tempHeight;
+							
+							// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION
+							selectedObject.position.z = parseFloat(parseFloat(newHeight /2 + 0.01 + parseFloat(originalZ)).toFixed(2));
+							
+							document.getElementById("objectHeight").value = parseFloat(value).toFixed(2);
+							controls2.update();
+							}
+							else
+							{
+							alert(STRING_ERROR_DOUBLE);
+							}
+						}
+					}
+				}
+
+			function changeObjectDepth(e)
+				{
+				if (selectedObject!=null)
+					{
+					if (e.keyCode == 13 || e.keyCode == 9)
+						{
+						var value = document.getElementById("objectDepth").value;
+						if(isDouble(value)==true)
+							{
+							var box = new THREE.Box3().setFromObject(selectedObject);
+							var oldDepth = box.max.y - box.min.y;
+							var originalY = parseFloat(parseFloat(selectedObject.position.y).toFixed(2) - oldDepth / 2 - 0.01).toFixed(2);
+
+							selectedObject.scale.y = 1;							
+							var tempBox = new THREE.Box3().setFromObject(selectedObject);
+							var tempDepth = tempBox.max.y - tempBox.min.y;
+							var newDepth = parseFloat(value);
+							selectedObject.scale.y = newDepth * 1 / tempDepth;
+							
+							// RELOCATING THE OBJECT TO THE ORIGINAL Y POSITION
+							selectedObject.position.y = parseFloat(parseFloat(newDepth /2 + 0.01 + parseFloat(originalY)).toFixed(2));
+							
+							document.getElementById("objectDepth").value = parseFloat(value).toFixed(2);
+							controls2.update();
+							}
+							else
+							{
+							alert(STRING_ERROR_DOUBLE);
+							}
+						}
+					}
+				}
+
+			function changeObjectPositionX(e)
+				{
+				if (selectedObject!=null)
+					{
+					if (e.keyCode == 13 || e.keyCode == 9)
+						{
+						var value = document.getElementById("objectPositionX").value;
+						if(isDouble(value)==true)
+							{
+							selectedObject.position.x = parseFloat(value);
+							document.getElementById("objectPositionX").value = parseFloat(value).toFixed(2);
+							controls2.update();
+							}
+							else
+							{
+							alert(STRING_ERROR_DOUBLE);
+							}
+						}
+					}
+				}
+
+			function changeObjectPositionY(e)
+				{
+				if (selectedObject!=null)
+					{
+					if (e.keyCode == 13 || e.keyCode == 9)
+						{
+						var value = document.getElementById("objectPositionY").value;
+						if(isDouble(value)==true)
+							{
+							try
+								{
+								var box = new THREE.Box3().setFromObject(selectedObject);
+								var height = box.max.z - box.min.z;
+								selectedObject.position.z = parseFloat((height/2)+parseFloat(value)).toFixed(2);
+								var finalPositionY = parseFloat(value).toFixed(2);
+								if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY)).toFixed(2);}
+								document.getElementById("objectPositionY").value = finalPositionY;
+								controls2.update();
+								}
+								catch(err)
+								{
+								alert(err);
+								}
+							}
+							else
+							{
+							alert(STRING_ERROR_DOUBLE);
+							}
+						}
+					}
+				}
+
+			function changeObjectPositionZ(e)
+				{
+				if (selectedObject!=null)
+					{
+					if (e.keyCode == 13 || e.keyCode == 9)
+						{
+						var value = document.getElementById("objectPositionZ").value;
+						if(isDouble(value)==true)
+							{
+							selectedObject.position.y = parseFloat(value);
+							document.getElementById("objectPositionZ").value = parseFloat(value).toFixed(2);
+							controls2.update();
+							}
+							else
+							{
+							alert(STRING_ERROR_DOUBLE);
+							}
+						}
+					}
+				}
+
+			function changeObjectRotationX(e)
+				{
+				if (selectedObject!=null)
+					{
+					if (e.keyCode == 13 || e.keyCode == 9)
+						{
+						var value = document.getElementById("objectRotationX").value;
+						if(isDouble(value)==true)
+							{
+							selectedObject.rotation.x = (value * Math.PI)/180;
+							document.getElementById("objectRotationX").value = parseFloat(value).toFixed(2);
+							}
+							else
+							{
+							alert(STRING_ERROR_DOUBLE);
+							}
+						}
+					}
+				}
+
+			function changeObjectRotationY(e)
+				{
+				if (selectedObject!=null)
+					{
+					if (e.keyCode == 13 || e.keyCode == 9)
+						{
+						var value = document.getElementById("objectRotationY").value;
+						if(isDouble(value)==true)
+							{
+							selectedObject.rotation.y = (value * Math.PI)/180;
+							document.getElementById("objectRotationY").value = parseFloat(value).toFixed(2);
+							}
+							else
+							{
+							alert(STRING_ERROR_DOUBLE);
+							}
+						}
+					}
+				}
+
+			function changeObjectRotationZ(e)
+				{
+				if (selectedObject!=null)
+					{
+					if (e.keyCode == 13 || e.keyCode == 9)
+						{
+						var value = document.getElementById("objectRotationZ").value;
+						if(isDouble(value)==true)
+							{
+							selectedObject.rotation.z = (value * Math.PI)/180;
+							document.getElementById("objectRotationZ").value = parseFloat(value).toFixed(2);
+							}
+							else
+							{
+							alert(STRING_ERROR_DOUBLE);
+							}
+						}
+					}
+				}
+
+			function newProject()
+				{
+				if (objects.length>0)
+					{
+					var message = confirm(STRING_ERROR_LOSECHANGES);
+					if (message == true)
+						{
+						init();
+
+						// IF NO OBJECTS ARE SELECTED
+						if (controls2!=null)
+							{
+							controls2.detach();
+							controls2.update();
+							controls2.visible = false;
+							selectedObject = null;
+							}
+
+						// DISABLING ALL THE TEXTBOXS AND BUTTONS
+						objectPropertiesPanelEnabled(false);
+						}
+					}
+					else
+					{
+					init();						
+					}
+				}
+
+			function exportToSTL()
+				{
+				if (objects.length>0)
+					{
+					// CREATING A SCENE THAT WILL HAVE ALL THE MODELS
+					var sceneConverter = new THREE.Scene();
+					for (var i = 0; i < objects.length; i++)
+						{
+						sceneConverter.add(objects[i]);
+						}
+
+					// EXPORTING THE SCENE AS A STL FILE
+					var exporter = new THREE.STLBinaryExporter();
+					var result = exporter.parse(sceneConverter);
+					saveString(result, STRING_FILENAME + ".stl");
+
+					// RETURNING THE OBJECTS TO THE MAIN SCENE
+					for (var i = 0; i < objects.length; i++)
+						{
+						scene.add(objects[i]);
+						}
+					}
+					else
+					{
+					alert(STRING_ERROR_EMPTYWORKSPACE);				
+					}
+				}
+
+			function exportToScene()
+				{
+				if (objects.length>0)
+					{
+					// SETTING THE VARIABLE THAT WILL HAVE ALL THE MODELS IN ONE FILE
+					var finalResult = "";
+
+					// GENERATING AN ARRAY OF SCENES WITH ONE MODEL IN EACH ESCENE
+					for (var i = 0; i < objects.length; i++)
+						{
+						var sceneConverter = new THREE.Scene();
+						sceneConverter.add(objects[i]);
+					
+						var box = new THREE.Box3().setFromObject(objects[i]);
+						var height = box.max.z - box.min.z;
+						var width = box.max.x - box.min.x;
+						var depth = box.max.y - box.min.y;
+						
+					
+						var objectProperties = objects[i].material.color.getHexString() + "," +
+											   width.toFixed(2) + "," +
+											   height.toFixed(2) + "," +
+											   depth.toFixed(2) + "," +
+											   objects[i].position.x + "," +
+											   objects[i].position.y + "," +
+											   objects[i].position.z + "," +
+											   objects[i].rotation.x + "," +
+											   objects[i].rotation.y + "," +
+											   objects[i].rotation.z + "|";
+
+						// ADDING THE STL MODEL WITH IT'S LOCATION TO THE FINAL RESULT
+						var exporter = new THREE.STLExporter();
+						var objectData = exporter.parse(sceneConverter);
+						if (finalResult=="")
+							{
+							finalResult = objectProperties + objectData + "3D_OBJECT_MAKER_SEPARATOR";
+							}
+							else
+							{
+							finalResult = finalResult + objectProperties + objectData + "3D_OBJECT_MAKER_SEPARATOR";
+							}
+						}
+
+					// ADDING THE GRID SIZE TO THE FINAL RESULT
+					finalResult = gridSizeValue + "|" + finalResult;
+
+					// EXPORTING THE SCENE
+					saveString(finalResult, STRING_FILENAME + ".scene");
+
+					// RETURNING THE OBJECTS TO THE MAIN SCENE
+					for (var i = 0; i < objects.length; i++)
+						{
+						scene.add(objects[i]);
+						}
+					}
+					else
+					{
+					alert(STRING_ERROR_EMPTYWORKSPACE);				
+					}
+				}
+
+			function saveString(text, filename)
+				{
+				save(new Blob([text], {type:"text/plain"}), filename);
+				}
+
+			function save(blob, filename)
+				{
+				var link = document.createElement("a");
+				link.style.display = "none";
+				document.body.appendChild(link);
+				link.href = URL.createObjectURL(blob);
+				link.download = filename || "data.json";
+				link.click();
+				}
+
+			function deleteObject()
+				{
+				if (selectedObject!=null)
+					{
+					scene.remove(selectedObject);
+					
+					objects = objects.filter(function(item)
+						{ 
+						return item !== selectedObject
+						})
+
+					// IF NO OBJECTS ARE SELECTED
+					if (controls2!=null)
+						{
+						controls2.detach();
+						controls2.update();
+						controls2.visible = false;
+						selectedObject = null;
+						}
+
+					// DISABLING ALL THE TEXTBOXS AND BUTTONS
+					objectPropertiesPanelEnabled(false);
+					}
+				}
+
+			function duplicateObject()
+				{
+				if (selectedObject!=null)
+					{
+					var duplicated = selectedObject.clone();
+					var box = new THREE.Box3().setFromObject(duplicated);
+					var height = box.max.z - box.min.z;
+					duplicated.position.x = 0;
+					duplicated.position.y = 0;
+					duplicated.position.z = height / 2;
+					scene.add(duplicated);
+					objects.push(duplicated);
+
+					// IF NO OBJECTS ARE SELECTED
+					if (controls2!=null)
+						{
+						controls2.detach();
+						controls2.update();
+						controls2.visible = false;
+						selectedObject = null;
+						}
+
+					// DISABLING ALL THE TEXTBOXS AND BUTTONS
+					objectPropertiesPanelEnabled(false);
+					}
+				}
+
+			function changeControlTypeMove()
+				{
+				if (selectedObject!=null)
+					{
+					controls2.setMode("translate");
+					controls2.update();
+					TYPE_CONTROL = TYPE_MOVE;
+					document.getElementById("buttonMove").classList.add("menubar_button_move_selected");
+					document.getElementById("buttonMove").classList.remove("menubar_button_move_enabled");
+					document.getElementById("buttonMove").classList.remove("menubar_button_move_disabled");
+
+					document.getElementById("buttonScale").classList.add("menubar_button_scale_enabled");
+					document.getElementById("buttonScale").classList.remove("menubar_button_scale_disabled");
+					document.getElementById("buttonScale").classList.remove("menubar_button_scale_selected");
+
+					document.getElementById("buttonRotate").classList.add("menubar_button_rotate_enabled");
+					document.getElementById("buttonRotate").classList.remove("menubar_button_rotate_disabled");
+					document.getElementById("buttonRotate").classList.remove("menubar_button_rotate_selected");
+					}
+				}
+
+			function changeControlTypeScale()
+				{
+				if (selectedObject!=null)
+					{
+					controls2.setMode("scale");
+					controls2.update();
+					TYPE_CONTROL = TYPE_SCALE;
+					document.getElementById("buttonScale").classList.add("menubar_button_scale_selected");
+					document.getElementById("buttonScale").classList.remove("menubar_button_scale_enabled");
+					document.getElementById("buttonScale").classList.remove("menubar_button_scale_disabled");
+
+					document.getElementById("buttonMove").classList.add("menubar_button_move_enabled");
+					document.getElementById("buttonMove").classList.remove("menubar_button_move_disabled");
+					document.getElementById("buttonMove").classList.remove("menubar_button_move_selected");
+
+					document.getElementById("buttonRotate").classList.add("menubar_button_rotate_enabled");
+					document.getElementById("buttonRotate").classList.remove("menubar_button_rotate_disabled");
+					document.getElementById("buttonRotate").classList.remove("menubar_button_rotate_selected");
+					}
+				}
+
+			function changeControlTypeRotate()
+				{
+				if (selectedObject!=null)
+					{
+					controls2.setMode("rotate");
+					controls2.update();
+					TYPE_CONTROL = TYPE_ROTATE;
+					document.getElementById("buttonRotate").classList.add("menubar_button_rotate_selected");
+					document.getElementById("buttonRotate").classList.remove("menubar_button_rotate_enabled");
+					document.getElementById("buttonRotate").classList.remove("menubar_button_rotate_disabled");
+
+					document.getElementById("buttonScale").classList.add("menubar_button_scale_enabled");
+					document.getElementById("buttonScale").classList.remove("menubar_button_scale_disabled");
+					document.getElementById("buttonScale").classList.remove("menubar_button_scale_selected");
+
+					document.getElementById("buttonMove").classList.add("menubar_button_move_enabled");
+					document.getElementById("buttonMove").classList.remove("menubar_button_move_disabled");
+					document.getElementById("buttonMove").classList.remove("menubar_button_move_selected");
+
+					}
+				}
+
+			init();
+		</script>
+	</body>
+</html>
