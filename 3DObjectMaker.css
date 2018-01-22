@@ -4,7 +4,7 @@ body
 	overflow:hidden;
 	margin:0;
 	padding:0;
-        min-height:800px;
+        min-height:620px;
 	}
 .content1
 	{
@@ -28,7 +28,7 @@ body
 	font-family:Arial;
 	font-size:13px;
 	width:220px;
-	min-height:800px;
+	min-height:620px;
 	height:100%;
 	top:0;
 	right:0;
