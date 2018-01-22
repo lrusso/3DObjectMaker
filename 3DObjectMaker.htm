@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<title>3D Object Maker</title>
-		<meta name="viewport" content="width=2560, user-scalable=yes" />
+		<meta name="viewport" content="width=2560" />
 		<link rel="stylesheet" type="text/css" href="3DObjectMaker.css">
 	</head>
 	<body>
@@ -80,6 +80,7 @@
 						<option class="panel_selectbox_option_gray" id="labelGray" value="0"></option>
 						<option class="panel_selectbox_option_red" id="labelRed" value="0"></option>
 						<option class="panel_selectbox_option_green" id="labelGreen" value="0"></option>
+						<option class="panel_selectbox_option_greenlight" id="labelGreenLight" value="0"></option>
 						<option class="panel_selectbox_option_blue" id="labelBlue" value="0"></option>
 						<option class="panel_selectbox_option_navyblue" id="labelNavyBlue" value="0"></option>
 						<option class="panel_selectbox_option_yellow" id="labelYellow" value="0"></option>
@@ -147,7 +148,7 @@
 			var TYPE_CONTROL;
 			var container, camera, scene, renderer, controls, controls2, raycaster, mouse, light, lightFocus, printer, plane;
 
-			var randomColors = ["ffffff","808080","ff0000","008000","0000ff","ffff00","ffd700","ffc0cb","ee82ee","ffa500","8b4513"];
+			var randomColors = ["ffffff","808080","ff0000","008000","0xA6D785","0000ff","4682b4","ffff00","ffd700","ffc0cb","ee82ee","ffa500","8b4513"];
 
 			var extensionFinal;
 			var gridSizeValue = 20;
@@ -203,16 +204,7 @@
 				requestAnimationFrame(animate);
 
 				document.getElementById("container").addEventListener("mousedown",onDocumentMouseDown,false);
-				document.getElementById("container").addEventListener("touchend",onDocumentMouseDown,false);
-				/*
-				document.getElementById("container").addEventListener('touchstart', function(e)
-					{
-					var touchobj = e.changedTouches[0];
-        			alert(touchobj.clientX);
-					e.preventDefault()
-					}, false);
-				*/
- 
+				document.getElementById("container").addEventListener("touchstart",onDocumentMouseDown,false); 
 				window.addEventListener("resize",onWindowResize,false);
 				}
 
@@ -315,7 +307,7 @@
 							var mesh = new THREE.Mesh(geometry, material);
 							var box = new THREE.Box3().setFromObject(mesh);
 							var height = box.max.z - box.min.z;
-							var randomColor = "0x" + randomColors[Math.floor(Math.random()*(10-0+1)+0)];
+							var randomColor = "0x" + randomColors[Math.floor(Math.random()*(12-0+1)+0)];
 							mesh.material.color.setHex(randomColor);
 							mesh.position.x = 0;
 							mesh.position.y = 0;
@@ -352,8 +344,8 @@
 
 				if (event.clientX==undefined)
 					{
-      				mouse.x = (parseInt(event.changedTouches[0].pageX)/renderer.domElement.clientWidth) * 2 - 1;
-      				mouse.y = - ((parseInt(event.changedTouches[0].pageY) - 49)/renderer.domElement.clientHeight) * 2 + 1;
+					mouse.x = (parseInt(event.changedTouches[0].clientX)/renderer.domElement.clientWidth) * 20 - 1;
+					mouse.y = ((parseInt(event.changedTouches[0].clientY) - 49)/renderer.domElement.clientHeight) * 20 + 1;
 					}
 					else
 					{
@@ -427,37 +419,41 @@
 						{
 						document.getElementById("objectColor").selectedIndex = 3;
 						}
-					else if (objectColorValue.indexOf("0000ff")>-1) // BLUE
+					else if (objectColorValue.indexOf("A6D785")>-1) // LIGHT GREEN
 						{
 						document.getElementById("objectColor").selectedIndex = 4;
 						}
-					else if (objectColorValue.indexOf("4682b4")>-1) // NAVY BLUE
+					else if (objectColorValue.indexOf("0000ff")>-1) // BLUE
 						{
 						document.getElementById("objectColor").selectedIndex = 5;
 						}
-					else if (objectColorValue.indexOf("ffff00")>-1) // YELLOW
+					else if (objectColorValue.indexOf("4682b4")>-1) // NAVY BLUE
 						{
 						document.getElementById("objectColor").selectedIndex = 6;
 						}
-					else if (objectColorValue.indexOf("ffd700")>-1) // GOLD
+					else if (objectColorValue.indexOf("ffff00")>-1) // YELLOW
 						{
 						document.getElementById("objectColor").selectedIndex = 7;
 						}
-					else if (objectColorValue.indexOf("ffc0cb")>-1) // PINK
+					else if (objectColorValue.indexOf("ffd700")>-1) // GOLD
 						{
 						document.getElementById("objectColor").selectedIndex = 8;
 						}
-					else if (objectColorValue.indexOf("ee82ee")>-1) // VIOLET
+					else if (objectColorValue.indexOf("ffc0cb")>-1) // PINK
 						{
 						document.getElementById("objectColor").selectedIndex = 9;
 						}
-					else if (objectColorValue.indexOf("ffa500")>-1) // ORANGE
+					else if (objectColorValue.indexOf("ee82ee")>-1) // VIOLET
 						{
 						document.getElementById("objectColor").selectedIndex = 10;
 						}
-					else if (objectColorValue.indexOf("8b4513")>-1) // BROWN
+					else if (objectColorValue.indexOf("ffa500")>-1) // ORANGE
 						{
 						document.getElementById("objectColor").selectedIndex = 11;
+						}
+					else if (objectColorValue.indexOf("8b4513")>-1) // BROWN
+						{
+						document.getElementById("objectColor").selectedIndex = 12;
 						}
 
 					document.getElementById("objectWidth").value = widthFinal;
@@ -498,7 +494,7 @@
 				var material = loadObjectMaterial();
 				var mesh = new THREE.Mesh(geometry, material);
 
-				var randomColor = "0x" + randomColors[Math.floor(Math.random()*(10-0+1)+0)];
+				var randomColor = "0x" + randomColors[Math.floor(Math.random()*(12-0+1)+0)];
 				mesh.material.color.setHex(randomColor);
 
 				var box = new THREE.Box3().setFromObject(mesh);
@@ -539,35 +535,39 @@
 						{
 						selectedObject.material.color.setHex(0x008000);
 						}
-					else if (document.getElementById("objectColor").selectedIndex==4) // BLUE
+					else if (document.getElementById("objectColor").selectedIndex==4) // LIGHT GREEN
+						{
+						selectedObject.material.color.setHex(0xA6D785);
+						}
+					else if (document.getElementById("objectColor").selectedIndex==5) // BLUE
 						{
 						selectedObject.material.color.setHex(0x0000ff);
 						}
-					else if (document.getElementById("objectColor").selectedIndex==5) // NAVY BLUE
+					else if (document.getElementById("objectColor").selectedIndex==6) // NAVY BLUE
 						{
 						selectedObject.material.color.setHex(0x4682b4);
 						}
-					else if (document.getElementById("objectColor").selectedIndex==6) // YELLOW
+					else if (document.getElementById("objectColor").selectedIndex==7) // YELLOW
 						{
 						selectedObject.material.color.setHex(0xffff00);
 						}
-					else if (document.getElementById("objectColor").selectedIndex==7) // GOLD
+					else if (document.getElementById("objectColor").selectedIndex==8) // GOLD
 						{
 						selectedObject.material.color.setHex(0xffd700);
 						}
-					else if (document.getElementById("objectColor").selectedIndex==8) // PINK
+					else if (document.getElementById("objectColor").selectedIndex==9) // PINK
 						{
 						selectedObject.material.color.setHex(0xffc0cb);
 						}
-					else if (document.getElementById("objectColor").selectedIndex==9) // VIOLET
+					else if (document.getElementById("objectColor").selectedIndex==10) // VIOLET
 						{
 						selectedObject.material.color.setHex(0xee82ee);
 						}
-					else if (document.getElementById("objectColor").selectedIndex==10) // ORANGE
+					else if (document.getElementById("objectColor").selectedIndex==11) // ORANGE
 						{
 						selectedObject.material.color.setHex(0xffa500);
 						}
-					else if (document.getElementById("objectColor").selectedIndex==11) // BROWN
+					else if (document.getElementById("objectColor").selectedIndex==12) // BROWN
 						{
 						selectedObject.material.color.setHex(0x8b4513);
 						}
