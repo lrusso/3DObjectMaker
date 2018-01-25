@@ -2,4 +2,4 @@
 
 3D Object Maker by LRusso.com
 
-Web version: http://3dobjectmaker.lrusso.com.ar
+Web version: https://lrusso.github.io/3DObjectMaker/3DObjectMaker.htm
