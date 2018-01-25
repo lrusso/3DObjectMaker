@@ -342,12 +342,12 @@
 				if (event.clientX==undefined)
 					{
 					mouse.x = (parseInt(event.changedTouches[0].clientX)/renderer.domElement.clientWidth) * 20 - 1;
-					mouse.y = ((parseInt(event.changedTouches[0].clientY) - 49)/renderer.domElement.clientHeight) * 20 + 1;
+					mouse.y = ((parseInt(event.changedTouches[0].clientY) - 56)/renderer.domElement.clientHeight) * 20 + 1;
 					}
 					else
 					{
 					mouse.x = (event.clientX/renderer.domElement.clientWidth) * 2 - 1;
-					mouse.y = - ((event.clientY - 49)/renderer.domElement.clientHeight) * 2 + 1;
+					mouse.y = - ((event.clientY - 56)/renderer.domElement.clientHeight) * 2 + 1;
 					}
 				
 				raycaster.setFromCamera(mouse,camera);
