@@ -847,12 +847,7 @@
 						var rotationY = (objects[i].rotation.y * 180 / Math.PI).toFixed(2);
 						var rotationZ = (objects[i].rotation.z * 180 / Math.PI).toFixed(2);
 
-						objects[i].applyMatrix(new THREE.Matrix4().makeRotationX(0));
-						objects[i].applyMatrix(new THREE.Matrix4().makeRotationY(0));
-						objects[i].applyMatrix(new THREE.Matrix4().makeRotationZ(0));
-
 						var newGeometry = new THREE.Geometry().fromBufferGeometry(objects[i].geometry);
-
 						newGeometry.applyMatrix(new THREE.Matrix4().makeRotationX(rotationX));
 						newGeometry.applyMatrix(new THREE.Matrix4().makeRotationY(rotationY));
 						newGeometry.applyMatrix(new THREE.Matrix4().makeRotationZ(rotationZ));
