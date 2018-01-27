@@ -166,10 +166,10 @@
 				gridSizeValue = 20;
 
 				TYPE_CONTROL = TYPE_MOVE;
-				
+
 				document.getElementById("buttonMove").classList.add("menubar_button_move_disabled");
 				document.getElementById("buttonMove").classList.remove("menubar_button_move_enabled");
-				
+
 				document.getElementById("buttonScale").classList.add("menubar_button_scale_disabled");
 				document.getElementById("buttonScale").classList.remove("menubar_button_scale_enabled");
 
@@ -189,7 +189,7 @@
 				renderer.setClearColor(0x000000, 0.0);
 
 				container.appendChild(renderer.domElement);
-				
+
 				addScene();
 				addLight();
 				addLightFocus(gridSizeValue);
@@ -257,7 +257,7 @@
 								var limit = models[i].indexOf("|");
 								var objectData = models[i].substring(0, limit);
 								var objectDataValues = objectData.split(",");
-								
+
 								// GETTING THE MODEL DATA
 								var modelData = models[i].substring(limit+1, models[i].length);
 
@@ -270,7 +270,7 @@
 								mesh.material.color.setHex(colorModelImported);
 
 								// SETTING THE SIZE OF THE MODEL
-								mesh.scale.x = 1;							
+								mesh.scale.x = 1;
 								mesh.scale.y = 1;
 								mesh.scale.z = 1;
 
@@ -282,16 +282,16 @@
 								var storedWidth = parseFloat(objectDataValues[1]);
 								var storedHeight = parseFloat(objectDataValues[2]);
 								var storedDepth = parseFloat(objectDataValues[3]);
-								
+
 								mesh.scale.x = storedWidth * 1 / width;
 								mesh.scale.z = storedHeight * 1 / height;
 								mesh.scale.y = storedDepth * 1 / depth;
-								
+
 								// SETTING THE POSITION OF THE MODEL
 								mesh.position.x = parseFloat(objectDataValues[4]);
 								mesh.position.y = parseFloat(objectDataValues[5]);
 								mesh.position.z = parseFloat(objectDataValues[6]);
-								
+
 								// SETTING THE ROTATION OF THE MODEL
 
 								scene.add(mesh);
@@ -349,7 +349,7 @@
 					mouse.x = (event.clientX/renderer.domElement.clientWidth) * 2 - 1;
 					mouse.y = - ((event.clientY - 56)/renderer.domElement.clientHeight) * 2 + 1;
 					}
-				
+
 				raycaster.setFromCamera(mouse,camera);
 				var intersects = raycaster.intersectObjects(objects);
 				if (intersects.length>0)
@@ -399,7 +399,7 @@
 
 					// GETTING THE COLOR OF THE OBJECT
 					var objectColorValue = String(selectedObject.material.color.getHexString());
-					
+
 					if (objectColorValue.indexOf("ffffff")>-1) // WHITE
 						{
 						document.getElementById("objectColor").selectedIndex = 0;
@@ -581,7 +581,7 @@
 							var oldWidth = box.max.x - box.min.x;
 							var originalX = parseFloat(parseFloat(selectedObject.position.x).toFixed(2) - oldWidth / 2 - 0.01).toFixed(2);
 
-							selectedObject.scale.x = 1;							
+							selectedObject.scale.x = 1;
 							var tempBox = new THREE.Box3().setFromObject(selectedObject);
 							var tempWidth = tempBox.max.x - tempBox.min.x;
 							var newWidth = parseFloat(value);
@@ -613,16 +613,16 @@
 							var box = new THREE.Box3().setFromObject(selectedObject);
 							var oldHeight = box.max.z - box.min.z;
 							var originalZ = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - oldHeight / 2 - 0.01).toFixed(2);
-						
+
 							selectedObject.scale.z = 1;
 							var tempBox = new THREE.Box3().setFromObject(selectedObject);
 							var tempHeight = tempBox.max.z - tempBox.min.z;
 							var newHeight = parseFloat(value);
 							selectedObject.scale.z = newHeight * 1 / tempHeight;
-							
+
 							// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION
 							selectedObject.position.z = parseFloat(parseFloat(newHeight /2 + 0.01 + parseFloat(originalZ)).toFixed(2));
-							
+
 							document.getElementById("objectHeight").value = parseFloat(value).toFixed(2);
 							controls2.update();
 							}
@@ -647,15 +647,15 @@
 							var oldDepth = box.max.y - box.min.y;
 							var originalY = parseFloat(parseFloat(selectedObject.position.y).toFixed(2) - oldDepth / 2 - 0.01).toFixed(2);
 
-							selectedObject.scale.y = 1;							
+							selectedObject.scale.y = 1;
 							var tempBox = new THREE.Box3().setFromObject(selectedObject);
 							var tempDepth = tempBox.max.y - tempBox.min.y;
 							var newDepth = parseFloat(value);
 							selectedObject.scale.y = newDepth * 1 / tempDepth;
-							
+
 							// RELOCATING THE OBJECT TO THE ORIGINAL Y POSITION
 							selectedObject.position.y = parseFloat(parseFloat(newDepth /2 + 0.01 + parseFloat(originalY)).toFixed(2));
-							
+
 							document.getElementById("objectDepth").value = parseFloat(value).toFixed(2);
 							controls2.update();
 							}
@@ -825,7 +825,7 @@
 					}
 					else
 					{
-					init();						
+					init();
 					}
 				}
 
@@ -835,25 +835,58 @@
 					{
 					// CREATING A SCENE THAT WILL HAVE ALL THE MODELS
 					var sceneConverter = new THREE.Scene();
+
+					// CREATING DEFAULT MATERIAL
+					var material = new THREE.MeshNormalMaterial();
+
+					// CREATING THE MESH THAT WILL HAVE ALL THE OBJECTS
+					var finalMeshBSP = null;
+
 					for (var i = 0; i < objects.length; i++)
 						{
-						sceneConverter.add(objects[i]);
+						var objectType = objects[i].geometry.type;
+
+						var box = new THREE.Box3().setFromObject(objects[i]);
+
+						var width = box.max.x - box.min.x;
+						var height = box.max.y - box.min.y;
+						var depth = box.max.z - box.min.z;
+
+						var positionX = objects[i].position.x;
+						var positionY = objects[i].position.y;
+						var positionZ = objects[i].position.z;
+
+						var newGeometry = new THREE.Geometry().fromBufferGeometry(objects[i].geometry);
+
+						var newMesh = new THREE.Mesh(newGeometry);
+						newMesh.position.x = positionX;
+						newMesh.position.y = positionY;
+						newMesh.position.z = positionZ;
+
+						var newBSP = new ThreeBSP(newMesh);
+
+						if (finalMeshBSP==null)
+							{
+							finalMeshBSP = newBSP;
+							}
+							else
+							{
+							finalMeshBSP = newBSP.union(finalMeshBSP);
+							}
 						}
+
+					var newMesh = finalMeshBSP.toMesh(material);
+
+					sceneConverter.add(newMesh);
 
 					// EXPORTING THE SCENE AS A STL FILE
 					var exporter = new THREE.STLBinaryExporter();
 					var result = exporter.parse(sceneConverter);
 					saveString(result, STRING_FILENAME + ".stl");
-
-					// RETURNING THE OBJECTS TO THE MAIN SCENE
-					for (var i = 0; i < objects.length; i++)
-						{
-						scene.add(objects[i]);
-						}
 					}
 					else
 					{
-					alert(STRING_ERROR_EMPTYWORKSPACE);				
+					alert(STRING_ERROR_EMPTYWORKSPACE);
 					}
 				}
 
@@ -869,13 +902,12 @@
 						{
 						var sceneConverter = new THREE.Scene();
 						sceneConverter.add(objects[i]);
-					
+
 						var box = new THREE.Box3().setFromObject(objects[i]);
 						var height = box.max.z - box.min.z;
 						var width = box.max.x - box.min.x;
 						var depth = box.max.y - box.min.y;
-						
-					
+
 						var objectProperties = objects[i].material.color.getHexString() + "," +
 											   width.toFixed(2) + "," +
 											   height.toFixed(2) + "," +
@@ -914,7 +946,7 @@
 					}
 					else
 					{
-					alert(STRING_ERROR_EMPTYWORKSPACE);				
+					alert(STRING_ERROR_EMPTYWORKSPACE);
 					}
 				}
 
