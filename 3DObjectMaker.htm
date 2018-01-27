@@ -854,13 +854,13 @@
 
 						var newMesh = new THREE.Mesh(newGeometry);
 
-						newMesh.position.x = objects[i].position.x;
-						newMesh.position.y = objects[i].position.y;
-						newMesh.position.z = objects[i].position.z;
-
 						newMesh.scale.x = objects[i].scale.x;
 						newMesh.scale.y = objects[i].scale.y;
 						newMesh.scale.z = objects[i].scale.z;
+
+						newMesh.position.x = objects[i].position.x;
+						newMesh.position.y = objects[i].position.y;
+						newMesh.position.z = objects[i].position.z;
 
 						var newBSP = new ThreeBSP(newMesh);
 
