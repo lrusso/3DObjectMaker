@@ -60,7 +60,7 @@ body
 	{
 	float:left;
 	padding-top:10px;
-	padding-bottom:10px;
+	padding-bottom:15px;
 	margin:0;
 	}
 .menubar_separator
@@ -73,14 +73,13 @@ body
 	}
 .menubar_button
 	{
+	display:block;
 	font-family:Arial;
 	font-size:15px;
-	line-height:24px;
-	height:24px;
+	line-height:34px;
+	height:34px;
 	background-color:#F2F2F2;
 	border:1px solid #D3D3D3;
-	padding-top:5px;
-	padding-bottom:5px;
 	padding-left:10px;
 	padding-right:10px;
 	margin-left:12px;
