@@ -828,6 +828,17 @@
 					}
 				}
 
+			function rotateAboutWorldAxis(object, axis, angle)
+				{
+				var rotationMatrix = new THREE.Matrix4();
+				rotationMatrix.makeRotationAxis( axis.normalize(), angle );
+				var currentPos = new THREE.Vector4(object.position.x, object.position.y, object.position.z, 1);
+				var newPos = currentPos.applyMatrix4(rotationMatrix);
+				object.position.x = newPos.x;
+				object.position.y = newPos.y;
+				object.position.z = newPos.z;
+				}
+
 			function exportToSTL()
 				{
 				if (objects.length>0)
@@ -843,16 +854,16 @@
 
 					for (var i = 0; i < objects.length; i++)
 						{
-						var positionX = objects[i].position.x;
-						var positionY = objects[i].position.y;
-						var positionZ = objects[i].position.z;
-
 						var newGeometry = new THREE.Geometry().fromBufferGeometry(objects[i].geometry);
-
 						var newMesh = new THREE.Mesh(newGeometry);
-						newMesh.position.x = positionX;
-						newMesh.position.y = positionY;
-						newMesh.position.z = positionZ;
+
+						newMesh.position.x = objects[i].position.x;
+						newMesh.position.y = objects[i].position.y;
+						newMesh.position.z = objects[i].position.z;
+
+						newMesh.scale.x = objects[i].scale.x;
+						newMesh.scale.y = objects[i].scale.y;
+						newMesh.scale.z = objects[i].scale.z;
 
 						var newBSP = new ThreeBSP(newMesh);
 
