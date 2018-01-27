@@ -286,12 +286,15 @@
 								mesh.scale.z = storedHeight * 1 / height;
 								mesh.scale.y = storedDepth * 1 / depth;
 
+								// SETTING THE ROTATION OF THE MODEL
+								mesh.applyMatrix(new THREE.Matrix4().makeRotationX(objectDataValues[7]));
+								mesh.applyMatrix(new THREE.Matrix4().makeRotationY(objectDataValues[8]));
+								mesh.applyMatrix(new THREE.Matrix4().makeRotationZ(objectDataValues[9]));
+
 								// SETTING THE POSITION OF THE MODEL
 								mesh.position.x = parseFloat(objectDataValues[4]);
 								mesh.position.y = parseFloat(objectDataValues[5]);
 								mesh.position.z = parseFloat(objectDataValues[6]);
-
-								// SETTING THE ROTATION OF THE MODEL
 
 								scene.add(mesh);
 								objects.push(mesh);
@@ -843,6 +846,10 @@
 
 					for (var i = 0; i < objects.length; i++)
 						{
+						var positionX = objects[i].position.x;
+						var positionY = objects[i].position.y;
+						var positionZ = objects[i].position.z;
+
 						var rotationX = (objects[i].rotation.x * 180 / Math.PI).toFixed(2);
 						var rotationY = (objects[i].rotation.y * 180 / Math.PI).toFixed(2);
 						var rotationZ = (objects[i].rotation.z * 180 / Math.PI).toFixed(2);
@@ -900,6 +907,15 @@
 					for (var i = 0; i < objects.length; i++)
 						{
 						var sceneConverter = new THREE.Scene();
+
+						var rotationX = objects[i].rotation.x;
+						var rotationY = objects[i].rotation.y;
+						var rotationZ = objects[i].rotation.z;
+
+						objects[i].rotation.x = 0;
+						objects[i].rotation.y = 0;
+						objects[i].rotation.z = 0;
+						
 						sceneConverter.add(objects[i]);
 
 						var box = new THREE.Box3().setFromObject(objects[i]);
@@ -914,9 +930,9 @@
 											   objects[i].position.x + "," +
 											   objects[i].position.y + "," +
 											   objects[i].position.z + "," +
-											   objects[i].rotation.x + "," +
-											   objects[i].rotation.y + "," +
-											   objects[i].rotation.z + "|";
+											   rotationX + "," +
+											   rotationY + "," +
+											   rotationZ + "|";
 
 						// ADDING THE STL MODEL WITH IT'S LOCATION TO THE FINAL RESULT
 						var exporter = new THREE.STLExporter();
@@ -929,6 +945,10 @@
 							{
 							finalResult = finalResult + objectProperties + objectData + "3D_OBJECT_MAKER_SEPARATOR";
 							}
+
+						objects[i].rotation.x = rotationX;
+						objects[i].rotation.y = rotationY;
+						objects[i].rotation.z = rotationZ;
 						}
 
 					// ADDING THE GRID SIZE TO THE FINAL RESULT
