@@ -844,14 +844,6 @@
 
 					for (var i = 0; i < objects.length; i++)
 						{
-						var objectType = objects[i].geometry.type;
-
-						var box = new THREE.Box3().setFromObject(objects[i]);
-
-						var width = box.max.x - box.min.x;
-						var height = box.max.y - box.min.y;
-						var depth = box.max.z - box.min.z;
-
 						var positionX = objects[i].position.x;
 						var positionY = objects[i].position.y;
 						var positionZ = objects[i].position.z;
