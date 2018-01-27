@@ -843,7 +843,20 @@
 
 					for (var i = 0; i < objects.length; i++)
 						{
+						var rotationX = parseInt(objects[i].rotation.x * 180 / Math.PI).toFixed(2);
+						var rotationY = parseInt(objects[i].rotation.y * 180 / Math.PI).toFixed(2);
+						var rotationZ = parseInt(objects[i].rotation.z * 180 / Math.PI).toFixed(2);
+
+						objects[i].applyMatrix(new THREE.Matrix4().makeRotationX(0));
+						objects[i].applyMatrix(new THREE.Matrix4().makeRotationY(0));
+						objects[i].applyMatrix(new THREE.Matrix4().makeRotationZ(0));
+
 						var newGeometry = new THREE.Geometry().fromBufferGeometry(objects[i].geometry);
+
+						newGeometry.applyMatrix(new THREE.Matrix4().makeRotationX(rotationX));
+						newGeometry.applyMatrix(new THREE.Matrix4().makeRotationY(rotationY));
+						newGeometry.applyMatrix(new THREE.Matrix4().makeRotationZ(rotationZ));
+
 						var newMesh = new THREE.Mesh(newGeometry);
 
 						newMesh.position.x = objects[i].position.x;
