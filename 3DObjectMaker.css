@@ -591,6 +591,11 @@ body
 	{
 	background-color:silver;
 	}
+.panel_selectbox_option_hollow
+	{
+	background-color:black;
+	color:white;
+	}
 .panel_selectbox_option_silver
 	{
 	background-color:silver;
