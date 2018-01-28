@@ -754,6 +754,17 @@
 							{
 							selectedObject.rotation.x = (value * Math.PI)/180;
 							document.getElementById("objectRotationX").value = parseFloat(value).toFixed(2);
+
+							var box = new THREE.Box3().setFromObject(selectedObject);
+							var height = box.max.z - box.min.z;
+							var width = box.max.x - box.min.x;
+							var depth = box.max.y - box.min.y;
+
+							document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
+							var finalPositionY = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - height / 2).toFixed(2);
+							if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY)).toFixed(2);}
+							document.getElementById("objectPositionY").value = finalPositionY;
+							document.getElementById("objectPositionZ").value = parseFloat(selectedObject.position.y).toFixed(2);
 							}
 							else
 							{
@@ -774,6 +785,17 @@
 							{
 							selectedObject.rotation.y = (value * Math.PI)/180;
 							document.getElementById("objectRotationY").value = parseFloat(value).toFixed(2);
+
+							var box = new THREE.Box3().setFromObject(selectedObject);
+							var height = box.max.z - box.min.z;
+							var width = box.max.x - box.min.x;
+							var depth = box.max.y - box.min.y;
+
+							document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
+							var finalPositionY = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - height / 2).toFixed(2);
+							if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY)).toFixed(2);}
+							document.getElementById("objectPositionY").value = finalPositionY;
+							document.getElementById("objectPositionZ").value = parseFloat(selectedObject.position.y).toFixed(2);
 							}
 							else
 							{
@@ -794,6 +816,17 @@
 							{
 							selectedObject.rotation.z = (value * Math.PI)/180;
 							document.getElementById("objectRotationZ").value = parseFloat(value).toFixed(2);
+
+							var box = new THREE.Box3().setFromObject(selectedObject);
+							var height = box.max.z - box.min.z;
+							var width = box.max.x - box.min.x;
+							var depth = box.max.y - box.min.y;
+
+							document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
+							var finalPositionY = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - height / 2).toFixed(2);
+							if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY)).toFixed(2);}
+							document.getElementById("objectPositionY").value = finalPositionY;
+							document.getElementById("objectPositionZ").value = parseFloat(selectedObject.position.y).toFixed(2);
 							}
 							else
 							{
