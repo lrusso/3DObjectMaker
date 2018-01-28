@@ -898,9 +898,9 @@
 						newMesh.scale.y = objects[i].scale.y;
 						newMesh.scale.z = objects[i].scale.z;
 
-						newMesh.position.x = objects[i].position.x;
-						newMesh.position.y = objects[i].position.y;
-						newMesh.position.z = objects[i].position.z;
+						newMesh.position.x = parseFloat(objects[i].position.x);
+						newMesh.position.y = parseFloat(objects[i].position.y);
+						newMesh.position.z = parseFloat(objects[i].position.z);
 
 						var newBSP = new ThreeBSP(newMesh);
 
