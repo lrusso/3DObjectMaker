@@ -933,20 +933,21 @@ var STRING_IMPORT = "";
 var STRING_EXPORTSTL = "";
 var STRING_EXPORTSCENE = "";
 var STRING_GRID = "";
-var STRING_COLOR = "";
-var STRING_COLOR_SILVER = "";
-var STRING_COLOR_GRAY = "";
-var STRING_COLOR_RED = "";
-var STRING_COLOR_GREEN = "";
-var STRING_COLOR_GREENLIGHT = "";
-var STRING_COLOR_BLUE = "";
-var STRING_COLOR_NAVYBLUE = "";
-var STRING_COLOR_YELLOW = "";
-var STRING_COLOR_GOLD = "";
-var STRING_COLOR_PINK = "";
-var STRING_COLOR_VIOLET = "";
-var STRING_COLOR_ORANGE = "";
-var STRING_COLOR_BROWN = "";
+var STRING_MATERIAL = "";
+var STRING_MATERIAL_HOLLOW = "";
+var STRING_MATERIAL_SILVER = "";
+var STRING_MATERIAL_GRAY = "";
+var STRING_MATERIAL_RED = "";
+var STRING_MATERIAL_GREEN = "";
+var STRING_MATERIAL_GREENLIGHT = "";
+var STRING_MATERIAL_BLUE = "";
+var STRING_MATERIAL_NAVYBLUE = "";
+var STRING_MATERIAL_YELLOW = "";
+var STRING_MATERIAL_GOLD = "";
+var STRING_MATERIAL_PINK = "";
+var STRING_MATERIAL_VIOLET = "";
+var STRING_MATERIAL_ORANGE = "";
+var STRING_MATERIAL_BROWN = "";
 var STRING_WIDTH = "";
 var STRING_HEIGHT = "";
 var STRING_DEPTH = "";
@@ -973,20 +974,21 @@ function initLanguage()
 		STRING_IMPORT = "Importar";
 		STRING_EXPORTSTL = "Exportar STL";
 		STRING_EXPORTSCENE = "Exportar Scene";
-		STRING_COLOR = "Color:";
-		STRING_COLOR_SILVER = "Plateado";
-		STRING_COLOR_GRAY = "Gris";
-		STRING_COLOR_RED = "Rojo";
-		STRING_COLOR_GREEN = "Verde";
-		STRING_COLOR_GREENLIGHT = "Verde claro";
-		STRING_COLOR_BLUE = "Azul";
-		STRING_COLOR_NAVYBLUE = "Azul marino";
-		STRING_COLOR_YELLOW = "Amarillo";
-		STRING_COLOR_GOLD = "Dorado";
-		STRING_COLOR_PINK = "Rosa";
-		STRING_COLOR_VIOLET = "Violeta";
-		STRING_COLOR_ORANGE = "Naranja";
-		STRING_COLOR_BROWN = "Marr\u00F3n";
+		STRING_MATERIAL = "Material:";
+		STRING_MATERIAL_HOLLOW = "Hueco";
+		STRING_MATERIAL_SILVER = "Plateado";
+		STRING_MATERIAL_GRAY = "Gris";
+		STRING_MATERIAL_RED = "Rojo";
+		STRING_MATERIAL_GREEN = "Verde";
+		STRING_MATERIAL_GREENLIGHT = "Verde claro";
+		STRING_MATERIAL_BLUE = "Azul";
+		STRING_MATERIAL_NAVYBLUE = "Azul marino";
+		STRING_MATERIAL_YELLOW = "Amarillo";
+		STRING_MATERIAL_GOLD = "Dorado";
+		STRING_MATERIAL_PINK = "Rosa";
+		STRING_MATERIAL_VIOLET = "Violeta";
+		STRING_MATERIAL_ORANGE = "Naranja";
+		STRING_MATERIAL_BROWN = "Marr\u00F3n";
 		STRING_GRID = "Plataforma:";
 		STRING_WIDTH = "Ancho (mm):";
 		STRING_HEIGHT = "Alto (mm):";
@@ -1011,20 +1013,21 @@ function initLanguage()
 		STRING_IMPORT = "Import";
 		STRING_EXPORTSTL = "Export STL";
 		STRING_EXPORTSCENE = "Export Scene";
-		STRING_COLOR = "Color:";
-		STRING_COLOR_SILVER = "Silver";
-		STRING_COLOR_GRAY = "Gray";
-		STRING_COLOR_RED = "Red";
-		STRING_COLOR_GREEN = "Green";
-		STRING_COLOR_GREENLIGHT = "Light green";
-		STRING_COLOR_BLUE = "Blue";
-		STRING_COLOR_NAVYBLUE = "Navy blue";
-		STRING_COLOR_YELLOW = "Yellow";
-		STRING_COLOR_GOLD = "Gold";
-		STRING_COLOR_PINK = "Pink";
-		STRING_COLOR_VIOLET = "Violet";
-		STRING_COLOR_ORANGE = "Orange";
-		STRING_COLOR_BROWN = "Brown";
+		STRING_MATERIAL = "Material:";
+		STRING_MATERIAL_HOLLOW = "Hollow";
+		STRING_MATERIAL_SILVER = "Silver";
+		STRING_MATERIAL_GRAY = "Gray";
+		STRING_MATERIAL_RED = "Red";
+		STRING_MATERIAL_GREEN = "Green";
+		STRING_MATERIAL_GREENLIGHT = "Light green";
+		STRING_MATERIAL_BLUE = "Blue";
+		STRING_MATERIAL_NAVYBLUE = "Navy blue";
+		STRING_MATERIAL_YELLOW = "Yellow";
+		STRING_MATERIAL_GOLD = "Gold";
+		STRING_MATERIAL_PINK = "Pink";
+		STRING_MATERIAL_VIOLET = "Violet";
+		STRING_MATERIAL_ORANGE = "Orange";
+		STRING_MATERIAL_BROWN = "Brown";
 		STRING_GRID = "Platform:";
 		STRING_WIDTH = "Width (mm):";
 		STRING_HEIGHT = "Height (mm):";
@@ -1049,21 +1052,22 @@ function initLanguage()
 	document.getElementById("buttonExportSTL").innerHTML = STRING_EXPORTSTL;
 	document.getElementById("buttonExportScene").innerHTML = STRING_EXPORTSCENE;
 	document.getElementById("labelGrid").innerHTML = STRING_GRID;
-	document.getElementById("labelColor").innerHTML = STRING_COLOR;
+	document.getElementById("labelMaterial").innerHTML = STRING_MATERIAL;
 
-	document.getElementById("labelSilver").innerHTML = STRING_COLOR_SILVER;
-	document.getElementById("labelGray").innerHTML = STRING_COLOR_GRAY;
-	document.getElementById("labelRed").innerHTML = STRING_COLOR_RED;
-	document.getElementById("labelGreen").innerHTML = STRING_COLOR_GREEN;
-	document.getElementById("labelGreenLight").innerHTML = STRING_COLOR_GREENLIGHT;
-	document.getElementById("labelBlue").innerHTML = STRING_COLOR_BLUE;
-	document.getElementById("labelNavyBlue").innerHTML = STRING_COLOR_NAVYBLUE;
-	document.getElementById("labelYellow").innerHTML = STRING_COLOR_YELLOW;
-	document.getElementById("labelGold").innerHTML = STRING_COLOR_GOLD;
-	document.getElementById("labelPink").innerHTML = STRING_COLOR_PINK;
-	document.getElementById("labelViolet").innerHTML = STRING_COLOR_VIOLET;
-	document.getElementById("labelOrange").innerHTML = STRING_COLOR_ORANGE;
-	document.getElementById("labelBrown").innerHTML = STRING_COLOR_BROWN;
+	document.getElementById("labelHollow").innerHTML = STRING_MATERIAL_HOLLOW;
+	document.getElementById("labelSilver").innerHTML = STRING_MATERIAL_SILVER;
+	document.getElementById("labelGray").innerHTML = STRING_MATERIAL_GRAY;
+	document.getElementById("labelRed").innerHTML = STRING_MATERIAL_RED;
+	document.getElementById("labelGreen").innerHTML = STRING_MATERIAL_GREEN;
+	document.getElementById("labelGreenLight").innerHTML = STRING_MATERIAL_GREENLIGHT;
+	document.getElementById("labelBlue").innerHTML = STRING_MATERIAL_BLUE;
+	document.getElementById("labelNavyBlue").innerHTML = STRING_MATERIAL_NAVYBLUE;
+	document.getElementById("labelYellow").innerHTML = STRING_MATERIAL_YELLOW;
+	document.getElementById("labelGold").innerHTML = STRING_MATERIAL_GOLD;
+	document.getElementById("labelPink").innerHTML = STRING_MATERIAL_PINK;
+	document.getElementById("labelViolet").innerHTML = STRING_MATERIAL_VIOLET;
+	document.getElementById("labelOrange").innerHTML = STRING_MATERIAL_ORANGE;
+	document.getElementById("labelBrown").innerHTML = STRING_MATERIAL_BROWN;
 
 	document.getElementById("labelWidth").innerHTML = STRING_WIDTH;
 	document.getElementById("labelHeight").innerHTML = STRING_HEIGHT;
@@ -1243,7 +1247,7 @@ function isDouble(value)
 
 function objectPropertiesPanelEnabled(state)
 	{
-	document.getElementById("labelColor").disabled = !state;
+	document.getElementById("labelMaterial").disabled = !state;
 	document.getElementById("labelWidth").disabled = !state;
 	document.getElementById("labelHeight").disabled = !state;
 	document.getElementById("labelDepth").disabled = !state;
@@ -1253,7 +1257,7 @@ function objectPropertiesPanelEnabled(state)
 	document.getElementById("labelRotationX").disabled = !state;
 	document.getElementById("labelRotationY").disabled = !state;
 	document.getElementById("labelRotationZ").disabled = !state;
-	document.getElementById("objectColor").disabled = !state;
+	document.getElementById("materialColor").disabled = !state;
 	document.getElementById("objectWidth").disabled = !state;
 	document.getElementById("objectHeight").disabled = !state;
 	document.getElementById("objectDepth").disabled = !state;
@@ -1266,7 +1270,7 @@ function objectPropertiesPanelEnabled(state)
 
 	if (!state==true)
 		{
-		document.getElementById("labelColor").style.color = "#c0c0c0";
+		document.getElementById("labelMaterial").style.color = "#c0c0c0";
 		document.getElementById("labelWidth").style.color = "#c0c0c0";
 		document.getElementById("labelHeight").style.color = "#c0c0c0";
 		document.getElementById("labelDepth").style.color = "#c0c0c0";
@@ -1276,7 +1280,7 @@ function objectPropertiesPanelEnabled(state)
 		document.getElementById("labelRotationX").style.color = "#c0c0c0";
 		document.getElementById("labelRotationY").style.color = "#c0c0c0";
 		document.getElementById("labelRotationZ").style.color = "#c0c0c0";
-		document.getElementById("objectColor").value = "";
+		document.getElementById("materialColor").value = "";
 		document.getElementById("objectWidth").value = "";
 		document.getElementById("objectHeight").value = "";
 		document.getElementById("objectDepth").value = "";
@@ -1303,7 +1307,7 @@ function objectPropertiesPanelEnabled(state)
 		else
 		{
 		document.getElementById("gridSize").blur();
-		document.getElementById("objectColor").blur();
+		document.getElementById("materialColor").blur();
 		document.getElementById("objectWidth").blur();
 		document.getElementById("objectHeight").blur();
 		document.getElementById("objectDepth").blur();
@@ -1313,7 +1317,7 @@ function objectPropertiesPanelEnabled(state)
 		document.getElementById("objectRotationX").blur();
 		document.getElementById("objectRotationY").blur();
 		document.getElementById("objectRotationZ").blur();
-		document.getElementById("labelColor").style.color = "#000000";
+		document.getElementById("labelMaterial").style.color = "#000000";
 		document.getElementById("labelWidth").style.color = "#000000";
 		document.getElementById("labelHeight").style.color = "#000000";
 		document.getElementById("labelDepth").style.color = "#000000";
