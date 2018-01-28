@@ -760,6 +760,9 @@
 							var width = box.max.x - box.min.x;
 							var depth = box.max.y - box.min.y;
 
+							document.getElementById("objectWidth").value = parseFloat(width).toFixed(2);
+							document.getElementById("objectHeight").value = parseFloat(height).toFixed(2);
+							document.getElementById("objectDepth").value = parseFloat(depth).toFixed(2);
 							document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
 							var finalPositionY = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - height / 2).toFixed(2);
 							if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY)).toFixed(2);}
@@ -791,6 +794,9 @@
 							var width = box.max.x - box.min.x;
 							var depth = box.max.y - box.min.y;
 
+							document.getElementById("objectWidth").value = parseFloat(width).toFixed(2);
+							document.getElementById("objectHeight").value = parseFloat(height).toFixed(2);
+							document.getElementById("objectDepth").value = parseFloat(depth).toFixed(2);
 							document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
 							var finalPositionY = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - height / 2).toFixed(2);
 							if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY)).toFixed(2);}
@@ -822,6 +828,9 @@
 							var width = box.max.x - box.min.x;
 							var depth = box.max.y - box.min.y;
 
+							document.getElementById("objectWidth").value = parseFloat(width).toFixed(2);
+							document.getElementById("objectHeight").value = parseFloat(height).toFixed(2);
+							document.getElementById("objectDepth").value = parseFloat(depth).toFixed(2);
 							document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
 							var finalPositionY = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - height / 2).toFixed(2);
 							if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY)).toFixed(2);}
@@ -883,24 +892,29 @@
 						var positionY = objects[i].position.y;
 						var positionZ = objects[i].position.z;
 
-						var rotationX = (objects[i].rotation.x * 180 / Math.PI).toFixed(2);
-						var rotationY = (objects[i].rotation.y * 180 / Math.PI).toFixed(2);
-						var rotationZ = (objects[i].rotation.z * 180 / Math.PI).toFixed(2);
+						var scaleX = objects[i].scale.x;
+						var scaleY = objects[i].scale.y;
+						var scaleZ = objects[i].scale.z;
+
+						var rotationX = parseFloat(objects[i].rotation.x * 180 / Math.PI);
+						var rotationY = parseFloat(objects[i].rotation.y * 180 / Math.PI);
+						var rotationZ = parseFloat(objects[i].rotation.z * 180 / Math.PI);
 
 						var newGeometry = new THREE.Geometry().fromBufferGeometry(objects[i].geometry);
-						newGeometry.applyMatrix(new THREE.Matrix4().makeRotationX(rotationX));
-						newGeometry.applyMatrix(new THREE.Matrix4().makeRotationY(rotationY));
-						newGeometry.applyMatrix(new THREE.Matrix4().makeRotationZ(rotationZ));
+
+						newGeometry.rotateX(rotationX);
+						newGeometry.rotateY(rotationY);
+						newGeometry.rotateZ(rotationZ);
 
 						var newMesh = new THREE.Mesh(newGeometry);
 
-						newMesh.scale.x = objects[i].scale.x;
-						newMesh.scale.y = objects[i].scale.y;
-						newMesh.scale.z = objects[i].scale.z;
+						newMesh.scale.x = parseFloat(scaleX);
+						newMesh.scale.y = parseFloat(scaleY);
+						newMesh.scale.z = parseFloat(scaleZ);
 
-						newMesh.position.x = parseFloat(objects[i].position.x);
-						newMesh.position.y = parseFloat(objects[i].position.y);
-						newMesh.position.z = parseFloat(objects[i].position.z);
+						newMesh.position.x = parseFloat(positionX);
+						newMesh.position.y = parseFloat(positionY);
+						newMesh.position.z = parseFloat(positionZ);
 
 						var newBSP = new ThreeBSP(newMesh);
 
@@ -1129,7 +1143,6 @@
 					document.getElementById("buttonMove").classList.add("menubar_button_move_enabled");
 					document.getElementById("buttonMove").classList.remove("menubar_button_move_disabled");
 					document.getElementById("buttonMove").classList.remove("menubar_button_move_selected");
-
 					}
 				}
 
