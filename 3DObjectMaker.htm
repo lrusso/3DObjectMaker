@@ -72,9 +72,10 @@
 			<div class="panel_fieldseparator"><hr class="panel_hr"></div>
 
 			<div class="panel_field1">
-				<div class="panel_field2"><span id="labelColor"></span></div>
+				<div class="panel_field2"><span id="labelMaterial"></span></div>
 				<div class="panel_field3">
-					<select class="panel_selectbox" id="objectColor" onchange="changeObjectColor()" disabled>
+					<select class="panel_selectbox" id="materialColor" onchange="changeObjectColor()" disabled>
+						<option class="panel_selectbox_option_hollow" id="labelHollow" value="0">&nbsp;</option>
 						<option class="panel_selectbox_option_silver" id="labelSilver" value="0">&nbsp;</option>
 						<option class="panel_selectbox_option_gray" id="labelGray" value="0">&nbsp;</option>
 						<option class="panel_selectbox_option_red" id="labelRed" value="0">&nbsp;</option>
@@ -267,6 +268,18 @@
 								// SETTING THE COLOR OF THE MODEL
 								var colorModelImported = "0x" + objectDataValues[0];
 								mesh.material.color.setHex(colorModelImported);
+								if (objectDataValues[0]=="000000")
+									{
+									mesh.material.transparent = true;
+									mesh.material.opacity = 0.5;
+									mesh.material.needsUpdate = true;
+									}
+									else
+									{
+									mesh.material.transparent = false;
+									mesh.material.opacity = 1;
+									mesh.material.needsUpdate = true;
+									}
 
 								// SETTING THE SIZE OF THE MODEL
 								mesh.scale.x = 1;
@@ -396,63 +409,67 @@
 					var widthFinal = width;widthFinal = widthFinal.toFixed(2);
 					var depthFinal = depth;depthFinal = depthFinal.toFixed(2);
 
-					// ENABLING ALL THE panel_textbox
+					// ENABLING ALL THE TEXTBOXS
 					objectPropertiesPanelEnabled(true);
 
 					// GETTING THE COLOR OF THE OBJECT
 					var objectColorValue = String(selectedObject.material.color.getHexString());
 
-					if (objectColorValue.indexOf("ffffff")>-1) // WHITE
+					if (objectColorValue.indexOf("000000")>-1) // HOLLOW
 						{
-						document.getElementById("objectColor").selectedIndex = 0;
+						document.getElementById("materialColor").selectedIndex = 0;
+						}
+					if (objectColorValue.indexOf("ffffff")>-1) // SILVER
+						{
+						document.getElementById("materialColor").selectedIndex = 1;
 						}
 					else if (objectColorValue.indexOf("808080")>-1) // GRAY
 						{
-						document.getElementById("objectColor").selectedIndex = 1;
+						document.getElementById("materialColor").selectedIndex = 2;
 						}
 					else if (objectColorValue.indexOf("ff0000")>-1) // RED
 						{
-						document.getElementById("objectColor").selectedIndex = 2;
+						document.getElementById("materialColor").selectedIndex = 3;
 						}
 					else if (objectColorValue.indexOf("008000")>-1) // GREEN
 						{
-						document.getElementById("objectColor").selectedIndex = 3;
+						document.getElementById("materialColor").selectedIndex = 4;
 						}
 					else if (objectColorValue.indexOf("93db70")>-1) // LIGHT GREEN
 						{
-						document.getElementById("objectColor").selectedIndex = 4;
+						document.getElementById("materialColor").selectedIndex = 5;
 						}
 					else if (objectColorValue.indexOf("0000ff")>-1) // BLUE
 						{
-						document.getElementById("objectColor").selectedIndex = 5;
+						document.getElementById("materialColor").selectedIndex = 6;
 						}
 					else if (objectColorValue.indexOf("4682b4")>-1) // NAVY BLUE
 						{
-						document.getElementById("objectColor").selectedIndex = 6;
+						document.getElementById("materialColor").selectedIndex = 7;
 						}
 					else if (objectColorValue.indexOf("ffff00")>-1) // YELLOW
 						{
-						document.getElementById("objectColor").selectedIndex = 7;
+						document.getElementById("materialColor").selectedIndex = 8;
 						}
 					else if (objectColorValue.indexOf("ffd700")>-1) // GOLD
 						{
-						document.getElementById("objectColor").selectedIndex = 8;
+						document.getElementById("materialColor").selectedIndex = 9;
 						}
 					else if (objectColorValue.indexOf("ffc0cb")>-1) // PINK
 						{
-						document.getElementById("objectColor").selectedIndex = 9;
+						document.getElementById("materialColor").selectedIndex = 10;
 						}
 					else if (objectColorValue.indexOf("ee82ee")>-1) // VIOLET
 						{
-						document.getElementById("objectColor").selectedIndex = 10;
+						document.getElementById("materialColor").selectedIndex = 11;
 						}
 					else if (objectColorValue.indexOf("ffa500")>-1) // ORANGE
 						{
-						document.getElementById("objectColor").selectedIndex = 11;
+						document.getElementById("materialColor").selectedIndex = 12;
 						}
 					else if (objectColorValue.indexOf("8b4513")>-1) // BROWN
 						{
-						document.getElementById("objectColor").selectedIndex = 12;
+						document.getElementById("materialColor").selectedIndex = 13;
 						}
 
 					document.getElementById("objectWidth").value = widthFinal;
@@ -515,57 +532,103 @@
 				{
 				if (selectedObject!=null)
 					{
-					if (document.getElementById("objectColor").selectedIndex==0) // WHITE
+					if (document.getElementById("materialColor").selectedIndex==0) // HOLLOW
+						{
+						selectedObject.material.color.setHex(0x000000);
+						selectedObject.material.transparent = true;
+						selectedObject.material.opacity = 0.5;
+						selectedObject.material.needsUpdate = true;
+						}
+					if (document.getElementById("materialColor").selectedIndex==1) // SILVER
 						{
 						selectedObject.material.color.setHex(0xffffff);
+						selectedObject.material.transparent = false;
+						selectedObject.material.opacity = 1;
+						selectedObject.material.needsUpdate = true;
 						}
-					else if (document.getElementById("objectColor").selectedIndex==1) // GRAY
+					else if (document.getElementById("materialColor").selectedIndex==2) // GRAY
 						{
 						selectedObject.material.color.setHex(0x808080);
+						selectedObject.material.transparent = false;
+						selectedObject.material.opacity = 1;
+						selectedObject.material.needsUpdate = true;
 						}
-					else if (document.getElementById("objectColor").selectedIndex==2) // RED
+					else if (document.getElementById("materialColor").selectedIndex==3) // RED
 						{
 						selectedObject.material.color.setHex(0xff0000);
+						selectedObject.material.transparent = false;
+						selectedObject.material.opacity = 1;
+						selectedObject.material.needsUpdate = true;
 						}
-					else if (document.getElementById("objectColor").selectedIndex==3) // GREEN
+					else if (document.getElementById("materialColor").selectedIndex==4) // GREEN
 						{
 						selectedObject.material.color.setHex(0x008000);
+						selectedObject.material.transparent = false;
+						selectedObject.material.opacity = 1;
+						selectedObject.material.needsUpdate = true;
 						}
-					else if (document.getElementById("objectColor").selectedIndex==4) // LIGHT GREEN
+					else if (document.getElementById("materialColor").selectedIndex==5) // LIGHT GREEN
 						{
 						selectedObject.material.color.setHex(0x93db70);
+						selectedObject.material.transparent = false;
+						selectedObject.material.opacity = 1;
+						selectedObject.material.needsUpdate = true;
 						}
-					else if (document.getElementById("objectColor").selectedIndex==5) // BLUE
+					else if (document.getElementById("materialColor").selectedIndex==6) // BLUE
 						{
 						selectedObject.material.color.setHex(0x0000ff);
+						selectedObject.material.transparent = false;
+						selectedObject.material.opacity = 1;
+						selectedObject.material.needsUpdate = true;
 						}
-					else if (document.getElementById("objectColor").selectedIndex==6) // NAVY BLUE
+					else if (document.getElementById("materialColor").selectedIndex==7) // NAVY BLUE
 						{
 						selectedObject.material.color.setHex(0x4682b4);
+						selectedObject.material.transparent = false;
+						selectedObject.material.opacity = 1;
+						selectedObject.material.needsUpdate = true;
 						}
-					else if (document.getElementById("objectColor").selectedIndex==7) // YELLOW
+					else if (document.getElementById("materialColor").selectedIndex==8) // YELLOW
 						{
 						selectedObject.material.color.setHex(0xffff00);
+						selectedObject.material.transparent = false;
+						selectedObject.material.opacity = 1;
+						selectedObject.material.needsUpdate = true;
 						}
-					else if (document.getElementById("objectColor").selectedIndex==8) // GOLD
+					else if (document.getElementById("materialColor").selectedIndex==9) // GOLD
 						{
 						selectedObject.material.color.setHex(0xffd700);
+						selectedObject.material.transparent = false;
+						selectedObject.material.opacity = 1;
+						selectedObject.material.needsUpdate = true;
 						}
-					else if (document.getElementById("objectColor").selectedIndex==9) // PINK
+					else if (document.getElementById("materialColor").selectedIndex==10) // PINK
 						{
 						selectedObject.material.color.setHex(0xffc0cb);
+						selectedObject.material.transparent = false;
+						selectedObject.material.opacity = 1;
+						selectedObject.material.needsUpdate = true;
 						}
-					else if (document.getElementById("objectColor").selectedIndex==10) // VIOLET
+					else if (document.getElementById("materialColor").selectedIndex==11) // VIOLET
 						{
 						selectedObject.material.color.setHex(0xee82ee);
+						selectedObject.material.transparent = false;
+						selectedObject.material.opacity = 1;
+						selectedObject.material.needsUpdate = true;
 						}
-					else if (document.getElementById("objectColor").selectedIndex==11) // ORANGE
+					else if (document.getElementById("materialColor").selectedIndex==12) // ORANGE
 						{
 						selectedObject.material.color.setHex(0xffa500);
+						selectedObject.material.transparent = false;
+						selectedObject.material.opacity = 1;
+						selectedObject.material.needsUpdate = true;
 						}
-					else if (document.getElementById("objectColor").selectedIndex==12) // BROWN
+					else if (document.getElementById("materialColor").selectedIndex==13) // BROWN
 						{
 						selectedObject.material.color.setHex(0x8b4513);
+						selectedObject.material.transparent = false;
+						selectedObject.material.opacity = 1;
+						selectedObject.material.needsUpdate = true;
 						}
 					}
 				}
@@ -886,23 +949,43 @@
 					// CREATING THE MESH THAT WILL HAVE ALL THE OBJECTS
 					var finalMeshCSG = null;
 
+					// LOOPING FOR EVERY OBJECT THAT WILL BE CREATED AS ONE
 					for (var i = 0; i < objects.length; i++)
 						{
-						var newCSG = THREE.CSG.fromMesh(objects[i]);
-
-						if (finalMeshCSG==null)
+						var objectColorValue = String(objects[i].material.color.getHexString());
+						if (objectColorValue.indexOf("000000")==-1) // IS NOT A HOLLOW OBJECT
 							{
-							finalMeshCSG = newCSG;
-							}
-							else
-							{
-							finalMeshCSG = newCSG.union(finalMeshCSG);
+							var newCSG = THREE.CSG.fromMesh(objects[i]);
+							if (finalMeshCSG==null)
+								{
+								finalMeshCSG = newCSG;
+								}
+								else
+								{
+								finalMeshCSG = newCSG.union(finalMeshCSG);
+								}
 							}
 						}
 
-					var newMesh = THREE.CSG.toMesh(finalMeshCSG,material);
+					// LOOPING FOR EVERY OBJECT THAT WILL SUBSTRACTING THE FINAL MODEL
+					for (var i = 0; i < objects.length; i++)
+						{
+						var objectColorValue = String(objects[i].material.color.getHexString());
+						if (objectColorValue.indexOf("000000")>-1) // IS A HOLLOW OBJECT
+							{
+							var newCSG = THREE.CSG.fromMesh(objects[i]);
+							if (finalMeshCSG!=null)
+								{
+								finalMeshCSG = finalMeshCSG.subtract(newCSG);
+								}
+							}
+						}
 
-					sceneConverter.add(newMesh);
+					if (finalMeshCSG!=null)
+						{
+						var newMesh = THREE.CSG.toMesh(finalMeshCSG,material);
+						sceneConverter.add(newMesh);
+						}
 
 					// EXPORTING THE SCENE AS A STL FILE
 					var exporter = new THREE.STLBinaryExporter();
