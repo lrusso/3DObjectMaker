@@ -884,51 +884,23 @@
 					var material = new THREE.MeshNormalMaterial();
 
 					// CREATING THE MESH THAT WILL HAVE ALL THE OBJECTS
-					var finalMeshBSP = null;
+					var finalMeshCSG = null;
 
 					for (var i = 0; i < objects.length; i++)
 						{
-						var positionX = objects[i].position.x;
-						var positionY = objects[i].position.y;
-						var positionZ = objects[i].position.z;
+						var newCSG = THREE.CSG.fromMesh(objects[i]);
 
-						var scaleX = objects[i].scale.x;
-						var scaleY = objects[i].scale.y;
-						var scaleZ = objects[i].scale.z;
-
-						var rotationX = parseFloat(objects[i].rotation.x * 180 / Math.PI);
-						var rotationY = parseFloat(objects[i].rotation.y * 180 / Math.PI);
-						var rotationZ = parseFloat(objects[i].rotation.z * 180 / Math.PI);
-
-						var newGeometry = new THREE.Geometry().fromBufferGeometry(objects[i].geometry);
-
-						newGeometry.rotateX(rotationX);
-						newGeometry.rotateY(rotationY);
-						newGeometry.rotateZ(rotationZ);
-
-						var newMesh = new THREE.Mesh(newGeometry);
-
-						newMesh.scale.x = parseFloat(scaleX);
-						newMesh.scale.y = parseFloat(scaleY);
-						newMesh.scale.z = parseFloat(scaleZ);
-
-						newMesh.position.x = parseFloat(positionX);
-						newMesh.position.y = parseFloat(positionY);
-						newMesh.position.z = parseFloat(positionZ);
-
-						var newBSP = new ThreeBSP(newMesh);
-
-						if (finalMeshBSP==null)
+						if (finalMeshCSG==null)
 							{
-							finalMeshBSP = newBSP;
+							finalMeshCSG = newCSG;
 							}
 							else
 							{
-							finalMeshBSP = newBSP.union(finalMeshBSP);
+							finalMeshCSG = newCSG.union(finalMeshCSG);
 							}
 						}
 
-					var newMesh = finalMeshBSP.toMesh(material);
+					var newMesh = THREE.CSG.toMesh(finalMeshCSG,material);
 
 					sceneConverter.add(newMesh);
 
