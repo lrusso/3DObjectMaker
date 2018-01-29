@@ -231,11 +231,13 @@
 					}
 					else
 					{
+					document.getElementById("fileOpener").value = null;
 					alert(STRING_ERROR_MODEL);
 					}
 
 				reader.addEventListener("load", function (event)
 					{
+					document.getElementById("fileOpener").value = null;
 					try
 						{
 						var contents = event.target.result;
