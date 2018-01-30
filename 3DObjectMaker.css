@@ -557,6 +557,7 @@ body
 	padding-left:4px;
 	padding-right:4px;
 	border:1px silver solid;
+	background-color:white;
 	-webkit-box-sizing:border-box;
 	-moz-box-sizing:border-box;
 	box-sizing:border-box;
@@ -566,7 +567,8 @@ body
 	}
 .panel_textbox:disabled
 	{
-	background-color:silver;
+	background-color:#D3D3D3;
+	border:1px #D3D3D3 solid;
 	}
 .panel_selectbox
 	{
@@ -580,6 +582,7 @@ body
 	padding-left:4px;
 	padding-right:4px;
 	border:1px silver solid;
+	background-color:white;
 	-webkit-box-sizing:border-box;
 	-moz-box-sizing:border-box;
 	box-sizing:border-box;
@@ -589,7 +592,8 @@ body
 	}
 .panel_selectbox:disabled
 	{
-	background-color:silver;
+	background-color:#D3D3D3;
+	border:1px #D3D3D3 solid;
 	}
 .panel_selectbox_option_hollow
 	{
