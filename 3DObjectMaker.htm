@@ -1092,24 +1092,28 @@
 				{
 				if (selectedObject!=null)
 					{
-					scene.remove(selectedObject);
-					
-					objects = objects.filter(function(item)
-						{ 
-						return item !== selectedObject
-						})
-
-					// IF NO OBJECTS ARE SELECTED
-					if (controls2!=null)
+					var message = confirm(STRING_DELETE_WARNING);
+					if (message == true)
 						{
-						controls2.detach();
-						controls2.update();
-						controls2.visible = false;
-						selectedObject = null;
-						}
+						scene.remove(selectedObject);
+					
+						objects = objects.filter(function(item)
+							{ 
+							return item !== selectedObject
+							})
 
-					// DISABLING ALL THE TEXTBOXS AND BUTTONS
-					objectPropertiesPanelEnabled(false);
+						// IF NO OBJECTS ARE SELECTED
+						if (controls2!=null)
+							{
+							controls2.detach();
+							controls2.update();
+							controls2.visible = false;
+							selectedObject = null;
+							}
+
+						// DISABLING ALL THE TEXTBOXS AND BUTTONS
+						objectPropertiesPanelEnabled(false);
+						}
 					}
 				}
 
