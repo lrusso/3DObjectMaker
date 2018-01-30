@@ -932,7 +932,7 @@ var STRING_NEW = "";
 var STRING_IMPORT = "";
 var STRING_EXPORTSTL = "";
 var STRING_EXPORTSCENE = "";
-var STRING_GRID = "";
+var STRING_PLATFORM = "";
 var STRING_MATERIAL = "";
 var STRING_MATERIAL_HOLLOW = "";
 var STRING_MATERIAL_SILVER = "";
@@ -989,7 +989,7 @@ function initLanguage()
 		STRING_MATERIAL_VIOLET = "Violeta";
 		STRING_MATERIAL_ORANGE = "Naranja";
 		STRING_MATERIAL_BROWN = "Marr\u00F3n";
-		STRING_GRID = "Plataforma:";
+		STRING_PLATFORM = "Plataforma:";
 		STRING_WIDTH = "Ancho (mm):";
 		STRING_HEIGHT = "Alto (mm):";
 		STRING_DEPTH = "Largo (mm):";
@@ -1028,7 +1028,7 @@ function initLanguage()
 		STRING_MATERIAL_VIOLET = "Violet";
 		STRING_MATERIAL_ORANGE = "Orange";
 		STRING_MATERIAL_BROWN = "Brown";
-		STRING_GRID = "Platform:";
+		STRING_PLATFORM = "Platform:";
 		STRING_WIDTH = "Width (mm):";
 		STRING_HEIGHT = "Height (mm):";
 		STRING_DEPTH = "Depth (mm):";
@@ -1051,7 +1051,7 @@ function initLanguage()
 	document.getElementById("buttonImport").innerHTML = STRING_IMPORT;
 	document.getElementById("buttonExportSTL").innerHTML = STRING_EXPORTSTL;
 	document.getElementById("buttonExportScene").innerHTML = STRING_EXPORTSCENE;
-	document.getElementById("labelGrid").innerHTML = STRING_GRID;
+	document.getElementById("labelGrid").innerHTML = STRING_PLATFORM;
 	document.getElementById("labelMaterial").innerHTML = STRING_MATERIAL;
 
 	document.getElementById("labelHollow").innerHTML = STRING_MATERIAL_HOLLOW;
