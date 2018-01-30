@@ -97,54 +97,85 @@ public class Main extends Activity
         		String stringMessage = consoleMessage.message();
         		if (stringMessage.startsWith("STLFILE---") || stringMessage.startsWith("SCENEFILE---"))
         			{
-            		String fileName = "";
-            		String contentToWrite = "";
-            		Calendar c        = Calendar.getInstance();
-            		String fileYear   = String.valueOf(c.get(Calendar.YEAR));
-            		String fileMonth  = String.valueOf(c.get(Calendar.MONTH));
-            		String fileDay    = String.valueOf(c.get(Calendar.DAY_OF_MONTH));
-            		String fileHour   = String.valueOf(c.get(Calendar.HOUR_OF_DAY));
-            		String fileMinute = String.valueOf(c.get(Calendar.MINUTE));
-            		String fileSecond = String.valueOf(c.get(Calendar.SECOND));
-            		
-            		if (fileMonth.length()==1){fileMonth = "0" + fileMonth;}
-            		if (fileDay.length()==1){fileDay = "0" + fileDay;}
-            		if (fileHour.length()==1){fileHour = "0" + fileHour;}
-            		if (fileMinute.length()==1){fileMinute = "0" + fileMinute;}
-            		if (fileSecond.length()==1){fileSecond = "0" + fileSecond;}
-            		            		
-            		if (stringMessage.startsWith("STLFILE---"))
-            			{
-            			fileName = "Model__" + fileYear + "_" + fileMonth + "_" + fileDay + "__" + fileHour + "_" + fileMinute + "_" + fileSecond + ".stl";                		
-            			contentToWrite = stringMessage.substring(10,stringMessage.length());
-            			}
-            		else if (stringMessage.startsWith("SCENEFILE---"))
-            			{
-            			fileName = "Scene__" + fileYear + "_" + fileMonth + "_" + fileDay + "__" + fileHour + "_" + fileMinute + "_" + fileSecond + ".scene";                		
-            			contentToWrite = stringMessage.substring(12,stringMessage.length());
-            			}
             	    String path = Environment.getExternalStorageDirectory() + File.separator  + "3DObjectMaker";
 
             	    // Creates the folder
             	    File folder = new File(path);
             	    folder.mkdirs();
+            	    
+            	    // Getting the format that the file will have
+            		String fileFormat = "";
+            		if (stringMessage.startsWith("STLFILE---"))
+        				{
+            			fileFormat = ".stl";
+        				}
+            		else if (stringMessage.startsWith("SCENEFILE---"))
+        				{
+            			fileFormat = ".scene";
+        				}
 
-            	    // Creates the file
+            	    // Getting the name that the file will have
+        			String fileName = getResources().getString(R.string.textFileName);
+            		boolean fileCanBeCreated = false;
+            		int counter = 0;
+            		while(fileCanBeCreated==false)
+            			{
+            			if (counter==0)
+            				{
+                	    	File fileChecker = new File(folder, fileName + fileFormat);
+                	    	if (fileChecker.exists()==false)
+                	    		{
+                	    		fileName = fileName + fileFormat;
+                	    		fileCanBeCreated = true;
+                	    		}
+                	    		else
+                	    		{
+                	    		counter = counter + 1;
+                	    		}
+            				}
+            			else
+            				{
+                	    	File fileChecker = new File(folder, fileName + "(" + counter + ")" + fileFormat);
+                	    	if (fileChecker.exists()==false)
+                	    		{
+                	    		fileName = fileName + "(" + counter + ")" + fileFormat;
+                	    		fileCanBeCreated = true;
+                	    		}
+                	    		else
+                	    		{
+                	    		counter = counter + 1;
+                	    		}
+            				}
+            			}
+            		
+            		// Getting the content of the file
+            		String fileContent = "";
+            		if (stringMessage.startsWith("STLFILE---"))
+        				{
+            			fileContent = stringMessage.substring(10,stringMessage.length());
+        				}
+            		else if (stringMessage.startsWith("SCENEFILE---"))
+        				{
+            			fileContent = stringMessage.substring(12,stringMessage.length());
+        				}
+
+            		// Writing the file
             	    try
-            	    	{
-                	    File file = new File(folder, fileName);
-                        file.createNewFile();
-                        FileOutputStream fOut = new FileOutputStream(file);
-                        OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
-                        myOutWriter.append(contentToWrite);
-                        myOutWriter.close();
-                        fOut.flush();
-                        fOut.close();
-            	    	}
-            	    	catch(Exception e)
-            	    	{
-            	    	}
-
+        	    		{
+            	    	File file = new File(folder, fileName);
+            	    	file.createNewFile();
+            	    	FileOutputStream fOut = new FileOutputStream(file);
+            	    	OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+            	    	myOutWriter.append(fileContent);
+            	    	myOutWriter.close();
+            	    	fOut.flush();
+            	    	fOut.close();
+        	    		}
+        	    		catch(Exception e)
+        	    		{
+        	    		}            		
+            		
+            		// Toast message
             		Toast.makeText(myContext, myContext.getResources().getString(R.string.textFileSaved), Toast.LENGTH_SHORT).show();
         			}
                 return true;

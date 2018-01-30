@@ -36,7 +36,8 @@ public final class R {
         public static final int hello_world=0x7f040001;
         public static final int textAbout=0x7f040003;
         public static final int textAboutMessage=0x7f040004;
-        public static final int textFileSaved=0x7f040008;
+        public static final int textFileName=0x7f040008;
+        public static final int textFileSaved=0x7f040009;
         public static final int textOK=0x7f040005;
         public static final int textPrivacy=0x7f040006;
         public static final int textPrivacyText=0x7f040007;
