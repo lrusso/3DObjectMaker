@@ -103,15 +103,18 @@ public class Main extends Activity
             	    File folder = new File(path);
             	    folder.mkdirs();
             	    
-            	    // Getting the format that the file will have
+            	    // Getting the format and content that the file will have
             		String fileFormat = "";
+            		String fileContent = "";
             		if (stringMessage.startsWith("STLFILE---"))
         				{
             			fileFormat = ".stl";
+            			fileContent = stringMessage.substring(10,stringMessage.length());
         				}
             		else if (stringMessage.startsWith("SCENEFILE---"))
         				{
             			fileFormat = ".scene";
+            			fileContent = stringMessage.substring(12,stringMessage.length());
         				}
 
             	    // Getting the name that the file will have
@@ -148,17 +151,6 @@ public class Main extends Activity
             				}
             			}
             		
-            		// Getting the content of the file
-            		String fileContent = "";
-            		if (stringMessage.startsWith("STLFILE---"))
-        				{
-            			fileContent = stringMessage.substring(10,stringMessage.length());
-        				}
-            		else if (stringMessage.startsWith("SCENEFILE---"))
-        				{
-            			fileContent = stringMessage.substring(12,stringMessage.length());
-        				}
-
             		// Writing the file
             	    try
         	    		{
@@ -180,23 +172,6 @@ public class Main extends Activity
         			}
                 return true;
         		}
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        	
         	});
 		}
 
