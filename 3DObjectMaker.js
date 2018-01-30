@@ -1002,7 +1002,7 @@ function initLanguage()
 		STRING_FILENAME = "3D_Proyecto";
 		STRING_DELETE_WARNING = "\u00BFDesea eliminar el objeto seleccionado?";
 		STRING_ERROR_EMPTYWORKSPACE = "Debe haber al menos un objeto en el plano de trabajo.";
-		STRING_ERROR_LOSECHANGES = "\u00BFDesea perder cualquier cambio no guardado?";
+		STRING_ERROR_LOSECHANGES = "\u00BFPerder cualquier cambio no guardado?";
 		STRING_ERROR_INTEGER = "ERROR: Debe ingresar un n\u00famero entero.";
 		STRING_ERROR_DOUBLE = "ERROR: Debe ingresar un n\u00famero entero o decimal.";
 		STRING_ERROR_MODEL = "ERROR: Por favor verifique que el modelo se encuentre en formato STL, OBJ, 3DS o SCENE.";
