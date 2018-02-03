@@ -2763,6 +2763,7 @@ function objectPropertiesPanelEnabled(state)
 							selectedObject.position.x = parseFloat(parseFloat(newWidth /2 + 0.01 + parseFloat(originalX)).toFixed(2));
 
 							document.getElementById("objectWidth").value = parseFloat(value).toFixed(2);
+							document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
 							controls2.update();
 							}
 							else
@@ -2829,6 +2830,7 @@ function objectPropertiesPanelEnabled(state)
 							selectedObject.position.y = parseFloat(parseFloat(newDepth /2 + 0.01 + parseFloat(originalY)).toFixed(2));
 
 							document.getElementById("objectDepth").value = parseFloat(value).toFixed(2);
+							document.getElementById("objectPositionZ").value = parseFloat(selectedObject.position.y).toFixed(2);
 							controls2.update();
 							}
 							else
