@@ -3227,6 +3227,13 @@ function objectPropertiesPanelEnabled(state)
 				if (selectedObject!=null)
 					{
 					var duplicated = selectedObject.clone();
+					duplicated.traverse(function (child)
+						{
+						if (child instanceof THREE.Mesh)
+							{
+							child.material = child.material.clone();
+							}
+						});
 					var box = new THREE.Box3().setFromObject(duplicated);
 					var height = box.max.z - box.min.z;
 					duplicated.position.x = 0;
