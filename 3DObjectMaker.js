@@ -963,6 +963,7 @@ var STRING_ERROR_EMPTYWORKSPACE = "";
 var STRING_ERROR_LOSECHANGES = "";
 var STRING_ERROR_INTEGER = "";
 var STRING_ERROR_DOUBLE = "";
+var STRING_ERROR_POSITIVE = "";
 var STRING_ERROR_MODEL = "";
 
 function initLanguage()
@@ -1005,6 +1006,7 @@ function initLanguage()
 		STRING_ERROR_LOSECHANGES = "\u00BFPerder cualquier cambio no guardado?";
 		STRING_ERROR_INTEGER = "ERROR: Debe ingresar un n\u00famero entero.";
 		STRING_ERROR_DOUBLE = "ERROR: Debe ingresar un n\u00famero entero o decimal.";
+		STRING_ERROR_POSITIVE = "ERROR: Debe ingresar un n\u00famero positivo.";
 		STRING_ERROR_MODEL = "ERROR: Por favor verifique que el modelo se encuentre en formato STL, OBJ, 3DS o SCENE.";
 		}
 		else
@@ -1044,6 +1046,7 @@ function initLanguage()
 		STRING_ERROR_LOSECHANGES = "Lose any unsaved changes?";
 		STRING_ERROR_INTEGER = "ERROR: You must input an integer number.";
 		STRING_ERROR_DOUBLE = "ERROR: You must input an integer or double number.";
+		STRING_ERROR_POSITIVE = "ERROR: You must input a positive number.";
 		STRING_ERROR_MODEL = "ERROR: Please check that the model is a STL, OBJ, 3DS or SCENE model.";
 		}
 
