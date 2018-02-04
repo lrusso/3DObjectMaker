@@ -646,7 +646,7 @@
 							{
 							var box = new THREE.Box3().setFromObject(selectedObject);
 							var oldWidth = box.max.x - box.min.x;
-							var originalX = parseFloat(parseFloat(selectedObject.position.x).toFixed(2) - oldWidth / 2 - 0.01).toFixed(2);
+							var originalX = parseFloat(parseFloat(selectedObject.position.x).toFixed(2) - oldWidth / 2).toFixed(2);
 
 							selectedObject.scale.x = 1;
 							var tempBox = new THREE.Box3().setFromObject(selectedObject);
@@ -655,7 +655,7 @@
 							selectedObject.scale.x = newWidth * 1 / tempWidth;
 
 							// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION
-							selectedObject.position.x = parseFloat(parseFloat(newWidth /2 + 0.01 + parseFloat(originalX)).toFixed(2));
+							selectedObject.position.x = parseFloat(parseFloat(newWidth /2 + parseFloat(originalX)).toFixed(2));
 
 							document.getElementById("objectWidth").value = parseFloat(value).toFixed(2);
 							document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
@@ -680,7 +680,7 @@
 							{
 							var box = new THREE.Box3().setFromObject(selectedObject);
 							var oldHeight = box.max.z - box.min.z;
-							var originalZ = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - oldHeight / 2 - 0.01).toFixed(2);
+							var originalZ = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - oldHeight / 2).toFixed(2);
 
 							selectedObject.scale.z = 1;
 							var tempBox = new THREE.Box3().setFromObject(selectedObject);
@@ -689,7 +689,7 @@
 							selectedObject.scale.z = newHeight * 1 / tempHeight;
 
 							// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION
-							selectedObject.position.z = parseFloat(parseFloat(newHeight /2 + 0.01 + parseFloat(originalZ)).toFixed(2));
+							selectedObject.position.z = parseFloat(parseFloat(newHeight /2 + parseFloat(originalZ)).toFixed(2));
 
 							document.getElementById("objectHeight").value = parseFloat(value).toFixed(2);
 							controls2.update();
@@ -713,7 +713,7 @@
 							{
 							var box = new THREE.Box3().setFromObject(selectedObject);
 							var oldDepth = box.max.y - box.min.y;
-							var originalY = parseFloat(parseFloat(selectedObject.position.y).toFixed(2) - oldDepth / 2 - 0.01).toFixed(2);
+							var originalY = parseFloat(parseFloat(selectedObject.position.y).toFixed(2) - oldDepth / 2).toFixed(2);
 
 							selectedObject.scale.y = 1;
 							var tempBox = new THREE.Box3().setFromObject(selectedObject);
@@ -722,7 +722,7 @@
 							selectedObject.scale.y = newDepth * 1 / tempDepth;
 
 							// RELOCATING THE OBJECT TO THE ORIGINAL Y POSITION
-							selectedObject.position.y = parseFloat(parseFloat(newDepth /2 + 0.01 + parseFloat(originalY)).toFixed(2));
+							selectedObject.position.y = parseFloat(parseFloat(newDepth /2 + parseFloat(originalY)).toFixed(2));
 
 							document.getElementById("objectDepth").value = parseFloat(value).toFixed(2);
 							document.getElementById("objectPositionZ").value = parseFloat(selectedObject.position.y).toFixed(2);
