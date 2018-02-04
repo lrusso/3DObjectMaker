@@ -1148,7 +1148,7 @@ function addWirePlane(a,b)
 	plane = new THREE.Mesh(new THREE.PlaneGeometry(x,y,division_x,division_y),new THREE.MeshPhongMaterial({emissive:0x484848,color:0x000000,wireframe:true,wireframeLinewidth:1}));
 	plane.position.x = 0;
 	plane.position.y = parseFloat(b);
-	plane.position.z = -0.01;
+	plane.position.z = 0;
 	scene.add(plane);
 	}
 
