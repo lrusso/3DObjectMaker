@@ -645,11 +645,11 @@
 		var totalDistanceY = 0;
 		var minResize = 10;
 		var minDistanceMove = 250;
-		var minDistanceScale = 100;
 		var lastSeenAt = {x: null, y: null};
 		var scaleCheckerX = null;
 		var scaleCheckerY = null;
 		var scaleCheckerZ = null;
+		var scaleCheckerXYZ = null;
 
 		domElement.addEventListener( "mousedown", onPointerDown, false );
 		domElement.addEventListener( "touchstart", onPointerDown, false );
@@ -940,7 +940,8 @@
 
 						if (point.z>0)
 							{
-							scope.object.position.z = scope.object.position.z + 10;
+							scope.object.position.z = scope.object.position.z - 10;
+							scope.object.position.z = scope.object.position.z + 20;
 							}
 						else if (point.z<0)
 							{
@@ -969,52 +970,35 @@
 
 					if ( scope.axis === "XYZ" ) {
 
-					if (event.clientY==undefined)
+					if (scaleCheckerXYZ==null)
 						{
-						totalDistanceY += Math.sqrt(Math.pow(lastSeenAt.y - parseInt(event.changedTouches[0].pageY), 2));
+						scaleCheckerXYZ = oldScale.y * ( 1 + point.y / oldScale.y );
 						}
 						else
 						{
-						totalDistanceY += Math.sqrt(Math.pow(lastSeenAt.y - event.clientY, 2));
-						}
+						var scaleChecker = oldScale.y * ( 1 + point.y / oldScale.y );
+						var directionPointer = null;
 
-
-						if (totalDistanceY>minDistanceScale)
+						if (Math.abs(scaleCheckerXYZ-scaleChecker)>1.5)
 							{
-							var directionPointer = null;
-							var deltaX;
-							var deltaY;
-
-							if (event.clientY==undefined)
-								{
-								deltaX = lastSeenAt.x - parseInt(event.changedTouches[0].pageX);
-								deltaY = lastSeenAt.y - parseInt(event.changedTouches[0].pageY);
-								}
-								else
-								{
-								deltaX = lastSeenAt.x - event.clientX;
-								deltaY = lastSeenAt.y - event.clientY;
-								}
-
-
-							if (Math.abs(deltaY) > Math.abs(deltaX) && deltaY > 0)
+							// CHECKING THE MOUSE DIRECTION
+							if (scaleChecker>scaleCheckerXYZ)
 								{
 								directionPointer = "up";
 								}
-							else if (Math.abs(deltaY) > Math.abs(deltaX) && deltaY < 0)
+								else
 								{
 								directionPointer = "down";
 								}
+							scaleCheckerXYZ = null;
 
-							totalDistanceY = 0;
-							if (event.clientY==undefined)
-								{
-								lastSeenAt.y = parseInt(event.changedTouches[0].pageY);
-								}
-								else
-								{
-								lastSeenAt.y = event.clientY;
-								}
+							var originalRotationX = scope.object.rotation.x;
+							var originalRotationY = scope.object.rotation.y;
+							var originalRotationZ = scope.object.rotation.z;
+
+							scope.object.rotation.x = 0;
+							scope.object.rotation.y = 0;
+							scope.object.rotation.z = 0;
 
 							var box = new THREE.Box3().setFromObject(scope.object);
 							var oldWidth = box.max.x - box.min.x;
@@ -1045,12 +1029,15 @@
 									changeScopeObjectDepth(scope.object,newDepth);
 									}
 								}
-        					}
-							
+
+							scope.object.rotation.x = originalRotationX;
+							scope.object.rotation.y = originalRotationY;
+							scope.object.rotation.z = originalRotationZ;
+							}
+							}
 						}
 						else
 						{
-
 						if (scope.axis === "X")
 							{
 							if (scaleCheckerX==null)
@@ -1058,13 +1045,26 @@
 								scaleCheckerX = oldScale.x * ( 1 + point.x / oldScale.x );
 								}
 								else
-								{								
+								{
 								var scaleChecker = oldScale.x * ( 1 + point.x / oldScale.x );
+
+								var originalRotationX = scope.object.rotation.x;
+								var originalRotationY = scope.object.rotation.y;
+								var originalRotationZ = scope.object.rotation.z;
+
+								scope.object.rotation.x = 0;
+								scope.object.rotation.y = 0;
+								scope.object.rotation.z = 0;
+
 								var box = new THREE.Box3().setFromObject(scope.object);
 								var oldWidth = box.max.x - box.min.x;
 								var oldHeight = box.max.z - box.min.z;
 								var oldDepth = box.max.y - box.min.y;
 								var newWidth;
+
+								scope.object.rotation.x = originalRotationX;
+								scope.object.rotation.y = originalRotationY;
+								scope.object.rotation.z = originalRotationZ;
 
 								if (Math.abs(scaleCheckerX-scaleChecker)>0.7)
 									{
@@ -1096,13 +1096,26 @@
 								scaleCheckerY = oldScale.y * ( 1 + point.y / oldScale.y );
 								}
 								else
-								{								
+								{
 								var scaleChecker = oldScale.y * ( 1 + point.y / oldScale.y );
+								
+								var originalRotationX = scope.object.rotation.x;
+								var originalRotationY = scope.object.rotation.y;
+								var originalRotationZ = scope.object.rotation.z;
+
+								scope.object.rotation.x = 0;
+								scope.object.rotation.y = 0;
+								scope.object.rotation.z = 0;
+
 								var box = new THREE.Box3().setFromObject(scope.object);
 								var oldWidth = box.max.x - box.min.x;
 								var oldHeight = box.max.z - box.min.z;
 								var oldDepth = box.max.y - box.min.y;
 								var newDepth;
+
+								scope.object.rotation.x = originalRotationX;
+								scope.object.rotation.y = originalRotationY;
+								scope.object.rotation.z = originalRotationZ;
 
 								if (Math.abs(scaleCheckerY-scaleChecker)>0.7)
 									{
@@ -1122,6 +1135,9 @@
 									if (newDepth>0)
 										{
 										changeScopeObjectDepth(scope.object,newDepth);
+										scope.object.rotation.x = originalRotationX;
+										scope.object.rotation.y = originalRotationY;
+										scope.object.rotation.z = originalRotationZ;
 										}
 									}
 								}
@@ -1134,13 +1150,26 @@
 								scaleCheckerZ = oldScale.z * ( 1 + point.z / oldScale.z );
 								}
 								else
-								{								
+								{
 								var scaleChecker = oldScale.z * ( 1 + point.z / oldScale.z );
+								
+								var originalRotationX = scope.object.rotation.x;
+								var originalRotationY = scope.object.rotation.y;
+								var originalRotationZ = scope.object.rotation.z;
+
+								scope.object.rotation.x = 0;
+								scope.object.rotation.y = 0;
+								scope.object.rotation.z = 0;
+
 								var box = new THREE.Box3().setFromObject(scope.object);
 								var oldWidth = box.max.x - box.min.x;
 								var oldHeight = box.max.z - box.min.z;
 								var oldDepth = box.max.y - box.min.y;
 								var newHeight;
+								
+								scope.object.rotation.x = originalRotationX;
+								scope.object.rotation.y = originalRotationY;
+								scope.object.rotation.z = originalRotationZ;
 
 								if (Math.abs(scaleCheckerZ-scaleChecker)>0.7)
 									{
@@ -1325,49 +1354,107 @@
 		
 	function changeScopeObjectWidth(a,b)
 		{
+		// GETTING THE ORIGINAL ROTATION OF THE OBJECT
+		var originalRotationX = a.rotation.x;
+		var originalRotationY = a.rotation.y;
+		var originalRotationZ = a.rotation.z;
+
+		// SETTING THE OBJECT ROTATION TO 0
+		a.rotation.x = 0;
+		a.rotation.y = 0;
+		a.rotation.z = 0;
+
+		// GETTING THE OBJECT WIDTH
 		var box = new THREE.Box3().setFromObject(a);
 		var oldWidth = box.max.x - box.min.x;
-		var originalX = parseFloat(parseFloat(a.position.x).toFixed(2) - oldWidth / 2 - 0.01).toFixed(2);
 
-		a.scale.x = 1;							
+		// GETTING THE ORIGINAL POSITION
+		var originalX = parseFloat(parseFloat(a.position.x).toFixed(2) - oldWidth / 2).toFixed(2);
+
+		// SCALING THE OBJECT
+		a.scale.x = 1;
 		var tempBox = new THREE.Box3().setFromObject(a);
 		var tempWidth = tempBox.max.x - tempBox.min.x;
-		var newWidth = parseFloat(b);
+		var newWidth = parseFloat(b).toFixed(2);
 		a.scale.x = newWidth * 1 / tempWidth;
 
-		a.position.x = parseFloat(parseFloat(newWidth /2 + 0.01 + parseFloat(originalX)).toFixed(2));
+		// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION
+		a.position.x = parseFloat(parseFloat(newWidth /2 + parseFloat(originalX)).toFixed(2));
+
+		// SETTING THE ORIGINAL ROTATION TO THE OBJECT
+		a.rotation.x = originalRotationX;
+		a.rotation.y = originalRotationY;
+		a.rotation.z = originalRotationZ;
 		}
 
 	function changeScopeObjectHeight(a,b)
 		{
+		// GETTING THE ORIGINAL ROTATION OF THE OBJECT
+		var originalRotationX = a.rotation.x;
+		var originalRotationY = a.rotation.y;
+		var originalRotationZ = a.rotation.z;
+
+		// SETTING THE OBJECT ROTATION TO 0
+		a.rotation.x = 0;
+		a.rotation.y = 0;
+		a.rotation.z = 0;
+
+		// GETTING THE OBJECT HEIGHT
 		var box = new THREE.Box3().setFromObject(a);
 		var oldHeight = box.max.z - box.min.z;
-		var originalZ = parseFloat(parseFloat(a.position.z).toFixed(2) - oldHeight / 2 - 0.01).toFixed(2);
-						
+
+		// GETTING THE ORIGINAL POSITION
+		var originalZ = parseFloat(parseFloat(a.position.z).toFixed(2) - oldHeight / 2).toFixed(2);
+
+		// SCALING THE OBJECT
 		a.scale.z = 1;
 		var tempBox = new THREE.Box3().setFromObject(a);
 		var tempHeight = tempBox.max.z - tempBox.min.z;
 		var newHeight = parseFloat(b);
 		a.scale.z = newHeight * 1 / tempHeight;
-							
+
 		// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION
-		a.position.z = parseFloat(parseFloat(newHeight /2 + 0.01 + parseFloat(originalZ)).toFixed(2));
+		a.position.z = parseFloat(parseFloat(newHeight /2 + parseFloat(originalZ)).toFixed(2));
+
+		// SETTING THE ORIGINAL ROTATION TO THE OBJECT
+		a.rotation.x = originalRotationX;
+		a.rotation.y = originalRotationY;
+		a.rotation.z = originalRotationZ;
 		}
 
 	function changeScopeObjectDepth(a,b)
 		{
+		// GETTING THE ORIGINAL ROTATION OF THE OBJECT
+		var originalRotationX = a.rotation.x;
+		var originalRotationY = a.rotation.y;
+		var originalRotationZ = a.rotation.z;
+
+		// SETTING THE OBJECT ROTATION TO 0
+		a.rotation.x = 0;
+		a.rotation.y = 0;
+		a.rotation.z = 0;
+
+		// GETTING THE OBJECT DEPTH
 		var box = new THREE.Box3().setFromObject(a);
 		var oldDepth = box.max.y - box.min.y;
-		var originalY = parseFloat(parseFloat(a.position.y).toFixed(2) - oldDepth / 2 - 0.01).toFixed(2);
 
-		a.scale.y = 1;							
+		// GETTING THE ORIGINAL POSITION
+		var originalY = parseFloat(parseFloat(a.position.y).toFixed(2) - oldDepth / 2).toFixed(2);
+
+		// SCALING THE OBJECT
+		a.scale.y = 1;
 		var tempBox = new THREE.Box3().setFromObject(a);
 		var tempDepth = tempBox.max.y - tempBox.min.y;
 		var newDepth = parseFloat(b);
 		a.scale.y = newDepth * 1 / tempDepth;
-							
+
 		// RELOCATING THE OBJECT TO THE ORIGINAL Y POSITION
-		a.position.y = parseFloat(parseFloat(newDepth /2 + 0.01 + parseFloat(originalY)).toFixed(2));
+		a.position.y = parseFloat(parseFloat(newDepth /2 + parseFloat(originalY)).toFixed(2));
+
+		// SETTING THE ORIGINAL ROTATION TO THE OBJECT
+		a.rotation.x = originalRotationX;
+		a.rotation.y = originalRotationY;
+		a.rotation.z = originalRotationZ;
 		}
 	};
 
