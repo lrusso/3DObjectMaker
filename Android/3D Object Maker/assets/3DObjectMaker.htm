@@ -2372,6 +2372,7 @@ function objectPropertiesPanelEnabled(state)
 								// GETTING THE MODEL DATA
 								var modelData = models[i].substring(limit+1, models[i].length);
 
+								// CREATING THE MODEL
 								var geometry = loadObjectGeometry(extension,modelData);
 								var material = loadObjectMaterial();
 								var mesh = new THREE.Mesh(geometry, material);
@@ -2396,16 +2397,13 @@ function objectPropertiesPanelEnabled(state)
 								mesh.scale.x = 1;
 								mesh.scale.y = 1;
 								mesh.scale.z = 1;
-
 								var box = new THREE.Box3().setFromObject(mesh);
 								var height = box.max.z - box.min.z;
 								var width = box.max.x - box.min.x;
 								var depth = box.max.y - box.min.y;
-
 								var storedWidth = parseFloat(objectDataValues[1]);
 								var storedHeight = parseFloat(objectDataValues[2]);
 								var storedDepth = parseFloat(objectDataValues[3]);
-
 								mesh.scale.x = storedWidth * 1 / width;
 								mesh.scale.z = storedHeight * 1 / height;
 								mesh.scale.y = storedDepth * 1 / depth;
@@ -2420,22 +2418,29 @@ function objectPropertiesPanelEnabled(state)
 								mesh.position.y = parseFloat(objectDataValues[5]);
 								mesh.position.z = parseFloat(objectDataValues[6]);
 
+								// ADDING THE MODEL TO SCENE
 								scene.add(mesh);
 								objects.push(mesh);
 								}
 							}
 							else
 							{
+							// CREATING THE MODEL
 							var geometry = loadObjectGeometry(extension,contents);
 							var material = loadObjectMaterial();
 							var mesh = new THREE.Mesh(geometry, material);
 							var box = new THREE.Box3().setFromObject(mesh);
+
+							// SETTING THE POSITION OF THE MODEL
 							var height = box.max.z - box.min.z;
-							mesh.material.color.setHex(0xffffff);
 							mesh.position.x = 0;
 							mesh.position.y = 0;
 							mesh.position.z = height / 2;
 
+							// SETTING THE COLOR OF THE MODEL
+							mesh.material.color.setHex(0xffffff);
+
+							// ADDING THE MODEL TO THE SCENE
 							scene.add(mesh);
 							objects.push(mesh);
 							}
@@ -2465,6 +2470,7 @@ function objectPropertiesPanelEnabled(state)
 				{
 				event.preventDefault();
 
+				// GETTING THE X AND Y VALUES FROM THE MOUSE OR FINGER IN A TOUCHSCREEN
 				if (event.clientX==undefined)
 					{
 					mouse.x = (parseInt(event.changedTouches[0].pageX)/renderer.domElement.clientWidth) * 2 - 1;
@@ -2476,52 +2482,31 @@ function objectPropertiesPanelEnabled(state)
 					mouse.y = - ((event.clientY - 56)/renderer.domElement.clientHeight) * 2 + 1;
 					}
 
+				// GETTING THE INTERSECTS IN ORDER TO CHECK IF AN OBJECT IS SELECTED
 				raycaster.setFromCamera(mouse,camera);
 				var intersects = raycaster.intersectObjects(objects);
+				
+				// CHECKING IF AN OBJECT IS SELECTED
 				if (intersects.length>0)
 					{
-					// IF AN OBJECT IS SELECTED
 					selectedObject = intersects[0].object;
 
 					// ATTACHING THE DRAGGING CONTROL TO THE SELECTED OBJECT
 					controls2.addEventListener("change",function ()
 						{
-						var box = new THREE.Box3().setFromObject(selectedObject);
-						var height = box.max.z - box.min.z;
-						var width = box.max.x - box.min.x;
-						var depth = box.max.y - box.min.y;
-
-						document.getElementById("objectWidth").value = parseFloat(width).toFixed(2);
-						document.getElementById("objectHeight").value = parseFloat(height).toFixed(2);
-						document.getElementById("objectDepth").value = parseFloat(depth).toFixed(2);
-
-						document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
-						var finalPositionY = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - height / 2).toFixed(2);
-						if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY)).toFixed(2);}
-						document.getElementById("objectPositionY").value = finalPositionY;
-						document.getElementById("objectPositionZ").value = parseFloat(selectedObject.position.y).toFixed(2);
-
-						document.getElementById("objectRotationX").value = (selectedObject.rotation.x * 180 / Math.PI).toFixed(2);
-						document.getElementById("objectRotationY").value = (selectedObject.rotation.y * 180 / Math.PI).toFixed(2);
-						document.getElementById("objectRotationZ").value = (selectedObject.rotation.z * 180 / Math.PI).toFixed(2);
+						updateTextBoxs();
 						});
 
+					// SETTING VISIBLE THE VISUAL CONTROL
 					controls2.attach(selectedObject);
 					controls2.update();
 					controls2.visible = true;
 
-					// LOADING THE OBJECT VALUES
-					var box = new THREE.Box3().setFromObject(selectedObject);
-					var height = box.max.z - box.min.z;
-					var width = box.max.x - box.min.x;
-					var depth = box.max.y - box.min.y;
-
-					var heightFinal = height;heightFinal = heightFinal.toFixed(2);
-					var widthFinal = width;widthFinal = widthFinal.toFixed(2);
-					var depthFinal = depth;depthFinal = depthFinal.toFixed(2);
-
 					// ENABLING ALL THE TEXTBOXS
 					objectPropertiesPanelEnabled(true);
+
+					// UPDATING THE TEXTBOXS VALUES
+					updateTextBoxs();
 
 					// GETTING THE COLOR OF THE OBJECT
 					var objectColorValue = String(selectedObject.material.color.getHexString());
@@ -2530,7 +2515,7 @@ function objectPropertiesPanelEnabled(state)
 						{
 						document.getElementById("materialColor").selectedIndex = 0;
 						}
-					if (objectColorValue.indexOf("ffffff")>-1) // SILVER
+					else if (objectColorValue.indexOf("ffffff")>-1) // SILVER
 						{
 						document.getElementById("materialColor").selectedIndex = 1;
 						}
@@ -2582,22 +2567,10 @@ function objectPropertiesPanelEnabled(state)
 						{
 						document.getElementById("materialColor").selectedIndex = 13;
 						}
-
-					document.getElementById("objectWidth").value = widthFinal;
-					document.getElementById("objectHeight").value = heightFinal;
-					document.getElementById("objectDepth").value = depthFinal;
-					document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
-					var finalPositionY = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - height / 2).toFixed(2);
-					if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY)).toFixed(2);}
-					document.getElementById("objectPositionY").value = finalPositionY;
-					document.getElementById("objectPositionZ").value = parseFloat(selectedObject.position.y).toFixed(2);
-					document.getElementById("objectRotationX").value = (selectedObject.rotation.x * 180 / Math.PI).toFixed(2);
-					document.getElementById("objectRotationY").value = (selectedObject.rotation.y * 180 / Math.PI).toFixed(2);
-					document.getElementById("objectRotationZ").value = (selectedObject.rotation.z * 180 / Math.PI).toFixed(2);
 					}
 					else
 					{
-					// IF NO OBJECTS ARE SELECTED
+					// IF NO OBJECTS ARE SELECTED, HIDING THE VISUAL CONTROL
 					if (controls2!=null)
 						{
 						controls2.detach();
@@ -2613,21 +2586,25 @@ function objectPropertiesPanelEnabled(state)
 
 			function addShape(a)
 				{
+				// CREATING THE SHAPE
 				var geometry = new THREE.STLLoader().parse(a);
 				geometry.computeFaceNormals();
 				geometry.computeVertexNormals();
 				geometry.center();
-
 				var material = loadObjectMaterial();
 				var mesh = new THREE.Mesh(geometry, material);
-				mesh.material.color.setHex(0xffffff);
+
+				// SETTING THE POSITION OF THE SHAPE
 				var box = new THREE.Box3().setFromObject(mesh);
 				var height = box.max.z - box.min.z;
-
 				mesh.position.x = 0;
 				mesh.position.y = 0;
 				mesh.position.z = height / 2;
 
+				// SETTING THE COLOR OF THE SHAPE
+				mesh.material.color.setHex(0xffffff);
+
+				// ADDING THE SHAPE TO SCENE
 				scene.add(mesh);
 				objects.push(mesh);
 				}
@@ -2641,6 +2618,7 @@ function objectPropertiesPanelEnabled(state)
 
 			function changeObjectColor()
 				{
+				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
 					if (document.getElementById("materialColor").selectedIndex==0) // HOLLOW
@@ -2650,7 +2628,7 @@ function objectPropertiesPanelEnabled(state)
 						selectedObject.material.opacity = 0.5;
 						selectedObject.material.needsUpdate = true;
 						}
-					if (document.getElementById("materialColor").selectedIndex==1) // SILVER
+					else if (document.getElementById("materialColor").selectedIndex==1) // SILVER
 						{
 						selectedObject.material.color.setHex(0xffffff);
 						selectedObject.material.transparent = false;
@@ -2746,21 +2724,39 @@ function objectPropertiesPanelEnabled(state)
 
 			function changeObjectWidth(e)
 				{
+				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
 					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectWidth").value;
+
+						// GETTING THE ORIGINAL ROTATION OF THE OBJECT
+						var originalRotationX = selectedObject.rotation.x;
+						var originalRotationY = selectedObject.rotation.y;
+						var originalRotationZ = selectedObject.rotation.z;
+
+						// SETTING THE OBJECT ROTATION TO 0
+						selectedObject.rotation.x = 0;
+						selectedObject.rotation.y = 0;
+						selectedObject.rotation.z = 0;
+
+						// GETTING THE OBJECT WIDTH
 						var box = new THREE.Box3().setFromObject(selectedObject);
 						var oldWidth = box.max.x - box.min.x;
+
+						// CHECKING IF IS A DOUBLE
 						if(isDouble(value)==true)
 							{
 							if (value>0)
 								{
+								// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
 								value = parseFloat(value).toFixed(2);
 
+								// GETTING THE ORIGINAL POSITION
 								var originalX = parseFloat(parseFloat(selectedObject.position.x).toFixed(2) - oldWidth / 2).toFixed(2);
 
+								// SCALING THE OBJECT
 								selectedObject.scale.x = 1;
 								var tempBox = new THREE.Box3().setFromObject(selectedObject);
 								var tempWidth = tempBox.max.x - tempBox.min.x;
@@ -2770,19 +2766,42 @@ function objectPropertiesPanelEnabled(state)
 								// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION
 								selectedObject.position.x = parseFloat(parseFloat(newWidth /2 + parseFloat(originalX)).toFixed(2));
 
-								document.getElementById("objectWidth").value = parseFloat(value).toFixed(2);
-								document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
+								// SETTING THE ORIGINAL ROTATION TO THE OBJECT
+								selectedObject.rotation.x = originalRotationX;
+								selectedObject.rotation.y = originalRotationY;
+								selectedObject.rotation.z = originalRotationZ;
+
+								// UPDATING THE VISUAL CONTROL
 								controls2.update();
+
+								// UPDATING THE TEXTBOXS VALUES
+								updateTextBoxs();
 								}
 								else
 								{
+								// SETTING THE ORIGINAL ROTATION TO THE OBJECT
+								selectedObject.rotation.x = originalRotationX;
+								selectedObject.rotation.y = originalRotationY;
+								selectedObject.rotation.z = originalRotationZ;
+
+								// SETTING THE ORIGINAL VALUE
 								document.getElementById("objectWidth").value = parseFloat(oldWidth).toFixed(2);
+
+								// ERROR MESSAGE
 								alert(STRING_ERROR_POSITIVE);
 								}
 							}
 							else
 							{
+							// SETTING THE ORIGINAL ROTATION TO THE OBJECT
+							selectedObject.rotation.x = originalRotationX;
+							selectedObject.rotation.y = originalRotationY;
+							selectedObject.rotation.z = originalRotationZ;
+
+							// SETTING THE ORIGINAL VALUE
 							document.getElementById("objectWidth").value = parseFloat(oldWidth).toFixed(2);
+
+							// ERROR MESSAGE
 							alert(STRING_ERROR_DOUBLE);
 							}
 						}
@@ -2791,21 +2810,39 @@ function objectPropertiesPanelEnabled(state)
 
 			function changeObjectHeight(e)
 				{
+				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
 					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectHeight").value;
+
+						// GETTING THE ORIGINAL ROTATION OF THE OBJECT
+						var originalRotationX = selectedObject.rotation.x;
+						var originalRotationY = selectedObject.rotation.y;
+						var originalRotationZ = selectedObject.rotation.z;
+
+						// SETTING THE OBJECT ROTATION TO 0
+						selectedObject.rotation.x = 0;
+						selectedObject.rotation.y = 0;
+						selectedObject.rotation.z = 0;
+
+						// GETTING THE OBJECT HEIGHT
 						var box = new THREE.Box3().setFromObject(selectedObject);
 						var oldHeight = box.max.z - box.min.z;
+
+						// CHECKING IF IS A DOUBLE
 						if(isDouble(value)==true)
 							{
 							if (value>0)
 								{
+								// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
 								value = parseFloat(value).toFixed(2);
 
+								// GETTING THE ORIGINAL POSITION
 								var originalZ = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - oldHeight / 2).toFixed(2);
 
+								// SCALING THE OBJECT
 								selectedObject.scale.z = 1;
 								var tempBox = new THREE.Box3().setFromObject(selectedObject);
 								var tempHeight = tempBox.max.z - tempBox.min.z;
@@ -2815,18 +2852,42 @@ function objectPropertiesPanelEnabled(state)
 								// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION
 								selectedObject.position.z = parseFloat(parseFloat(newHeight /2 + parseFloat(originalZ)).toFixed(2));
 
-								document.getElementById("objectHeight").value = parseFloat(value).toFixed(2);
+								// SETTING THE ORIGINAL ROTATION TO THE OBJECT
+								selectedObject.rotation.x = originalRotationX;
+								selectedObject.rotation.y = originalRotationY;
+								selectedObject.rotation.z = originalRotationZ;
+
+								// UPDATING THE VISUAL CONTROL
 								controls2.update();
+
+								// UPDATING THE TEXTBOXS VALUES
+								updateTextBoxs();
 								}
 								else
 								{
+								// SETTING THE ORIGINAL ROTATION TO THE OBJECT
+								selectedObject.rotation.x = originalRotationX;
+								selectedObject.rotation.y = originalRotationY;
+								selectedObject.rotation.z = originalRotationZ;
+
+								// SETTING THE ORIGINAL VALUE
 								document.getElementById("objectHeight").value = parseFloat(oldHeight).toFixed(2);
+
+								// ERROR MESSAGE
 								alert(STRING_ERROR_POSITIVE);
 								}
 							}
 							else
 							{
+							// SETTING THE ORIGINAL ROTATION TO THE OBJECT
+							selectedObject.rotation.x = originalRotationX;
+							selectedObject.rotation.y = originalRotationY;
+							selectedObject.rotation.z = originalRotationZ;
+
+							// SETTING THE ORIGINAL VALUE
 							document.getElementById("objectHeight").value = parseFloat(oldHeight).toFixed(2);
+
+							// ERROR MESSAGE
 							alert(STRING_ERROR_DOUBLE);
 							}
 						}
@@ -2835,21 +2896,39 @@ function objectPropertiesPanelEnabled(state)
 
 			function changeObjectDepth(e)
 				{
+				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
 					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectDepth").value;
+
+						// GETTING THE ORIGINAL ROTATION OF THE OBJECT
+						var originalRotationX = selectedObject.rotation.x;
+						var originalRotationY = selectedObject.rotation.y;
+						var originalRotationZ = selectedObject.rotation.z;
+
+						// SETTING THE OBJECT ROTATION TO 0
+						selectedObject.rotation.x = 0;
+						selectedObject.rotation.y = 0;
+						selectedObject.rotation.z = 0;
+
+						// GETTING THE OBJECT DEPTH
 						var box = new THREE.Box3().setFromObject(selectedObject);
 						var oldDepth = box.max.y - box.min.y;
+
+						// CHECKING IF IS A DOUBLE
 						if(isDouble(value)==true)
 							{
 							if (value>0)
 								{
+								// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
 								value = parseFloat(value).toFixed(2);
 
+								// GETTING THE ORIGINAL POSITION
 								var originalY = parseFloat(parseFloat(selectedObject.position.y).toFixed(2) - oldDepth / 2).toFixed(2);
 
+								// SCALING THE OBJECT
 								selectedObject.scale.y = 1;
 								var tempBox = new THREE.Box3().setFromObject(selectedObject);
 								var tempDepth = tempBox.max.y - tempBox.min.y;
@@ -2859,19 +2938,42 @@ function objectPropertiesPanelEnabled(state)
 								// RELOCATING THE OBJECT TO THE ORIGINAL Y POSITION
 								selectedObject.position.y = parseFloat(parseFloat(newDepth /2 + parseFloat(originalY)).toFixed(2));
 
-								document.getElementById("objectDepth").value = parseFloat(value).toFixed(2);
-								document.getElementById("objectPositionZ").value = parseFloat(selectedObject.position.y).toFixed(2);
+								// SETTING THE ORIGINAL ROTATION TO THE OBJECT
+								selectedObject.rotation.x = originalRotationX;
+								selectedObject.rotation.y = originalRotationY;
+								selectedObject.rotation.z = originalRotationZ;
+
+								// UPDATING THE VISUAL CONTROL
 								controls2.update();
+
+								// UPDATING THE TEXTBOXS VALUES
+								updateTextBoxs();
 								}
 								else
 								{
+								// SETTING THE ORIGINAL ROTATION TO THE OBJECT
+								selectedObject.rotation.x = originalRotationX;
+								selectedObject.rotation.y = originalRotationY;
+								selectedObject.rotation.z = originalRotationZ;
+
+								// SETTING THE ORIGINAL VALUE
 								document.getElementById("objectDepth").value = parseFloat(oldDepth).toFixed(2);
+
+								// ERROR MESSAGE
 								alert(STRING_ERROR_POSITIVE);
 								}
 							}
 							else
 							{
+							// SETTING THE ORIGINAL ROTATION TO THE OBJECT
+							selectedObject.rotation.x = originalRotationX;
+							selectedObject.rotation.y = originalRotationY;
+							selectedObject.rotation.z = originalRotationZ;
+
+							// SETTING THE ORIGINAL VALUE
 							document.getElementById("objectDepth").value = parseFloat(oldDepth).toFixed(2);
+
+							// ERROR MESSAGE
 							alert(STRING_ERROR_DOUBLE);
 							}
 						}
@@ -2880,22 +2982,34 @@ function objectPropertiesPanelEnabled(state)
 
 			function changeObjectPositionX(e)
 				{
+				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
 					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectPositionX").value;
+
+						// CHECKING IF IS A DOUBLE
 						if(isDouble(value)==true)
 							{
+							// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
 							value = parseFloat(value).toFixed(2);
 
+							// SETTING THE OBJECT POSITION
 							selectedObject.position.x = parseFloat(value);
+
+							// SETTING THE VALUE
 							document.getElementById("objectPositionX").value = parseFloat(value).toFixed(2);
+
+							// UPDATING THE VISUAL CONTROL
 							controls2.update();
 							}
 							else
 							{
+							// SETTING THE ORIGINAL VALUE
 							document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
+
+							// ERROR MESSAGE
 							alert(STRING_ERROR_DOUBLE);
 							}
 						}
@@ -2904,26 +3018,38 @@ function objectPropertiesPanelEnabled(state)
 
 			function changeObjectPositionY(e)
 				{
+				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
 					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectPositionY").value;
+
+						// GETTING THE OBJECT HEIGHT
 						var box = new THREE.Box3().setFromObject(selectedObject);
 						var height = box.max.z - box.min.z;
+
+						// CHECKING IF IS A DOUBLE
 						if(isDouble(value)==true)
 							{
+							// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
 							value = parseFloat(value).toFixed(2);
 
+							// SETTING THE OBJECT POSITION
 							selectedObject.position.z = parseFloat((height/2)+parseFloat(value)).toFixed(2);
-							var finalPositionY = parseFloat(value).toFixed(2);
-							if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY)).toFixed(2);}
-							document.getElementById("objectPositionY").value = finalPositionY;
+
+							// UPDATING THE VISUAL CONTROL
 							controls2.update();
+
+							// UPDATING THE TEXTBOXS VALUES
+							updateTextBoxs();
 							}
 							else
 							{
+							// SETTING THE ORIGINAL VALUE
 							document.getElementById("objectPositionY").value = parseFloat(selectedObject.position.z - height / 2).toFixed(2);
+
+							// ERROR MESSAGE
 							alert(STRING_ERROR_DOUBLE);
 							}
 						}
@@ -2932,22 +3058,34 @@ function objectPropertiesPanelEnabled(state)
 
 			function changeObjectPositionZ(e)
 				{
+				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
 					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectPositionZ").value;
+
+						// CHECKING IF IS A DOUBLE
 						if(isDouble(value)==true)
 							{
+							// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
 							value = parseFloat(value).toFixed(2);
 
+							// SETTING THE OBJECT POSITION
 							selectedObject.position.y = parseFloat(value);
+
+							// SETTING THE VALUE
 							document.getElementById("objectPositionZ").value = parseFloat(value).toFixed(2);
+
+							// UPDATING THE VISUAL CONTROL
 							controls2.update();
 							}
 							else
 							{
+							// SETTING THE ORIGINAL VALUE
 							document.getElementById("objectPositionZ").value = parseFloat(selectedObject.position.y).toFixed(2);
+
+							// ERROR MESSAGE
 							alert(STRING_ERROR_DOUBLE);
 							}
 						}
@@ -2956,35 +3094,34 @@ function objectPropertiesPanelEnabled(state)
 
 			function changeObjectRotationX(e)
 				{
+				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
 					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectRotationX").value;
+
+						// CHECKING IF IS A DOUBLE
 						if(isDouble(value)==true)
 							{
+							// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
 							value = parseFloat(value).toFixed(2);
 
+							// SETTING THE OBJECT ROTATION
 							selectedObject.rotation.x = (value * Math.PI)/180;
+
+							// SETTING THE VALUE
 							document.getElementById("objectRotationX").value = parseFloat(value).toFixed(2);
 
-							var box = new THREE.Box3().setFromObject(selectedObject);
-							var height = box.max.z - box.min.z;
-							var width = box.max.x - box.min.x;
-							var depth = box.max.y - box.min.y;
-
-							document.getElementById("objectWidth").value = parseFloat(width).toFixed(2);
-							document.getElementById("objectHeight").value = parseFloat(height).toFixed(2);
-							document.getElementById("objectDepth").value = parseFloat(depth).toFixed(2);
-							document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
-							var finalPositionY = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - height / 2).toFixed(2);
-							if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY)).toFixed(2);}
-							document.getElementById("objectPositionY").value = finalPositionY;
-							document.getElementById("objectPositionZ").value = parseFloat(selectedObject.position.y).toFixed(2);
+							// UPDATING THE TEXTBOXS VALUES
+							updateTextBoxs();
 							}
 							else
 							{
+							// SETTING THE ORIGINAL VALUE
 							document.getElementById("objectRotationX").value = (selectedObject.rotation.x * 180 / Math.PI).toFixed(2);
+
+							// ERROR MESSAGE
 							alert(STRING_ERROR_DOUBLE);
 							}
 						}
@@ -2993,35 +3130,34 @@ function objectPropertiesPanelEnabled(state)
 
 			function changeObjectRotationY(e)
 				{
+				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
 					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectRotationY").value;
+
+						// CHECKING IF IS A DOUBLE
 						if(isDouble(value)==true)
 							{
+							// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
 							value = parseFloat(value).toFixed(2);
 
+							// SETTING THE OBJECT ROTATION
 							selectedObject.rotation.y = (value * Math.PI)/180;
+
+							// SETTING THE VALUE
 							document.getElementById("objectRotationY").value = parseFloat(value).toFixed(2);
 
-							var box = new THREE.Box3().setFromObject(selectedObject);
-							var height = box.max.z - box.min.z;
-							var width = box.max.x - box.min.x;
-							var depth = box.max.y - box.min.y;
-
-							document.getElementById("objectWidth").value = parseFloat(width).toFixed(2);
-							document.getElementById("objectHeight").value = parseFloat(height).toFixed(2);
-							document.getElementById("objectDepth").value = parseFloat(depth).toFixed(2);
-							document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
-							var finalPositionY = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - height / 2).toFixed(2);
-							if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY)).toFixed(2);}
-							document.getElementById("objectPositionY").value = finalPositionY;
-							document.getElementById("objectPositionZ").value = parseFloat(selectedObject.position.y).toFixed(2);
+							// UPDATING THE TEXTBOXS VALUES
+							updateTextBoxs();
 							}
 							else
 							{
+							// SETTING THE ORIGINAL VALUE
 							document.getElementById("objectRotationY").value = (selectedObject.rotation.y * 180 / Math.PI).toFixed(2);
+
+							// ERROR MESSAGE
 							alert(STRING_ERROR_DOUBLE);
 							}
 						}
@@ -3030,35 +3166,34 @@ function objectPropertiesPanelEnabled(state)
 
 			function changeObjectRotationZ(e)
 				{
+				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
 					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectRotationZ").value;
+
+						// CHECKING IF IS A DOUBLE
 						if(isDouble(value)==true)
 							{
+							// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
 							value = parseFloat(value).toFixed(2);
 
+							// SETTING THE OBJECT ROTATION
 							selectedObject.rotation.z = (value * Math.PI)/180;
+
+							// SETTING THE VALUE
 							document.getElementById("objectRotationZ").value = parseFloat(value).toFixed(2);
 
-							var box = new THREE.Box3().setFromObject(selectedObject);
-							var height = box.max.z - box.min.z;
-							var width = box.max.x - box.min.x;
-							var depth = box.max.y - box.min.y;
-
-							document.getElementById("objectWidth").value = parseFloat(width).toFixed(2);
-							document.getElementById("objectHeight").value = parseFloat(height).toFixed(2);
-							document.getElementById("objectDepth").value = parseFloat(depth).toFixed(2);
-							document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
-							var finalPositionY = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - height / 2).toFixed(2);
-							if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY)).toFixed(2);}
-							document.getElementById("objectPositionY").value = finalPositionY;
-							document.getElementById("objectPositionZ").value = parseFloat(selectedObject.position.y).toFixed(2);
+							// UPDATING THE TEXTBOXS VALUES
+							updateTextBoxs();
 							}
 							else
 							{
+							// SETTING THE ORIGINAL VALUE
 							document.getElementById("objectRotationZ").value = (selectedObject.rotation.z * 180 / Math.PI).toFixed(2);
+
+							// ERROR MESSAGE
 							alert(STRING_ERROR_DOUBLE);
 							}
 						}
@@ -3067,14 +3202,17 @@ function objectPropertiesPanelEnabled(state)
 
 			function newProject()
 				{
+				// CHECKING IF THERE IS ANY OBJECTS IN THE PLATFORM
 				if (objects.length>0)
 					{
+					// ASKING IF LOSE CHANGES
 					var message = confirm(STRING_ERROR_LOSECHANGES);
 					if (message == true)
 						{
+						// RESTARTING EVERYTHING
 						init();
 
-						// IF NO OBJECTS ARE SELECTED
+						// IF NO OBJECTS ARE SELECTED, HIDING THE VISUAL CONTROL
 						if (controls2!=null)
 							{
 							controls2.detach();
@@ -3089,12 +3227,14 @@ function objectPropertiesPanelEnabled(state)
 					}
 					else
 					{
+					// RESTARTING EVERYTHING
 					init();
 					}
 				}
 
 			function exportToSTL()
 				{
+				// CHECKING IF THERE IS ANY OBJECTS IN THE PLATFORM
 				if (objects.length>0)
 					{
 					// CREATING A SCENE THAT WILL HAVE ALL THE MODELS
@@ -3103,22 +3243,28 @@ function objectPropertiesPanelEnabled(state)
 					// CREATING DEFAULT MATERIAL
 					var material = new THREE.MeshNormalMaterial();
 
-					// CREATING THE MESH THAT WILL HAVE ALL THE OBJECTS
+					// CREATING THE OBJECT THAT WILL HAVE ALL THE OBJECTS COMBINED
 					var finalMeshCSG = null;
 
 					// LOOPING FOR EVERY OBJECT THAT WILL BE CREATED AS ONE
 					for (var i = 0; i < objects.length; i++)
 						{
 						var objectColorValue = String(objects[i].material.color.getHexString());
-						if (objectColorValue.indexOf("000000")==-1) // IS NOT A HOLLOW OBJECT
+
+						// CHECKING IF IT IS NOT A HOLLOW OBJECT
+						if (objectColorValue.indexOf("000000")==-1)
 							{
+							// CREATING AN OBJECT IN ORDER TO COMBINED IT WITH THE REST OF THE OBJECTS IN THE PLATFORM
 							var newCSG = THREE.CSG.fromMesh(objects[i]);
+							
+							// IF THE OBJECT THAT WILL HAVE ALL THE COMBINED OBJECTS IS EMPTY, SETS THE FIRST OBJECT
 							if (finalMeshCSG==null)
 								{
 								finalMeshCSG = newCSG;
 								}
 								else
 								{
+								// COMBINING THE OBJECT WITH THE OBJECT THAT CONTAINS ALL THE OBJECT COMBINED AT THE MOMENT
 								finalMeshCSG = newCSG.union(finalMeshCSG);
 								}
 							}
@@ -3128,9 +3274,14 @@ function objectPropertiesPanelEnabled(state)
 					for (var i = 0; i < objects.length; i++)
 						{
 						var objectColorValue = String(objects[i].material.color.getHexString());
-						if (objectColorValue.indexOf("000000")>-1) // IS A HOLLOW OBJECT
+
+						// CHECKING IF IT IS A HOLLOW OBJECT
+						if (objectColorValue.indexOf("000000")>-1)
 							{
+							// CREATING AN OBJECT IN ORDER TO SUBTRACT IT WITH THE REST OF THE OBJECTS IN THE PLATFORM
 							var newCSG = THREE.CSG.fromMesh(objects[i]);
+							
+							// IF THE OBJECT THAT WILL HAVE ALL THE COMBINED OBJECTS IS NOT EMPTY, SUBTRACTS THE OBJECT
 							if (finalMeshCSG!=null)
 								{
 								finalMeshCSG = finalMeshCSG.subtract(newCSG);
@@ -3138,50 +3289,63 @@ function objectPropertiesPanelEnabled(state)
 							}
 						}
 
+					// CHECKING IF THE OBJECT THAT WILL HAVE ALL THE COMBINED OBJECTS IS NOT EMPTY
 					if (finalMeshCSG!=null)
 						{
+						// CONVERTING THE OBJECT THAT WAS COMBINED AND/OR SUBSTRACTED TO A COMPATIBLE MODEL
 						var newMesh = THREE.CSG.toMesh(finalMeshCSG,material);
+						
+						// ADDING THE MODEL TO THE SCENE
 						sceneConverter.add(newMesh);
 						}
 
 					// EXPORTING THE SCENE AS A STL FILE
 					var exporter = new THREE.STLBinaryExporter();
 					var result = exporter.parse(sceneConverter);
+
+					// FORCING SAVING AS FILE
 					saveString(result, STRING_FILENAME + ".stl");
 					}
 					else
 					{
+					// ERROR MESSAGE
 					alert(STRING_ERROR_EMPTYWORKSPACE);
 					}
 				}
 
 			function exportToScene()
 				{
+				// CHECKING IF THERE IS ANY OBJECTS IN THE PLATFORM
 				if (objects.length>0)
 					{
 					// SETTING THE VARIABLE THAT WILL HAVE ALL THE MODELS IN ONE FILE
 					var finalResult = "";
 
-					// GENERATING AN ARRAY OF SCENES WITH ONE MODEL IN EACH ESCENE
+					// GENERATING AN ARRAY OF TEMPORARY SCENES WITH ONE MODEL IN EACH ESCENE
 					for (var i = 0; i < objects.length; i++)
 						{
-						var sceneConverter = new THREE.Scene();
+						var tempScene = new THREE.Scene();
 
+						// GETTING THE ORIGINAL ROTATION OF THE OBJECT
 						var rotationX = objects[i].rotation.x;
 						var rotationY = objects[i].rotation.y;
 						var rotationZ = objects[i].rotation.z;
 
+						// SETTING THE OBJECT ROTATION TO 0
 						objects[i].rotation.x = 0;
 						objects[i].rotation.y = 0;
 						objects[i].rotation.z = 0;
-						
-						sceneConverter.add(objects[i]);
 
+						// ADDING THE OBJECT TO THE TEMPORARY SCENE
+						tempScene.add(objects[i]);
+
+						// GETTING THE OBJECT SIZE
 						var box = new THREE.Box3().setFromObject(objects[i]);
 						var height = box.max.z - box.min.z;
 						var width = box.max.x - box.min.x;
 						var depth = box.max.y - box.min.y;
 
+						// LOADING ALL THE OBJECT PROPERTIES IN A VARIABLE
 						var objectProperties = objects[i].material.color.getHexString() + "," +
 											   width.toFixed(2) + "," +
 											   height.toFixed(2) + "," +
@@ -3193,9 +3357,11 @@ function objectPropertiesPanelEnabled(state)
 											   rotationY + "," +
 											   rotationZ + "|";
 
-						// ADDING THE STL MODEL WITH IT'S LOCATION TO THE FINAL RESULT
+						// EXPORTING THE SCENE AS A STL MODEL
 						var exporter = new THREE.STLExporter();
-						var objectData = exporter.parse(sceneConverter);
+						var objectData = exporter.parse(tempScene);
+						
+						// ADDING THE MODEL TO THE VARIABLE THAT WILL HAVE ALL THE MODELS IN ONE FILE
 						if (finalResult=="")
 							{
 							finalResult = objectProperties + objectData + "3D_OBJECT_MAKER_SEPARATOR";
@@ -3205,6 +3371,7 @@ function objectPropertiesPanelEnabled(state)
 							finalResult = finalResult + objectProperties + objectData + "3D_OBJECT_MAKER_SEPARATOR";
 							}
 
+						// SETTING THE ORIGINAL ROTATION TO THE OBJECT
 						objects[i].rotation.x = rotationX;
 						objects[i].rotation.y = rotationY;
 						objects[i].rotation.z = rotationZ;
@@ -3213,7 +3380,7 @@ function objectPropertiesPanelEnabled(state)
 					// ADDING THE GRID SIZE TO THE FINAL RESULT
 					finalResult = gridSizeValue + "|" + finalResult;
 
-					// EXPORTING THE SCENE
+					// FORCING SAVING AS FILE
 					saveString(finalResult, STRING_FILENAME + ".scene");
 
 					// RETURNING THE OBJECTS TO THE MAIN SCENE
@@ -3224,6 +3391,7 @@ function objectPropertiesPanelEnabled(state)
 					}
 					else
 					{
+					// ERROR MESSAGE
 					alert(STRING_ERROR_EMPTYWORKSPACE);
 					}
 				}
@@ -3245,19 +3413,23 @@ function objectPropertiesPanelEnabled(state)
 
 			function deleteObject()
 				{
+				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
+					// ASKING IF WILL DELETE OBJECT
 					var message = confirm(STRING_DELETE_WARNING);
 					if (message == true)
 						{
+						// DELETING THE OBJECT FROM THE SCENE
 						scene.remove(selectedObject);
-					
+
+						// DELETING THE OBJECT FROM THE OBJECTS ARRAY
 						objects = objects.filter(function(item)
 							{ 
 							return item !== selectedObject
 							})
 
-						// IF NO OBJECTS ARE SELECTED
+						// IF NO OBJECTS ARE SELECTED, HIDING THE VISUAL CONTROL
 						if (controls2!=null)
 							{
 							controls2.detach();
@@ -3274,16 +3446,20 @@ function objectPropertiesPanelEnabled(state)
 
 			function duplicateObject()
 				{
+				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
+					// GETTING THE ORIGINAL ROTATION OF THE OBJECT
 					var originalRotationX = selectedObject.rotation.x;
 					var originalRotationY = selectedObject.rotation.y;
 					var originalRotationZ = selectedObject.rotation.z;
 
+					// SETTING THE OBJECT ROTATION TO 0
 					selectedObject.applyMatrix(new THREE.Matrix4().makeRotationX(0));
 					selectedObject.applyMatrix(new THREE.Matrix4().makeRotationY(0));
 					selectedObject.applyMatrix(new THREE.Matrix4().makeRotationZ(0));
 
+					// DUPLICATING THE OBJECT
 					var duplicated = selectedObject.clone();
 					duplicated.traverse(function (child)
 						{
@@ -3293,23 +3469,28 @@ function objectPropertiesPanelEnabled(state)
 							}
 						});
 
+					// SETTING THE ORIGINAL ROTATION TO THE OBJECT
 					duplicated.rotation.x = originalRotationX;
 					duplicated.rotation.y = originalRotationY;
 					duplicated.rotation.z = originalRotationZ;
 
+					// SETTING THE ORIGINAL ROTATION TO THE OBJECT
 					selectedObject.rotation.x = originalRotationX;
 					selectedObject.rotation.y = originalRotationY;
 					selectedObject.rotation.z = originalRotationZ;
 
+					// SETTING THE POSITION OF THE MODEL
 					var box = new THREE.Box3().setFromObject(duplicated);
 					var height = box.max.z - box.min.z;
 					duplicated.position.x = 0;
 					duplicated.position.y = 0;
 					duplicated.position.z = height / 2;
+
+					// ADDING THE DUPLICATED OBJECT TO THE SCENE
 					scene.add(duplicated);
 					objects.push(duplicated);
 
-					// IF NO OBJECTS ARE SELECTED
+					// IF NO OBJECTS ARE SELECTED, HIDING THE VISUAL CONTROL
 					if (controls2!=null)
 						{
 						controls2.detach();
@@ -3325,6 +3506,7 @@ function objectPropertiesPanelEnabled(state)
 
 			function changeControlTypeMove()
 				{
+				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
 					controls2.setMode("translate");
@@ -3346,6 +3528,7 @@ function objectPropertiesPanelEnabled(state)
 
 			function changeControlTypeScale()
 				{
+				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
 					controls2.setMode("scale");
@@ -3367,6 +3550,7 @@ function objectPropertiesPanelEnabled(state)
 
 			function changeControlTypeRotate()
 				{
+				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
 					controls2.setMode("rotate");
@@ -3383,6 +3567,52 @@ function objectPropertiesPanelEnabled(state)
 					document.getElementById("buttonMove").classList.add("menubar_button_move_enabled");
 					document.getElementById("buttonMove").classList.remove("menubar_button_move_disabled");
 					document.getElementById("buttonMove").classList.remove("menubar_button_move_selected");
+					}
+				}
+
+			function updateTextBoxs()
+				{
+				// CHECKING IF AN OBJECT WAS SELECTED
+				if (selectedObject!=null)
+					{
+					var boxInitial = new THREE.Box3().setFromObject(selectedObject);
+					var heightInitial = boxInitial.max.z - boxInitial.min.z;
+
+					// GETTING THE ORIGINAL ROTATION OF THE OBJECT
+					var originalRotationX = selectedObject.rotation.x;
+					var originalRotationY = selectedObject.rotation.y;
+					var originalRotationZ = selectedObject.rotation.z;
+
+					// SETTING THE OBJECT ROTATION TO 0
+					selectedObject.rotation.x = 0;
+					selectedObject.rotation.y = 0;
+					selectedObject.rotation.z = 0;
+
+					// GETTING THE OBJECT SIZE
+					var box = new THREE.Box3().setFromObject(selectedObject);
+					var height = box.max.z - box.min.z;
+					var width = box.max.x - box.min.x;
+					var depth = box.max.y - box.min.y;
+
+					// SETTING THE VALUES
+					document.getElementById("objectWidth").value = parseFloat(width).toFixed(2);
+					document.getElementById("objectHeight").value = parseFloat(height).toFixed(2);
+					document.getElementById("objectDepth").value = parseFloat(depth).toFixed(2);
+
+					// SETTING THE ORIGINAL ROTATION TO THE OBJECT
+					selectedObject.rotation.x = originalRotationX;
+					selectedObject.rotation.y = originalRotationY;
+					selectedObject.rotation.z = originalRotationZ;
+
+					// SETTING THE VALUES
+					document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
+					var finalPositionY = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - heightInitial / 2).toFixed(2);
+					if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY)).toFixed(2);}
+					document.getElementById("objectPositionY").value = finalPositionY;
+					document.getElementById("objectPositionZ").value = parseFloat(selectedObject.position.y).toFixed(2);
+					document.getElementById("objectRotationX").value = (selectedObject.rotation.x * 180 / Math.PI).toFixed(2);
+					document.getElementById("objectRotationY").value = (selectedObject.rotation.y * 180 / Math.PI).toFixed(2);
+					document.getElementById("objectRotationZ").value = (selectedObject.rotation.z * 180 / Math.PI).toFixed(2);
 					}
 				}
 
