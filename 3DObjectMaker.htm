@@ -642,27 +642,38 @@
 					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectWidth").value;
+						var box = new THREE.Box3().setFromObject(selectedObject);
+						var oldWidth = box.max.x - box.min.x;
 						if(isDouble(value)==true)
 							{
-							var box = new THREE.Box3().setFromObject(selectedObject);
-							var oldWidth = box.max.x - box.min.x;
-							var originalX = parseFloat(parseFloat(selectedObject.position.x).toFixed(2) - oldWidth / 2).toFixed(2);
+							if (value>0)
+								{
+								value = parseFloat(value).toFixed(2);
 
-							selectedObject.scale.x = 1;
-							var tempBox = new THREE.Box3().setFromObject(selectedObject);
-							var tempWidth = tempBox.max.x - tempBox.min.x;
-							var newWidth = parseFloat(value);
-							selectedObject.scale.x = newWidth * 1 / tempWidth;
+								var originalX = parseFloat(parseFloat(selectedObject.position.x).toFixed(2) - oldWidth / 2).toFixed(2);
 
-							// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION
-							selectedObject.position.x = parseFloat(parseFloat(newWidth /2 + parseFloat(originalX)).toFixed(2));
+								selectedObject.scale.x = 1;
+								var tempBox = new THREE.Box3().setFromObject(selectedObject);
+								var tempWidth = tempBox.max.x - tempBox.min.x;
+								var newWidth = parseFloat(value).toFixed(2);
+								selectedObject.scale.x = newWidth * 1 / tempWidth;
 
-							document.getElementById("objectWidth").value = parseFloat(value).toFixed(2);
-							document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
-							controls2.update();
+								// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION
+								selectedObject.position.x = parseFloat(parseFloat(newWidth /2 + parseFloat(originalX)).toFixed(2));
+
+								document.getElementById("objectWidth").value = parseFloat(value).toFixed(2);
+								document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
+								controls2.update();
+								}
+								else
+								{
+								document.getElementById("objectWidth").value = parseFloat(oldWidth).toFixed(2);
+								alert(STRING_ERROR_POSITIVE);
+								}
 							}
 							else
 							{
+							document.getElementById("objectWidth").value = parseFloat(oldWidth).toFixed(2);
 							alert(STRING_ERROR_DOUBLE);
 							}
 						}
@@ -676,26 +687,37 @@
 					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectHeight").value;
+						var box = new THREE.Box3().setFromObject(selectedObject);
+						var oldHeight = box.max.z - box.min.z;
 						if(isDouble(value)==true)
 							{
-							var box = new THREE.Box3().setFromObject(selectedObject);
-							var oldHeight = box.max.z - box.min.z;
-							var originalZ = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - oldHeight / 2).toFixed(2);
+							if (value>0)
+								{
+								value = parseFloat(value).toFixed(2);
 
-							selectedObject.scale.z = 1;
-							var tempBox = new THREE.Box3().setFromObject(selectedObject);
-							var tempHeight = tempBox.max.z - tempBox.min.z;
-							var newHeight = parseFloat(value);
-							selectedObject.scale.z = newHeight * 1 / tempHeight;
+								var originalZ = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - oldHeight / 2).toFixed(2);
 
-							// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION
-							selectedObject.position.z = parseFloat(parseFloat(newHeight /2 + parseFloat(originalZ)).toFixed(2));
+								selectedObject.scale.z = 1;
+								var tempBox = new THREE.Box3().setFromObject(selectedObject);
+								var tempHeight = tempBox.max.z - tempBox.min.z;
+								var newHeight = parseFloat(value);
+								selectedObject.scale.z = newHeight * 1 / tempHeight;
 
-							document.getElementById("objectHeight").value = parseFloat(value).toFixed(2);
-							controls2.update();
+								// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION
+								selectedObject.position.z = parseFloat(parseFloat(newHeight /2 + parseFloat(originalZ)).toFixed(2));
+
+								document.getElementById("objectHeight").value = parseFloat(value).toFixed(2);
+								controls2.update();
+								}
+								else
+								{
+								document.getElementById("objectHeight").value = parseFloat(oldHeight).toFixed(2);
+								alert(STRING_ERROR_POSITIVE);
+								}
 							}
 							else
 							{
+							document.getElementById("objectHeight").value = parseFloat(oldHeight).toFixed(2);
 							alert(STRING_ERROR_DOUBLE);
 							}
 						}
@@ -709,27 +731,38 @@
 					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectDepth").value;
+						var box = new THREE.Box3().setFromObject(selectedObject);
+						var oldDepth = box.max.y - box.min.y;
 						if(isDouble(value)==true)
 							{
-							var box = new THREE.Box3().setFromObject(selectedObject);
-							var oldDepth = box.max.y - box.min.y;
-							var originalY = parseFloat(parseFloat(selectedObject.position.y).toFixed(2) - oldDepth / 2).toFixed(2);
+							if (value>0)
+								{
+								value = parseFloat(value).toFixed(2);
 
-							selectedObject.scale.y = 1;
-							var tempBox = new THREE.Box3().setFromObject(selectedObject);
-							var tempDepth = tempBox.max.y - tempBox.min.y;
-							var newDepth = parseFloat(value);
-							selectedObject.scale.y = newDepth * 1 / tempDepth;
+								var originalY = parseFloat(parseFloat(selectedObject.position.y).toFixed(2) - oldDepth / 2).toFixed(2);
 
-							// RELOCATING THE OBJECT TO THE ORIGINAL Y POSITION
-							selectedObject.position.y = parseFloat(parseFloat(newDepth /2 + parseFloat(originalY)).toFixed(2));
+								selectedObject.scale.y = 1;
+								var tempBox = new THREE.Box3().setFromObject(selectedObject);
+								var tempDepth = tempBox.max.y - tempBox.min.y;
+								var newDepth = parseFloat(value);
+								selectedObject.scale.y = newDepth * 1 / tempDepth;
 
-							document.getElementById("objectDepth").value = parseFloat(value).toFixed(2);
-							document.getElementById("objectPositionZ").value = parseFloat(selectedObject.position.y).toFixed(2);
-							controls2.update();
+								// RELOCATING THE OBJECT TO THE ORIGINAL Y POSITION
+								selectedObject.position.y = parseFloat(parseFloat(newDepth /2 + parseFloat(originalY)).toFixed(2));
+
+								document.getElementById("objectDepth").value = parseFloat(value).toFixed(2);
+								document.getElementById("objectPositionZ").value = parseFloat(selectedObject.position.y).toFixed(2);
+								controls2.update();
+								}
+								else
+								{
+								document.getElementById("objectDepth").value = parseFloat(oldDepth).toFixed(2);
+								alert(STRING_ERROR_POSITIVE);
+								}
 							}
 							else
 							{
+							document.getElementById("objectDepth").value = parseFloat(oldDepth).toFixed(2);
 							alert(STRING_ERROR_DOUBLE);
 							}
 						}
@@ -745,12 +778,15 @@
 						var value = document.getElementById("objectPositionX").value;
 						if(isDouble(value)==true)
 							{
+							value = parseFloat(value).toFixed(2);
+
 							selectedObject.position.x = parseFloat(value);
 							document.getElementById("objectPositionX").value = parseFloat(value).toFixed(2);
 							controls2.update();
 							}
 							else
 							{
+							document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
 							alert(STRING_ERROR_DOUBLE);
 							}
 						}
@@ -764,25 +800,21 @@
 					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectPositionY").value;
+						var box = new THREE.Box3().setFromObject(selectedObject);
+						var height = box.max.z - box.min.z;
 						if(isDouble(value)==true)
 							{
-							try
-								{
-								var box = new THREE.Box3().setFromObject(selectedObject);
-								var height = box.max.z - box.min.z;
-								selectedObject.position.z = parseFloat((height/2)+parseFloat(value)).toFixed(2);
-								var finalPositionY = parseFloat(value).toFixed(2);
-								if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY)).toFixed(2);}
-								document.getElementById("objectPositionY").value = finalPositionY;
-								controls2.update();
-								}
-								catch(err)
-								{
-								alert(err);
-								}
+							value = parseFloat(value).toFixed(2);
+
+							selectedObject.position.z = parseFloat((height/2)+parseFloat(value)).toFixed(2);
+							var finalPositionY = parseFloat(value).toFixed(2);
+							if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY)).toFixed(2);}
+							document.getElementById("objectPositionY").value = finalPositionY;
+							controls2.update();
 							}
 							else
 							{
+							document.getElementById("objectPositionY").value = parseFloat(selectedObject.position.z - height / 2).toFixed(2);
 							alert(STRING_ERROR_DOUBLE);
 							}
 						}
@@ -798,12 +830,15 @@
 						var value = document.getElementById("objectPositionZ").value;
 						if(isDouble(value)==true)
 							{
+							value = parseFloat(value).toFixed(2);
+
 							selectedObject.position.y = parseFloat(value);
 							document.getElementById("objectPositionZ").value = parseFloat(value).toFixed(2);
 							controls2.update();
 							}
 							else
 							{
+							document.getElementById("objectPositionZ").value = parseFloat(selectedObject.position.y).toFixed(2);
 							alert(STRING_ERROR_DOUBLE);
 							}
 						}
@@ -819,6 +854,8 @@
 						var value = document.getElementById("objectRotationX").value;
 						if(isDouble(value)==true)
 							{
+							value = parseFloat(value).toFixed(2);
+
 							selectedObject.rotation.x = (value * Math.PI)/180;
 							document.getElementById("objectRotationX").value = parseFloat(value).toFixed(2);
 
@@ -838,6 +875,7 @@
 							}
 							else
 							{
+							document.getElementById("objectRotationX").value = (selectedObject.rotation.x * 180 / Math.PI).toFixed(2);
 							alert(STRING_ERROR_DOUBLE);
 							}
 						}
@@ -853,6 +891,8 @@
 						var value = document.getElementById("objectRotationY").value;
 						if(isDouble(value)==true)
 							{
+							value = parseFloat(value).toFixed(2);
+
 							selectedObject.rotation.y = (value * Math.PI)/180;
 							document.getElementById("objectRotationY").value = parseFloat(value).toFixed(2);
 
@@ -872,6 +912,7 @@
 							}
 							else
 							{
+							document.getElementById("objectRotationY").value = (selectedObject.rotation.y * 180 / Math.PI).toFixed(2);
 							alert(STRING_ERROR_DOUBLE);
 							}
 						}
@@ -887,6 +928,8 @@
 						var value = document.getElementById("objectRotationZ").value;
 						if(isDouble(value)==true)
 							{
+							value = parseFloat(value).toFixed(2);
+
 							selectedObject.rotation.z = (value * Math.PI)/180;
 							document.getElementById("objectRotationZ").value = parseFloat(value).toFixed(2);
 
@@ -906,6 +949,7 @@
 							}
 							else
 							{
+							document.getElementById("objectRotationZ").value = (selectedObject.rotation.z * 180 / Math.PI).toFixed(2);
 							alert(STRING_ERROR_DOUBLE);
 							}
 						}
@@ -1123,6 +1167,14 @@
 				{
 				if (selectedObject!=null)
 					{
+					var originalRotationX = selectedObject.rotation.x;
+					var originalRotationY = selectedObject.rotation.y;
+					var originalRotationZ = selectedObject.rotation.z;
+
+					selectedObject.applyMatrix(new THREE.Matrix4().makeRotationX(0));
+					selectedObject.applyMatrix(new THREE.Matrix4().makeRotationY(0));
+					selectedObject.applyMatrix(new THREE.Matrix4().makeRotationZ(0));
+
 					var duplicated = selectedObject.clone();
 					duplicated.traverse(function (child)
 						{
@@ -1131,6 +1183,14 @@
 							child.material = child.material.clone();
 							}
 						});
+
+					duplicated.rotation.x = originalRotationX;
+					duplicated.rotation.y = originalRotationY;
+					duplicated.rotation.z = originalRotationZ;
+
+					selectedObject.rotation.x = originalRotationX;
+					selectedObject.rotation.y = originalRotationY;
+					selectedObject.rotation.z = originalRotationZ;
 
 					var box = new THREE.Box3().setFromObject(duplicated);
 					var height = box.max.z - box.min.z;
