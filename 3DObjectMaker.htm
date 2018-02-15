@@ -399,65 +399,8 @@
 					// UPDATING THE TEXTBOXS VALUES
 					updateTextBoxs();
 
-					// GETTING THE COLOR OF THE OBJECT
-					var objectColorValue = String(selectedObject.material.color.getHexString());
-
-					if (objectColorValue.indexOf("000000")>-1) // HOLLOW
-						{
-						document.getElementById("materialColor").selectedIndex = 0;
-						}
-					else if (objectColorValue.indexOf("ffffff")>-1) // SILVER
-						{
-						document.getElementById("materialColor").selectedIndex = 1;
-						}
-					else if (objectColorValue.indexOf("808080")>-1) // GRAY
-						{
-						document.getElementById("materialColor").selectedIndex = 2;
-						}
-					else if (objectColorValue.indexOf("ff0000")>-1) // RED
-						{
-						document.getElementById("materialColor").selectedIndex = 3;
-						}
-					else if (objectColorValue.indexOf("008000")>-1) // GREEN
-						{
-						document.getElementById("materialColor").selectedIndex = 4;
-						}
-					else if (objectColorValue.indexOf("93db70")>-1) // LIGHT GREEN
-						{
-						document.getElementById("materialColor").selectedIndex = 5;
-						}
-					else if (objectColorValue.indexOf("0000ff")>-1) // BLUE
-						{
-						document.getElementById("materialColor").selectedIndex = 6;
-						}
-					else if (objectColorValue.indexOf("4682b4")>-1) // NAVY BLUE
-						{
-						document.getElementById("materialColor").selectedIndex = 7;
-						}
-					else if (objectColorValue.indexOf("ffff00")>-1) // YELLOW
-						{
-						document.getElementById("materialColor").selectedIndex = 8;
-						}
-					else if (objectColorValue.indexOf("ffd700")>-1) // GOLD
-						{
-						document.getElementById("materialColor").selectedIndex = 9;
-						}
-					else if (objectColorValue.indexOf("ffc0cb")>-1) // PINK
-						{
-						document.getElementById("materialColor").selectedIndex = 10;
-						}
-					else if (objectColorValue.indexOf("ee82ee")>-1) // VIOLET
-						{
-						document.getElementById("materialColor").selectedIndex = 11;
-						}
-					else if (objectColorValue.indexOf("ffa500")>-1) // ORANGE
-						{
-						document.getElementById("materialColor").selectedIndex = 12;
-						}
-					else if (objectColorValue.indexOf("8b4513")>-1) // BROWN
-						{
-						document.getElementById("materialColor").selectedIndex = 13;
-						}
+					// UPDATING THE COLOR FIELD
+					updateColorField();
 					}
 					else
 					{
@@ -1392,6 +1335,27 @@
 
 					// DISABLING ALL THE TEXTBOXS AND BUTTONS
 					objectPropertiesPanelEnabled(false);
+
+					// ATTACHING THE DRAGGING CONTROL TO THE SELECTED OBJECT
+					controls2.addEventListener("change",function ()
+						{
+						updateTextBoxs();
+						});
+
+					// SELECTING THE DUPLICATED OBJECT
+					selectedObject = duplicated;
+					controls2.attach(selectedObject);
+					controls2.update();
+					controls2.visible = true;
+
+					// ENABLING ALL THE TEXTBOXS
+					objectPropertiesPanelEnabled(true);
+
+					// UPDATING THE TEXTBOXS VALUES
+					updateTextBoxs();
+
+					// UPDATING THE COLOR FIELD
+					updateColorField();
 					}
 				}
 
@@ -1504,6 +1468,69 @@
 					document.getElementById("objectRotationX").value = (selectedObject.rotation.x * 180 / Math.PI).toFixed(2);
 					document.getElementById("objectRotationY").value = (selectedObject.rotation.y * 180 / Math.PI).toFixed(2);
 					document.getElementById("objectRotationZ").value = (selectedObject.rotation.z * 180 / Math.PI).toFixed(2);
+					}
+				}
+
+			function updateColorField()
+				{
+				// GETTING THE COLOR OF THE OBJECT
+				var objectColorValue = String(selectedObject.material.color.getHexString());
+
+				if (objectColorValue.indexOf("000000")>-1) // HOLLOW
+					{
+					document.getElementById("materialColor").selectedIndex = 0;
+					}
+				else if (objectColorValue.indexOf("ffffff")>-1) // SILVER
+					{
+					document.getElementById("materialColor").selectedIndex = 1;
+					}
+				else if (objectColorValue.indexOf("808080")>-1) // GRAY
+					{
+					document.getElementById("materialColor").selectedIndex = 2;
+					}
+				else if (objectColorValue.indexOf("ff0000")>-1) // RED
+					{
+					document.getElementById("materialColor").selectedIndex = 3;
+					}
+				else if (objectColorValue.indexOf("008000")>-1) // GREEN
+					{
+					document.getElementById("materialColor").selectedIndex = 4;
+					}
+				else if (objectColorValue.indexOf("93db70")>-1) // LIGHT GREEN
+					{
+					document.getElementById("materialColor").selectedIndex = 5;
+					}
+				else if (objectColorValue.indexOf("0000ff")>-1) // BLUE
+					{
+					document.getElementById("materialColor").selectedIndex = 6;
+					}
+				else if (objectColorValue.indexOf("4682b4")>-1) // NAVY BLUE
+					{
+					document.getElementById("materialColor").selectedIndex = 7;
+					}
+				else if (objectColorValue.indexOf("ffff00")>-1) // YELLOW
+					{
+					document.getElementById("materialColor").selectedIndex = 8;
+					}
+				else if (objectColorValue.indexOf("ffd700")>-1) // GOLD
+					{
+					document.getElementById("materialColor").selectedIndex = 9;
+					}
+				else if (objectColorValue.indexOf("ffc0cb")>-1) // PINK
+					{
+					document.getElementById("materialColor").selectedIndex = 10;
+					}
+				else if (objectColorValue.indexOf("ee82ee")>-1) // VIOLET
+					{
+					document.getElementById("materialColor").selectedIndex = 11;
+					}
+				else if (objectColorValue.indexOf("ffa500")>-1) // ORANGE
+					{
+					document.getElementById("materialColor").selectedIndex = 12;
+					}
+				else if (objectColorValue.indexOf("8b4513")>-1) // BROWN
+					{
+					document.getElementById("materialColor").selectedIndex = 13;
 					}
 				}
 
