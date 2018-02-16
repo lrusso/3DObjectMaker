@@ -334,6 +334,27 @@
 							// ADDING THE MODEL TO THE SCENE
 							scene.add(mesh);
 							objects.push(mesh);
+
+							// ATTACHING THE DRAGGING CONTROL TO THE SELECTED OBJECT
+							controls2.addEventListener("change",function ()
+								{
+								updateTextBoxs();
+								});
+
+							// SELECTING THE DUPLICATED OBJECT
+							selectedObject = mesh;
+							controls2.attach(selectedObject);
+							controls2.update();
+							controls2.visible = true;
+
+							// ENABLING ALL THE TEXTBOXS
+							objectPropertiesPanelEnabled(true);
+
+							// UPDATING THE TEXTBOXS VALUES
+							updateTextBoxs();
+
+							// UPDATING THE COLOR FIELD
+							updateColorField();
 							}
 						}
 						catch(err)
@@ -441,6 +462,27 @@
 				// ADDING THE SHAPE TO SCENE
 				scene.add(mesh);
 				objects.push(mesh);
+
+				// ATTACHING THE DRAGGING CONTROL TO THE SELECTED OBJECT
+				controls2.addEventListener("change",function ()
+					{
+					updateTextBoxs();
+					});
+
+				// SELECTING THE DUPLICATED OBJECT
+				selectedObject = mesh;
+				controls2.attach(selectedObject);
+				controls2.update();
+				controls2.visible = true;
+
+				// ENABLING ALL THE TEXTBOXS
+				objectPropertiesPanelEnabled(true);
+
+				// UPDATING THE TEXTBOXS VALUES
+				updateTextBoxs();
+
+				// UPDATING THE COLOR FIELD
+				updateColorField();
 				}
 
 			function changeGridSize(a)
