@@ -2443,6 +2443,27 @@ function objectPropertiesPanelEnabled(state)
 							// ADDING THE MODEL TO THE SCENE
 							scene.add(mesh);
 							objects.push(mesh);
+
+							// ATTACHING THE DRAGGING CONTROL TO THE SELECTED OBJECT
+							controls2.addEventListener("change",function ()
+								{
+								updateTextBoxs();
+								});
+
+							// SELECTING THE DUPLICATED OBJECT
+							selectedObject = mesh;
+							controls2.attach(selectedObject);
+							controls2.update();
+							controls2.visible = true;
+
+							// ENABLING ALL THE TEXTBOXS
+							objectPropertiesPanelEnabled(true);
+
+							// UPDATING THE TEXTBOXS VALUES
+							updateTextBoxs();
+
+							// UPDATING THE COLOR FIELD
+							updateColorField();
 							}
 						}
 						catch(err)
@@ -2550,6 +2571,27 @@ function objectPropertiesPanelEnabled(state)
 				// ADDING THE SHAPE TO SCENE
 				scene.add(mesh);
 				objects.push(mesh);
+
+				// ATTACHING THE DRAGGING CONTROL TO THE SELECTED OBJECT
+				controls2.addEventListener("change",function ()
+					{
+					updateTextBoxs();
+					});
+
+				// SELECTING THE DUPLICATED OBJECT
+				selectedObject = mesh;
+				controls2.attach(selectedObject);
+				controls2.update();
+				controls2.visible = true;
+
+				// ENABLING ALL THE TEXTBOXS
+				objectPropertiesPanelEnabled(true);
+
+				// UPDATING THE TEXTBOXS VALUES
+				updateTextBoxs();
+
+				// UPDATING THE COLOR FIELD
+				updateColorField();
 				}
 
 			function changeGridSize(a)
@@ -3243,11 +3285,12 @@ function objectPropertiesPanelEnabled(state)
 						}
 
 					// EXPORTING THE SCENE AS A STL FILE
-					var exporter = new THREE.STLBinaryExporter();
+					var exporter = new THREE.STLExporter();
 					var result = exporter.parse(sceneConverter);
 
 					// FORCING SAVING AS FILE
-					saveString(result, STRING_FILENAME + ".stl");
+					console.log("STLFILE---" + result);
+					//saveString(result, STRING_FILENAME + ".stl");
 					}
 					else
 					{
@@ -3324,7 +3367,8 @@ function objectPropertiesPanelEnabled(state)
 					finalResult = gridSizeValue + "|" + finalResult;
 
 					// FORCING SAVING AS FILE
-					saveString(finalResult, STRING_FILENAME + ".scene");
+					console.log("SCENEFILE---" + finalResult);
+					//saveString(finalResult, STRING_FILENAME + ".scene");
 
 					// RETURNING THE OBJECTS TO THE MAIN SCENE
 					for (var i = 0; i < objects.length; i++)
