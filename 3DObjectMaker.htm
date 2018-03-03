@@ -139,6 +139,7 @@
 			</div>
 
 		</div>
+		<div id="loading" class="loading_splash"></div>
 
 		<script src="3DObjectMaker.js"></script>
 		<script>
@@ -213,6 +214,9 @@
 				extensionFinal = extension;
 				var reader = new FileReader();
 
+				// SHOWING THE LOADING SPLASH
+				document.getElementById("loading").style.display = "block";
+
 				if (extension=="stl")
 					{
 					reader.readAsArrayBuffer(file);
@@ -231,6 +235,9 @@
 					}
 					else
 					{
+					// HIDDING THE LOADING SPLASH
+					document.getElementById("loading").style.display = "none";
+
 					document.getElementById("fileOpener").value = null;
 					alert(STRING_ERROR_MODEL);
 					}
@@ -356,9 +363,15 @@
 							// UPDATING THE COLOR FIELD
 							updateColorField();
 							}
+
+						// HIDDING THE LOADING SPLASH
+						document.getElementById("loading").style.display = "none";
 						}
 						catch(err)
 						{
+						// HIDDING THE LOADING SPLASH
+						document.getElementById("loading").style.display = "none";
+
 						alert(STRING_ERROR_MODEL);
 						}
 					}, false);
@@ -1113,74 +1126,23 @@
 				// CHECKING IF THERE IS ANY OBJECTS IN THE PLATFORM
 				if (objects.length>0)
 					{
-					// CREATING A SCENE THAT WILL HAVE ALL THE MODELS
-					var sceneConverter = new THREE.Scene();
-
-					// CREATING DEFAULT MATERIAL
-					var material = new THREE.MeshNormalMaterial();
-
-					// CREATING THE OBJECT THAT WILL HAVE ALL THE OBJECTS COMBINED
-					var finalMeshCSG = null;
-
-					// LOOPING FOR EVERY OBJECT THAT WILL BE CREATED AS ONE
-					for (var i = 0; i < objects.length; i++)
+					// IF NO OBJECTS ARE SELECTED, HIDING THE VISUAL CONTROL
+					if (controls2!=null)
 						{
-						var objectColorValue = String(objects[i].material.color.getHexString());
-
-						// CHECKING IF IT IS NOT A HOLLOW OBJECT
-						if (objectColorValue.indexOf("000000")==-1)
-							{
-							// CREATING AN OBJECT IN ORDER TO COMBINED IT WITH THE REST OF THE OBJECTS IN THE PLATFORM
-							var newCSG = THREE.CSG.fromMesh(objects[i]);
-							
-							// IF THE OBJECT THAT WILL HAVE ALL THE COMBINED OBJECTS IS EMPTY, SETS THE FIRST OBJECT
-							if (finalMeshCSG==null)
-								{
-								finalMeshCSG = newCSG;
-								}
-								else
-								{
-								// COMBINING THE OBJECT WITH THE OBJECT THAT CONTAINS ALL THE OBJECT COMBINED AT THE MOMENT
-								finalMeshCSG = newCSG.union(finalMeshCSG);
-								}
-							}
+						controls2.detach();
+						controls2.update();
+						controls2.visible = false;
+						selectedObject = null;
 						}
 
-					// LOOPING FOR EVERY OBJECT THAT WILL SUBSTRACTING THE FINAL MODEL
-					for (var i = 0; i < objects.length; i++)
-						{
-						var objectColorValue = String(objects[i].material.color.getHexString());
+					// DISABLING ALL THE TEXTBOXS AND BUTTONS
+					objectPropertiesPanelEnabled(false);
 
-						// CHECKING IF IT IS A HOLLOW OBJECT
-						if (objectColorValue.indexOf("000000")>-1)
-							{
-							// CREATING AN OBJECT IN ORDER TO SUBTRACT IT WITH THE REST OF THE OBJECTS IN THE PLATFORM
-							var newCSG = THREE.CSG.fromMesh(objects[i]);
-							
-							// IF THE OBJECT THAT WILL HAVE ALL THE COMBINED OBJECTS IS NOT EMPTY, SUBTRACTS THE OBJECT
-							if (finalMeshCSG!=null)
-								{
-								finalMeshCSG = finalMeshCSG.subtract(newCSG);
-								}
-							}
-						}
+					// SHOWING THE LOADING SPLASH
+					document.getElementById("loading").style.display = "block";
 
-					// CHECKING IF THE OBJECT THAT WILL HAVE ALL THE COMBINED OBJECTS IS NOT EMPTY
-					if (finalMeshCSG!=null)
-						{
-						// CONVERTING THE OBJECT THAT WAS COMBINED AND/OR SUBSTRACTED TO A COMPATIBLE MODEL
-						var newMesh = THREE.CSG.toMesh(finalMeshCSG,material);
-						
-						// ADDING THE MODEL TO THE SCENE
-						sceneConverter.add(newMesh);
-						}
-
-					// EXPORTING THE SCENE AS A STL FILE
-					var exporter = new THREE.STLBinaryExporter();
-					var result = exporter.parse(sceneConverter);
-
-					// FORCING SAVING AS FILE
-					saveString(result, STRING_FILENAME + ".stl");
+					// LOADING THE SCRIPT 1 SECONDS LATER
+					setTimeout(exportToSTLExecute, 1000);
 					}
 					else
 					{
@@ -1189,87 +1151,186 @@
 					}
 				}
 
+			function exportToSTLExecute()
+				{
+				// CREATING A SCENE THAT WILL HAVE ALL THE MODELS
+				var sceneConverter = new THREE.Scene();
+
+				// CREATING DEFAULT MATERIAL
+				var material = new THREE.MeshNormalMaterial();
+
+				// CREATING THE OBJECT THAT WILL HAVE ALL THE OBJECTS COMBINED
+				var finalMeshCSG = null;
+
+				// LOOPING FOR EVERY OBJECT THAT WILL BE CREATED AS ONE
+				for (var i = 0; i < objects.length; i++)
+					{
+					var objectColorValue = String(objects[i].material.color.getHexString());
+
+					// CHECKING IF IT IS NOT A HOLLOW OBJECT
+					if (objectColorValue.indexOf("000000")==-1)
+						{
+						// CREATING AN OBJECT IN ORDER TO COMBINED IT WITH THE REST OF THE OBJECTS IN THE PLATFORM
+						var newCSG = THREE.CSG.fromMesh(objects[i]);
+							
+						// IF THE OBJECT THAT WILL HAVE ALL THE COMBINED OBJECTS IS EMPTY, SETS THE FIRST OBJECT
+						if (finalMeshCSG==null)
+							{
+							finalMeshCSG = newCSG;
+							}
+							else
+							{
+							// COMBINING THE OBJECT WITH THE OBJECT THAT CONTAINS ALL THE OBJECT COMBINED AT THE MOMENT
+							finalMeshCSG = newCSG.union(finalMeshCSG);
+							}
+						}
+					}
+
+				// LOOPING FOR EVERY OBJECT THAT WILL SUBSTRACTING THE FINAL MODEL
+				for (var i = 0; i < objects.length; i++)
+					{
+					var objectColorValue = String(objects[i].material.color.getHexString());
+
+					// CHECKING IF IT IS A HOLLOW OBJECT
+					if (objectColorValue.indexOf("000000")>-1)
+						{
+						// CREATING AN OBJECT IN ORDER TO SUBTRACT IT WITH THE REST OF THE OBJECTS IN THE PLATFORM
+						var newCSG = THREE.CSG.fromMesh(objects[i]);
+
+						// IF THE OBJECT THAT WILL HAVE ALL THE COMBINED OBJECTS IS NOT EMPTY, SUBTRACTS THE OBJECT
+						if (finalMeshCSG!=null)
+							{
+							finalMeshCSG = finalMeshCSG.subtract(newCSG);
+							}
+						}
+					}
+
+				// CHECKING IF THE OBJECT THAT WILL HAVE ALL THE COMBINED OBJECTS IS NOT EMPTY
+				if (finalMeshCSG!=null)
+					{
+					// CONVERTING THE OBJECT THAT WAS COMBINED AND/OR SUBSTRACTED TO A COMPATIBLE MODEL
+					var newMesh = THREE.CSG.toMesh(finalMeshCSG,material);
+
+					// ADDING THE MODEL TO THE SCENE
+					sceneConverter.add(newMesh);
+					}
+
+				// EXPORTING THE SCENE AS A STL FILE
+				var exporter = new THREE.STLBinaryExporter();
+				var result = exporter.parse(sceneConverter);
+
+				// FORCING SAVING AS FILE
+				saveString(result, STRING_FILENAME + ".stl");
+
+				// HIDING THE LOADING SPLASH
+				document.getElementById("loading").style.display = "none";
+				}
+
 			function exportToScene()
 				{
 				// CHECKING IF THERE IS ANY OBJECTS IN THE PLATFORM
 				if (objects.length>0)
 					{
-					// SETTING THE VARIABLE THAT WILL HAVE ALL THE MODELS IN ONE FILE
-					var finalResult = "";
-
-					// GENERATING AN ARRAY OF TEMPORARY SCENES WITH ONE MODEL IN EACH ESCENE
-					for (var i = 0; i < objects.length; i++)
+					// IF NO OBJECTS ARE SELECTED, HIDING THE VISUAL CONTROL
+					if (controls2!=null)
 						{
-						var tempScene = new THREE.Scene();
-
-						// GETTING THE ORIGINAL ROTATION OF THE OBJECT
-						var rotationX = objects[i].rotation.x;
-						var rotationY = objects[i].rotation.y;
-						var rotationZ = objects[i].rotation.z;
-
-						// SETTING THE OBJECT ROTATION TO 0
-						objects[i].rotation.x = 0;
-						objects[i].rotation.y = 0;
-						objects[i].rotation.z = 0;
-
-						// ADDING THE OBJECT TO THE TEMPORARY SCENE
-						tempScene.add(objects[i]);
-
-						// GETTING THE OBJECT SIZE
-						var box = new THREE.Box3().setFromObject(objects[i]);
-						var height = box.max.z - box.min.z;
-						var width = box.max.x - box.min.x;
-						var depth = box.max.y - box.min.y;
-
-						// LOADING ALL THE OBJECT PROPERTIES IN A VARIABLE
-						var objectProperties = objects[i].material.color.getHexString() + "," +
-											   width.toFixed(2) + "," +
-											   height.toFixed(2) + "," +
-											   depth.toFixed(2) + "," +
-											   objects[i].position.x + "," +
-											   objects[i].position.y + "," +
-											   objects[i].position.z + "," +
-											   rotationX + "," +
-											   rotationY + "," +
-											   rotationZ + "|";
-
-						// EXPORTING THE SCENE AS A STL MODEL
-						var exporter = new THREE.STLExporter();
-						var objectData = exporter.parse(tempScene);
-						
-						// ADDING THE MODEL TO THE VARIABLE THAT WILL HAVE ALL THE MODELS IN ONE FILE
-						if (finalResult=="")
-							{
-							finalResult = objectProperties + objectData + "3D_OBJECT_MAKER_SEPARATOR";
-							}
-							else
-							{
-							finalResult = finalResult + objectProperties + objectData + "3D_OBJECT_MAKER_SEPARATOR";
-							}
-
-						// SETTING THE ORIGINAL ROTATION TO THE OBJECT
-						objects[i].rotation.x = rotationX;
-						objects[i].rotation.y = rotationY;
-						objects[i].rotation.z = rotationZ;
+						controls2.detach();
+						controls2.update();
+						controls2.visible = false;
+						selectedObject = null;
 						}
 
-					// ADDING THE GRID SIZE TO THE FINAL RESULT
-					finalResult = gridSizeValue + "|" + finalResult;
+					// DISABLING ALL THE TEXTBOXS AND BUTTONS
+					objectPropertiesPanelEnabled(false);
 
-					// FORCING SAVING AS FILE
-					saveString(finalResult, STRING_FILENAME + ".scene");
+					// SHOWING THE LOADING SPLASH
+					document.getElementById("loading").style.display = "block";
 
-					// RETURNING THE OBJECTS TO THE MAIN SCENE
-					for (var i = 0; i < objects.length; i++)
-						{
-						scene.add(objects[i]);
-						}
+					// LOADING THE SCRIPT 1 SECONDS LATER
+					setTimeout(exportToSceneExecute, 1000);
 					}
 					else
 					{
 					// ERROR MESSAGE
 					alert(STRING_ERROR_EMPTYWORKSPACE);
 					}
+				}
+
+			function exportToSceneExecute()
+				{
+				// SETTING THE VARIABLE THAT WILL HAVE ALL THE MODELS IN ONE FILE
+				var finalResult = "";
+
+				// GENERATING AN ARRAY OF TEMPORARY SCENES WITH ONE MODEL IN EACH ESCENE
+				for (var i = 0; i < objects.length; i++)
+					{
+					var tempScene = new THREE.Scene();
+
+					// GETTING THE ORIGINAL ROTATION OF THE OBJECT
+					var rotationX = objects[i].rotation.x;
+					var rotationY = objects[i].rotation.y;
+					var rotationZ = objects[i].rotation.z;
+
+					// SETTING THE OBJECT ROTATION TO 0
+					objects[i].rotation.x = 0;
+					objects[i].rotation.y = 0;
+					objects[i].rotation.z = 0;
+
+					// ADDING THE OBJECT TO THE TEMPORARY SCENE
+					tempScene.add(objects[i]);
+
+					// GETTING THE OBJECT SIZE
+					var box = new THREE.Box3().setFromObject(objects[i]);
+					var height = box.max.z - box.min.z;
+					var width = box.max.x - box.min.x;
+					var depth = box.max.y - box.min.y;
+
+					// LOADING ALL THE OBJECT PROPERTIES IN A VARIABLE
+					var objectProperties = objects[i].material.color.getHexString() + "," +
+										   width.toFixed(2) + "," +
+										   height.toFixed(2) + "," +
+										   depth.toFixed(2) + "," +
+										   objects[i].position.x + "," +
+										   objects[i].position.y + "," +
+										   objects[i].position.z + "," +
+										   rotationX + "," +
+										   rotationY + "," +
+										   rotationZ + "|";
+
+					// EXPORTING THE SCENE AS A STL MODEL
+					var exporter = new THREE.STLExporter();
+					var objectData = exporter.parse(tempScene);
+						
+					// ADDING THE MODEL TO THE VARIABLE THAT WILL HAVE ALL THE MODELS IN ONE FILE
+					if (finalResult=="")
+						{
+						finalResult = objectProperties + objectData + "3D_OBJECT_MAKER_SEPARATOR";
+						}
+						else
+						{
+						finalResult = finalResult + objectProperties + objectData + "3D_OBJECT_MAKER_SEPARATOR";
+						}
+
+					// SETTING THE ORIGINAL ROTATION TO THE OBJECT
+					objects[i].rotation.x = rotationX;
+					objects[i].rotation.y = rotationY;
+					objects[i].rotation.z = rotationZ;
+					}
+
+				// ADDING THE GRID SIZE TO THE FINAL RESULT
+				finalResult = gridSizeValue + "|" + finalResult;
+
+				// FORCING SAVING AS FILE
+				saveString(finalResult, STRING_FILENAME + ".scene");
+
+				// RETURNING THE OBJECTS TO THE MAIN SCENE
+				for (var i = 0; i < objects.length; i++)
+					{
+					scene.add(objects[i]);
+					}
+
+				// HIDING THE LOADING SPLASH
+				document.getElementById("loading").style.display = "none";
 				}
 
 			function saveString(text, filename)
