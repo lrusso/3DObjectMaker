@@ -607,32 +607,17 @@ body
 	}
 .panel_selectbox_option_gray
 	{
-	background-color:gray;
+	background-color:#808080;
 	color:white;
 	}
-.panel_selectbox_option_white
+.panel_selectbox_option_aqua
 	{
-	background:white;
-	color:black;
-	}
-.panel_selectbox_option_red
-	{
-	background:red;
-	color:white;
-	}
-.panel_selectbox_option_green
-	{
-	background-color:green;
-	color:white;
-	}
-.panel_selectbox_option_greenlight
-	{
-	background-color:#93DB70;
+	background-color:#00ffff;
 	color:black;
 	}
 .panel_selectbox_option_blue
 	{
-	background-color:blue;
+	background-color:#0000ff;
 	color:white;
 	}
 .panel_selectbox_option_navyblue
@@ -640,42 +625,76 @@ body
 	background-color:#4682b4;
 	color:white;
 	}
-.panel_selectbox_option_black
+.panel_selectbox_option_fuchsia
 	{
-	background-color:black;
+	background-color:#ff00ff;
+	color:white;
+	}
+.panel_selectbox_option_green
+	{
+	background-color:#008000;
+	color:white;
+	}
+.panel_selectbox_option_teal
+	{
+	background-color:#008080;
+	color:white;
+	}
+.panel_selectbox_option_lightgreen
+	{
+	background-color:#93db70;
+	color:black;
+	}
+.panel_selectbox_option_lime
+	{
+	background-color:#00ff00;
+	color:black;
+	}
+.panel_selectbox_option_brown
+	{
+	background-color:#8b4513;
+	color:white;
+	}
+.panel_selectbox_option_olive
+	{
+	background-color:#808000;
+	color:white;
+	}
+.panel_selectbox_option_purple
+	{
+	background-color:#800080;
+	color:white;
+	}
+.panel_selectbox_option_violet
+	{
+	background-color:#ee82ee;
+	color:white;
+	}
+.panel_selectbox_option_red
+	{
+	background-color:#ff0000;
 	color:white;
 	}
 .panel_selectbox_option_yellow
 	{
-	background-color:yellow;
+	background-color:#ffff00;
 	color:black;
 	}
 .panel_selectbox_option_gold
 	{
-	background-color:#FFD700;
+	background-color:#ffd700;
 	color:black;
-	}
-.panel_selectbox_option_pink
-	{
-	background-color:pink;
-	color:black;
-	}
-.panel_selectbox_option_violet
-	{
-	background-color:violet;
-	color:white;
 	}
 .panel_selectbox_option_orange
 	{
-	background-color:orange;
+	background-color:#ffa500;
 	color:white;
 	}
-.panel_selectbox_option_brown
+.panel_selectbox_option_pink
 	{
-	background-color:#8B4513;
-	color:white;
+	background-color:#ffc0cb;
+	color:black;
 	}
-
 .models_container1
 	{
 	text-align:center;
