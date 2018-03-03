@@ -788,8 +788,11 @@
 								var newHeight = parseFloat(value);
 								selectedObject.scale.z = newHeight * 1 / tempHeight;
 
-								// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION
-								selectedObject.position.z = parseFloat(parseFloat(newHeight /2 + parseFloat(originalZ)).toFixed(2));
+								// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION IF NO ROTATION
+								if (originalRotationX==0 && originalRotationY==0)
+									{
+									selectedObject.position.z = parseFloat(parseFloat(newHeight /2 + parseFloat(originalZ)).toFixed(2));
+									}
 
 								// SETTING THE ORIGINAL ROTATION TO THE OBJECT
 								selectedObject.rotation.x = originalRotationX;
