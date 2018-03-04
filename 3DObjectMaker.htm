@@ -1532,9 +1532,13 @@
 					{
 					// GETTING THE ORIGINAL SIZE
 					var box = new THREE.Box3().setFromObject(selectedObject);
+					var oldWidth = box.max.x - box.min.x;
+					var oldDepth = box.max.y - box.min.y;
 					var oldHeight = box.max.z - box.min.z;
 					
 					// GETTING THE ORIGINAL POSITION
+					var originalX = parseFloat(parseFloat(selectedObject.position.x).toFixed(2) - oldWidth / 2).toFixed(2);
+					var originalY = parseFloat(parseFloat(selectedObject.position.y).toFixed(2) - oldDepth / 2).toFixed(2);
 					var originalZ = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - oldHeight / 2).toFixed(2);
 
 					// SETTING THE INITIAL OBJECT SIZE
@@ -1546,8 +1550,12 @@
 					if (selectedObject.rotation.x==0 && selectedObject.rotation.y==0)
 						{
 						var tempBox = new THREE.Box3().setFromObject(selectedObject);
+						var newWidth = tempBox.max.x - tempBox.min.x;
+						var newDepth = tempBox.max.y - tempBox.min.y;
 						var newHeight = tempBox.max.z - tempBox.min.z;
 						selectedObject.position.z = parseFloat(parseFloat(newHeight /2 + parseFloat(originalZ)).toFixed(2));
+						selectedObject.position.x = parseFloat(parseFloat(newWidth /2 + parseFloat(originalX)).toFixed(2));
+						selectedObject.position.y = parseFloat(parseFloat(newDepth /2 + parseFloat(originalY)).toFixed(2));
 						}
 
 					// UPDATING THE TEXTBOXS VALUES
