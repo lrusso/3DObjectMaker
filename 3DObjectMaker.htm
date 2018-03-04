@@ -56,7 +56,7 @@
 
 			<div class="panel_fieldseparator"><hr class="panel_hr"></div>
 
-			<div class="panel_field1">
+			<div class="panel_field1b">
 				<div class="panel_field2"><span id="labelGrid"></span></div>
 				<div class="panel_field3">
 					<select class="panel_selectbox" id="gridSize" onchange="changeGridSize(document.getElementById('gridSize').value)">
@@ -71,7 +71,7 @@
 
 			<div class="panel_fieldseparator"><hr class="panel_hr"></div>
 
-			<div class="panel_field1">
+			<div class="panel_field1b">
 				<div class="panel_field2"><span id="labelMaterial"></span></div>
 				<div class="panel_field3">
 					<select class="panel_selectbox" id="materialColor" onchange="changeObjectColor()" disabled>
@@ -99,6 +99,8 @@
 				</div>
 			</div>
 
+			<div class="panel_fieldseparator"><hr class="panel_hr"></div>
+
 			<div class="panel_field1">
 				<div class="panel_field2"><span id="labelWidth"></span></div>
 				<div class="panel_field3"><input type="text" id="objectWidth" onkeydown="return changeObjectWidth(event)" onblur="changeObjectWidth('NULL')" class="panel_textbox" disabled></div>
@@ -114,6 +116,12 @@
 				<div class="panel_field3"><input type="text" id="objectDepth" onkeydown="return changeObjectDepth(event)" onblur="changeObjectDepth('NULL')" class="panel_textbox" disabled></div>
 			</div>
 
+			<div class="panel_field4">
+				<input type="submit" class="panel_button" id="resetScale" onclick="resetObjectScale();" value="" disabled>
+			</div>
+
+			<div class="panel_fieldseparator"><hr class="panel_hr"></div>
+
 			<div class="panel_field1">
 				<div class="panel_field2"><span id="labelPositionX"></span></div>
 				<div class="panel_field3"><input type="text" id="objectPositionX" onkeydown="return changeObjectPositionX(event)" onblur="changeObjectPositionX('NULL')" class="panel_textbox" disabled></div>
@@ -124,10 +132,12 @@
 				<div class="panel_field3"><input type="text" id="objectPositionY" onkeydown="return changeObjectPositionY(event)" onblur="changeObjectPositionY('NULL')" class="panel_textbox" disabled></div>
 			</div>
 
-			<div class="panel_field1">
+			<div class="panel_field1b">
 				<div class="panel_field2"><span id="labelPositionZ"></span></div>
 				<div class="panel_field3"><input type="text" id="objectPositionZ" onkeydown="return changeObjectPositionZ(event)" onblur="changeObjectPositionZ('NULL')" class="panel_textbox" disabled></div>
 			</div>
+
+			<div class="panel_fieldseparator"><hr class="panel_hr"></div>
 
 			<div class="panel_field1">
 				<div class="panel_field2"><span id="labelRotationX"></span></div>
@@ -139,7 +149,7 @@
 				<div class="panel_field3"><input type="text" id="objectRotationY" onkeydown="return changeObjectRotationY(event)" onblur="changeObjectRotationY('NULL')" class="panel_textbox" disabled></div>
 			</div>
 
-			<div class="panel_field1">
+			<div class="panel_field1b">
 				<div class="panel_field2"><span id="labelRotationZ"></span></div>
 				<div class="panel_field3"><input type="text" id="objectRotationZ" onkeydown="return changeObjectRotationZ(event)" onblur="changeObjectRotationZ('NULL')" class="panel_textbox" disabled></div>
 			</div>
@@ -1512,6 +1522,39 @@
 
 					// UPDATING THE COLOR FIELD
 					updateColorField();
+					}
+				}
+
+			function resetObjectScale()
+				{
+				// CHECKING IF AN OBJECT WAS SELECTED
+				if (selectedObject!=null)
+					{
+					// GETTING THE ORIGINAL SIZE
+					var box = new THREE.Box3().setFromObject(selectedObject);
+					var oldHeight = box.max.z - box.min.z;
+					
+					// GETTING THE ORIGINAL POSITION
+					var originalZ = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - oldHeight / 2).toFixed(2);
+
+					// SETTING THE INITIAL OBJECT SIZE
+					selectedObject.scale.x = 1;
+					selectedObject.scale.y = 1;
+					selectedObject.scale.z = 1;
+
+					// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION IF NO ROTATION
+					if (selectedObject.rotation.x==0 && selectedObject.rotation.y==0)
+						{
+						var tempBox = new THREE.Box3().setFromObject(selectedObject);
+						var newHeight = tempBox.max.z - tempBox.min.z;
+						selectedObject.position.z = parseFloat(parseFloat(newHeight /2 + parseFloat(originalZ)).toFixed(2));
+						}
+
+					// UPDATING THE TEXTBOXS VALUES
+					updateTextBoxs();
+
+					// UPDATING THE VISUAL CONTROL
+					controls2.update();
 					}
 				}
 
