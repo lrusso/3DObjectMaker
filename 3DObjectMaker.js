@@ -1348,18 +1348,7 @@ function objectPropertiesPanelEnabled(state)
 		}
 		else
 		{
-		document.getElementById("gridSize").blur();
-		document.getElementById("materialColor").blur();
-		document.getElementById("objectWidth").blur();
-		document.getElementById("objectHeight").blur();
-		document.getElementById("objectDepth").blur();
-		document.getElementById("resetScale").blur();
-		document.getElementById("objectPositionX").blur();
-		document.getElementById("objectPositionY").blur();
-		document.getElementById("objectPositionZ").blur();
-		document.getElementById("objectRotationX").blur();
-		document.getElementById("objectRotationY").blur();
-		document.getElementById("objectRotationZ").blur();
+		document.getElementById("objectWidth").focus();
 		document.getElementById("labelMaterial").style.color = "#000000";
 		document.getElementById("labelWidth").style.color = "#000000";
 		document.getElementById("labelHeight").style.color = "#000000";
