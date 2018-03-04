@@ -957,6 +957,7 @@ var STRING_MATERIAL_PINK = "";
 var STRING_WIDTH = "";
 var STRING_HEIGHT = "";
 var STRING_DEPTH = "";
+var STRING_RESETSCALE = "";
 var STRING_POSITION_X = "";
 var STRING_POSITION_Y = "";
 var STRING_POSITION_Z = "";
@@ -1006,6 +1007,7 @@ function initLanguage()
 		STRING_WIDTH = "Ancho (mm):";
 		STRING_HEIGHT = "Alto (mm):";
 		STRING_DEPTH = "Largo (mm):";
+		STRING_RESETSCALE = "Restablecer tama\u00F1o";
 		STRING_POSITION_X = "Posici&oacute;n X (mm):";
 		STRING_POSITION_Y = "Posici&oacute;n Y (mm):";
 		STRING_POSITION_Z = "Posici&oacute;n Z (mm):";
@@ -1052,6 +1054,7 @@ function initLanguage()
 		STRING_WIDTH = "Width (mm):";
 		STRING_HEIGHT = "Height (mm):";
 		STRING_DEPTH = "Depth (mm):";
+		STRING_RESETSCALE = "Reset size";
 		STRING_POSITION_X = "Position X (mm):";
 		STRING_POSITION_Y = "Position Y (mm):";
 		STRING_POSITION_Z = "Position Z (mm):";
@@ -1097,6 +1100,7 @@ function initLanguage()
 	document.getElementById("labelWidth").innerHTML = STRING_WIDTH;
 	document.getElementById("labelHeight").innerHTML = STRING_HEIGHT;
 	document.getElementById("labelDepth").innerHTML = STRING_DEPTH;
+	document.getElementById("resetScale").value = STRING_RESETSCALE;
 	document.getElementById("labelPositionX").innerHTML = STRING_POSITION_X;
 	document.getElementById("labelPositionY").innerHTML = STRING_POSITION_Y;
 	document.getElementById("labelPositionZ").innerHTML = STRING_POSITION_Z;
@@ -1286,6 +1290,7 @@ function objectPropertiesPanelEnabled(state)
 	document.getElementById("objectWidth").disabled = !state;
 	document.getElementById("objectHeight").disabled = !state;
 	document.getElementById("objectDepth").disabled = !state;
+	document.getElementById("resetScale").disabled = !state;
 	document.getElementById("objectPositionX").disabled = !state;
 	document.getElementById("objectPositionY").disabled = !state;
 	document.getElementById("objectPositionZ").disabled = !state;
