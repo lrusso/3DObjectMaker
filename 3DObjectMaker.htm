@@ -103,17 +103,17 @@
 
 			<div class="panel_field1">
 				<div class="panel_field2"><span id="labelWidth"></span></div>
-				<div class="panel_field3"><input type="text" id="objectWidth" onkeydown="return changeObjectWidth(event)" onblur="changeObjectWidth('NULL')" class="panel_textbox" disabled></div>
+				<div class="panel_field3"><input type="text" id="objectWidth" onkeydown="return changeObjectWidth(event)" class="panel_textbox" disabled></div>
 			</div>
 
 			<div class="panel_field1">
 				<div class="panel_field2"><span id="labelHeight"></span></div>
-				<div class="panel_field3"><input type="text" id="objectHeight" onkeydown="return changeObjectHeight(event)" onblur="changeObjectHeight('NULL')" class="panel_textbox" disabled></div>
+				<div class="panel_field3"><input type="text" id="objectHeight" onkeydown="return changeObjectHeight(event)" class="panel_textbox" disabled></div>
 			</div>
 
 			<div class="panel_field1">
 				<div class="panel_field2"><span id="labelDepth"></span></div>
-				<div class="panel_field3"><input type="text" id="objectDepth" onkeydown="return changeObjectDepth(event)" onblur="changeObjectDepth('NULL')" class="panel_textbox" disabled></div>
+				<div class="panel_field3"><input type="text" id="objectDepth" onkeydown="return changeObjectDepth(event)" class="panel_textbox" disabled></div>
 			</div>
 
 			<div class="panel_field4">
@@ -124,34 +124,34 @@
 
 			<div class="panel_field1">
 				<div class="panel_field2"><span id="labelPositionX"></span></div>
-				<div class="panel_field3"><input type="text" id="objectPositionX" onkeydown="return changeObjectPositionX(event)" onblur="changeObjectPositionX('NULL')" class="panel_textbox" disabled></div>
+				<div class="panel_field3"><input type="text" id="objectPositionX" onkeydown="return changeObjectPositionX(event)" class="panel_textbox" disabled></div>
 			</div>
 
 			<div class="panel_field1">
 				<div class="panel_field2"><span id="labelPositionY"></span></div>
-				<div class="panel_field3"><input type="text" id="objectPositionY" onkeydown="return changeObjectPositionY(event)" onblur="changeObjectPositionY('NULL')" class="panel_textbox" disabled></div>
+				<div class="panel_field3"><input type="text" id="objectPositionY" onkeydown="return changeObjectPositionY(event)" class="panel_textbox" disabled></div>
 			</div>
 
 			<div class="panel_field1b">
 				<div class="panel_field2"><span id="labelPositionZ"></span></div>
-				<div class="panel_field3"><input type="text" id="objectPositionZ" onkeydown="return changeObjectPositionZ(event)" onblur="changeObjectPositionZ('NULL')" class="panel_textbox" disabled></div>
+				<div class="panel_field3"><input type="text" id="objectPositionZ" onkeydown="return changeObjectPositionZ(event)" class="panel_textbox" disabled></div>
 			</div>
 
 			<div class="panel_fieldseparator"><hr class="panel_hr"></div>
 
 			<div class="panel_field1">
 				<div class="panel_field2"><span id="labelRotationX"></span></div>
-				<div class="panel_field3"><input type="text" id="objectRotationX" onkeydown="return changeObjectRotationX(event)" onblur="changeObjectRotationX('NULL')" class="panel_textbox" disabled></div>
+				<div class="panel_field3"><input type="text" id="objectRotationX" onkeydown="return changeObjectRotationX(event)" class="panel_textbox" disabled></div>
 			</div>
 
 			<div class="panel_field1">
 				<div class="panel_field2"><span id="labelRotationY"></span></div>
-				<div class="panel_field3"><input type="text" id="objectRotationY" onkeydown="return changeObjectRotationY(event)" onblur="changeObjectRotationY('NULL')" class="panel_textbox" disabled></div>
+				<div class="panel_field3"><input type="text" id="objectRotationY" onkeydown="return changeObjectRotationY(event)" class="panel_textbox" disabled></div>
 			</div>
 
 			<div class="panel_field1b">
 				<div class="panel_field2"><span id="labelRotationZ"></span></div>
-				<div class="panel_field3"><input type="text" id="objectRotationZ" onkeydown="return changeObjectRotationZ(event)" onblur="changeObjectRotationZ('NULL')" class="panel_textbox" disabled></div>
+				<div class="panel_field3"><input type="text" id="objectRotationZ" onkeydown="return changeObjectRotationZ(event)" class="panel_textbox" disabled></div>
 			</div>
 
 		</div>
@@ -676,7 +676,7 @@
 				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
-					if (e.keyCode == 13 || e=='NULL')
+					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectWidth").value;
 
@@ -762,7 +762,7 @@
 				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
-					if (e.keyCode == 13 || e=='NULL')
+					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectHeight").value;
 
@@ -851,7 +851,7 @@
 				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
-					if (e.keyCode == 13 || e=='NULL')
+					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectDepth").value;
 
@@ -937,7 +937,7 @@
 				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
-					if (e.keyCode == 13 || e=='NULL')
+					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectPositionX").value;
 
@@ -973,7 +973,7 @@
 				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
-					if (e.keyCode == 13 || e=='NULL')
+					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectPositionY").value;
 
@@ -1013,7 +1013,7 @@
 				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
-					if (e.keyCode == 13 || e=='NULL')
+					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectPositionZ").value;
 
@@ -1049,7 +1049,7 @@
 				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
-					if (e.keyCode == 13 || e=='NULL')
+					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectRotationX").value;
 
@@ -1085,7 +1085,7 @@
 				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
-					if (e.keyCode == 13 || e=='NULL')
+					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectRotationY").value;
 
@@ -1121,7 +1121,7 @@
 				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
-					if (e.keyCode == 13 || e=='NULL')
+					if (e.keyCode == 13 || e.keyCode == 9)
 						{
 						var value = document.getElementById("objectRotationZ").value;
 
