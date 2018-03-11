@@ -9,7 +9,7 @@ body
 	overflow:hidden;
 	margin:0;
 	padding:0;
-	min-height:600px;
+	min-height:610px;
 	}
 .content1
 	{
@@ -38,7 +38,7 @@ body
 	right:0;
 	max-width:100%;
 	max-height:100%;
-	min-height:600px;
+	min-height:610px;
 	overflow:hidden;
 	padding-top:10px;
 	text-align:center;
@@ -494,8 +494,19 @@ body
 .panel_field4
 	{
 	float:left;
-  	width:100%;
-  	}
+	text-align:left;
+	width:100%;
+	padding-left:5px;
+	padding-bottom:5px;
+	}
+.panel_field5
+	{
+	float:left;
+	width:200px;
+	text-align:left,;
+	padding-left:10px;
+	padding-right:10px;
+	}
 .panel_fieldseparator
 	{
 	float:left;
@@ -509,14 +520,14 @@ body
 	}
 .panel_button
 	{
+	width:100%;
 	line-height:27px;
 	height:27px;
 	color:black;
 	font-family:Arial;
 	font-size:13px;
-	text-align:left;
-	padding-left:10px;
-	padding-right:10px;
+	text-align:center;
+	margin-bottom:2px;
 	border:1px silver solid;
 	background-color:#F2F2F2;
 	border:1px solid #D3D3D3;
@@ -532,6 +543,48 @@ body
 	background-color:#F2F2F2;
 	border:1px solid #D3D3D3;
 	color:silver;
+	}
+.panel_checkbox
+	{
+	display:inline;
+	border:1px silver solid;
+	background-color:#F2F2F2;
+	border:1px solid #D3D3D3;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius:5px;
+	}
+.panel_checkbox:disabled
+	{
+	background-color:#F2F2F2;
+	border:1px solid #D3D3D3;
+	}
+.panel_checkboxtext
+	{
+	display:inline;
+	color:black;
+	font-family:Arial;
+	font-size:13px;
+	text-align:left;
+	cursor:default;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	user-select:none;
+	}
+.panel_checkboxtext_disabled
+	{
+	display:inline;
+	color:silver;
+	font-family:Arial;
+	font-size:13px;
+	text-align:left;
+	cursor:default;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	user-select:none;
 	}
 .panel_textbox
 	{
@@ -899,20 +952,24 @@ body
 
 			<div class="panel_field1">
 				<div class="panel_field2"><span id="labelWidth"></span></div>
-				<div class="panel_field3"><input type="text" id="objectWidth" onkeydown="return changeObjectWidth(event)" class="panel_textbox" disabled></div>
+				<div class="panel_field3"><input type="text" id="objectWidth" onkeydown="return changeObjectWidth(event)" class="panel_textbox" disabled><input type="hidden" id="objectWidthCommaResidualData"></div>
 			</div>
 
 			<div class="panel_field1">
 				<div class="panel_field2"><span id="labelHeight"></span></div>
-				<div class="panel_field3"><input type="text" id="objectHeight" onkeydown="return changeObjectHeight(event)" class="panel_textbox" disabled></div>
+				<div class="panel_field3"><input type="text" id="objectHeight" onkeydown="return changeObjectHeight(event)" class="panel_textbox" disabled><input type="hidden" id="objectHeightCommaResidualData"></div>
 			</div>
 
 			<div class="panel_field1">
 				<div class="panel_field2"><span id="labelDepth"></span></div>
-				<div class="panel_field3"><input type="text" id="objectDepth" onkeydown="return changeObjectDepth(event)" class="panel_textbox" disabled></div>
+				<div class="panel_field3"><input type="text" id="objectDepth" onkeydown="return changeObjectDepth(event)" class="panel_textbox" disabled><input type="hidden" id="objectDepthCommaResidualData"></div>
 			</div>
 
 			<div class="panel_field4">
+				<input type="checkbox" class="panel_checkbox" id="objectProportional" onclick="checkProportional();" disabled><label class="panel_checkboxtext_disabled" id="objectProportionalLabel" onclick="document.getElementById('objectProportional').click();"></label>
+			</div>
+
+			<div class="panel_field5">
 				<input type="submit" class="panel_button" id="resetScale" onclick="resetObjectScale();" value="" disabled>
 			</div>
 
@@ -1913,6 +1970,7 @@ var STRING_MATERIAL_PINK = "";
 var STRING_WIDTH = "";
 var STRING_HEIGHT = "";
 var STRING_DEPTH = "";
+var STRING_PROPORTIONALSCALING = "";
 var STRING_RESETSCALE = "";
 var STRING_POSITION_X = "";
 var STRING_POSITION_Y = "";
@@ -1963,6 +2021,7 @@ function initLanguage()
 		STRING_WIDTH = "Ancho (mm):";
 		STRING_HEIGHT = "Alto (mm):";
 		STRING_DEPTH = "Largo (mm):";
+		STRING_PROPORTIONALSCALING = "Tama\u00F1o proporcional";
 		STRING_RESETSCALE = "Restablecer tama\u00F1o";
 		STRING_POSITION_X = "Posici&oacute;n X (mm):";
 		STRING_POSITION_Y = "Posici&oacute;n Y (mm):";
@@ -2010,6 +2069,7 @@ function initLanguage()
 		STRING_WIDTH = "Width (mm):";
 		STRING_HEIGHT = "Height (mm):";
 		STRING_DEPTH = "Depth (mm):";
+		STRING_PROPORTIONALSCALING = "Proportional size";
 		STRING_RESETSCALE = "Reset size";
 		STRING_POSITION_X = "Position X (mm):";
 		STRING_POSITION_Y = "Position Y (mm):";
@@ -2056,6 +2116,7 @@ function initLanguage()
 	document.getElementById("labelWidth").innerHTML = STRING_WIDTH;
 	document.getElementById("labelHeight").innerHTML = STRING_HEIGHT;
 	document.getElementById("labelDepth").innerHTML = STRING_DEPTH;
+	document.getElementById("objectProportionalLabel").innerHTML = STRING_PROPORTIONALSCALING;
 	document.getElementById("resetScale").value = STRING_RESETSCALE;
 	document.getElementById("labelPositionX").innerHTML = STRING_POSITION_X;
 	document.getElementById("labelPositionY").innerHTML = STRING_POSITION_Y;
@@ -2246,6 +2307,7 @@ function objectPropertiesPanelEnabled(state)
 	document.getElementById("objectWidth").disabled = !state;
 	document.getElementById("objectHeight").disabled = !state;
 	document.getElementById("objectDepth").disabled = !state;
+	document.getElementById("objectProportional").disabled = !state;
 	document.getElementById("resetScale").disabled = !state;
 	document.getElementById("objectPositionX").disabled = !state;
 	document.getElementById("objectPositionY").disabled = !state;
@@ -2261,6 +2323,7 @@ function objectPropertiesPanelEnabled(state)
 		document.getElementById("objectWidth").blur();
 		document.getElementById("objectHeight").blur();
 		document.getElementById("objectDepth").blur();
+		document.getElementById("objectProportional").blur();
 		document.getElementById("resetScale").blur();
 		document.getElementById("objectPositionX").blur();
 		document.getElementById("objectPositionY").blur();
@@ -2282,12 +2345,15 @@ function objectPropertiesPanelEnabled(state)
 		document.getElementById("objectWidth").value = "";
 		document.getElementById("objectHeight").value = "";
 		document.getElementById("objectDepth").value = "";
+		document.getElementById("objectProportional").checked = false;
 		document.getElementById("objectPositionX").value = "";
 		document.getElementById("objectPositionY").value = "";
 		document.getElementById("objectPositionZ").value = "";
 		document.getElementById("objectRotationX").value = "";
 		document.getElementById("objectRotationY").value = "";
 		document.getElementById("objectRotationZ").value = "";
+		document.getElementById("objectProportionalLabel").classList.add("panel_checkboxtext_disabled");
+		document.getElementById("objectProportionalLabel").classList.remove("panel_checkboxtext");
 		document.getElementById("buttonMove").classList.add("menubar_button_move_disabled");
 		document.getElementById("buttonMove").classList.remove("menubar_button_move_enabled");
 		document.getElementById("buttonMove").classList.remove("menubar_button_move_selected");
@@ -2326,6 +2392,9 @@ function objectPropertiesPanelEnabled(state)
 		document.getElementById("labelRotationX").style.color = "#000000";
 		document.getElementById("labelRotationY").style.color = "#000000";
 		document.getElementById("labelRotationZ").style.color = "#000000";
+
+		document.getElementById("objectProportionalLabel").classList.add("panel_checkboxtext");
+		document.getElementById("objectProportionalLabel").classList.remove("panel_checkboxtext_disabled");
 
 		if (TYPE_CONTROL==TYPE_MOVE)
 			{
@@ -2572,6 +2641,11 @@ function objectPropertiesPanelEnabled(state)
 							mesh.position.y = 0;
 							mesh.position.z = height / 2;
 
+							// SETTING THE SCALE OF THE MODEL
+							mesh.scale.x = 1;
+							mesh.scale.y = 1;
+							mesh.scale.z = 1;
+
 							// SETTING THE COLOR OF THE MODEL
 							mesh.material.color.setHex(0xffffff);
 
@@ -2599,6 +2673,9 @@ function objectPropertiesPanelEnabled(state)
 
 							// UPDATING THE COLOR FIELD
 							updateColorField();
+
+							// UPDATING THE PROPORTIONAL VALUE
+							updateProportional();
 							}
 
 						// HIDDING THE LOADING SPLASH
@@ -2672,6 +2749,9 @@ function objectPropertiesPanelEnabled(state)
 
 					// UPDATING THE COLOR FIELD
 					updateColorField();
+
+					// UPDATING THE PROPORTIONAL VALUE
+					updateProportional();
 					}
 					else
 					{
@@ -2733,6 +2813,9 @@ function objectPropertiesPanelEnabled(state)
 
 				// UPDATING THE COLOR FIELD
 				updateColorField();
+
+				// UPDATING THE PROPORTIONAL VALUE
+				updateProportional();
 				}
 
 			function changeGridSize(a)
@@ -2911,9 +2994,10 @@ function objectPropertiesPanelEnabled(state)
 						selectedObject.rotation.y = 0;
 						selectedObject.rotation.z = 0;
 
-						// GETTING THE OBJECT WIDTH
+						// GETTING THE OBJECT WIDTH AND HEIGHT
 						var box = new THREE.Box3().setFromObject(selectedObject);
 						var oldWidth = box.max.x - box.min.x;
+						var oldHeight = box.max.z - box.min.z;
 
 						// CHECKING IF IS A DOUBLE
 						if(isDouble(value)==true)
@@ -2921,17 +3005,36 @@ function objectPropertiesPanelEnabled(state)
 							if (value>0)
 								{
 								// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
-								value = parseFloat(value).toFixed(2);
+								value = parseFloat(parseFloat(document.getElementById("objectWidth").value) + parseFloat(document.getElementById("objectWidthCommaResidualData").value));
 
 								// GETTING THE ORIGINAL POSITION
-								var originalX = parseFloat(parseFloat(selectedObject.position.x).toFixed(2) - oldWidth / 2).toFixed(2);
+								var originalX = parseFloat(parseFloat(selectedObject.position.x).toFixed(2) - oldWidth / 2);
+								var originalZ = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - oldHeight / 2);
 
-								// SCALING THE OBJECT
+								// RESIZING THE OBJECT
 								selectedObject.scale.x = 1;
 								var tempBox = new THREE.Box3().setFromObject(selectedObject);
 								var tempWidth = tempBox.max.x - tempBox.min.x;
-								var newWidth = parseFloat(value).toFixed(2);
-								selectedObject.scale.x = newWidth * 1 / tempWidth;
+								var newWidth = parseFloat(value);
+								var newScale = newWidth * 1 / tempWidth;
+
+								// CHECKING IF PROPORTIONAL SIZE IS ACTIVATED
+								if (document.getElementById("objectProportional").checked==true)
+									{
+									selectedObject.scale.set(newScale,newScale,newScale);
+
+									// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION IF NO ROTATION
+									if (originalRotationX==0 && originalRotationY==0)
+										{
+										var newBox = new THREE.Box3().setFromObject(selectedObject);
+										var newHeight = newBox.max.z - newBox.min.z;
+										selectedObject.position.z = parseFloat(parseFloat(newHeight /2 + parseFloat(originalZ)).toFixed(2));
+										}
+									}
+									else
+									{
+									selectedObject.scale.x = newScale;
+									}
 
 								// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION
 								selectedObject.position.x = parseFloat(parseFloat(newWidth /2 + parseFloat(originalX)).toFixed(2));
@@ -2955,7 +3058,7 @@ function objectPropertiesPanelEnabled(state)
 								selectedObject.rotation.z = originalRotationZ;
 
 								// SETTING THE ORIGINAL VALUE
-								document.getElementById("objectWidth").value = parseFloat(oldWidth).toFixed(2);
+								document.getElementById("objectWidth").value = parseFloat(oldWidth);
 
 								// ERROR MESSAGE
 								alert(STRING_ERROR_POSITIVE);
@@ -2969,7 +3072,7 @@ function objectPropertiesPanelEnabled(state)
 							selectedObject.rotation.z = originalRotationZ;
 
 							// SETTING THE ORIGINAL VALUE
-							document.getElementById("objectWidth").value = parseFloat(oldWidth).toFixed(2);
+							document.getElementById("objectWidth").value = parseFloat(oldWidth);
 
 							// ERROR MESSAGE
 							alert(STRING_ERROR_DOUBLE);
@@ -3007,22 +3110,32 @@ function objectPropertiesPanelEnabled(state)
 							if (value>0)
 								{
 								// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
-								value = parseFloat(value).toFixed(2);
+								value = parseFloat(parseFloat(document.getElementById("objectHeight").value) + parseFloat(document.getElementById("objectHeightCommaResidualData").value));
 
 								// GETTING THE ORIGINAL POSITION
-								var originalZ = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - oldHeight / 2).toFixed(2);
+								var originalZ = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - oldHeight / 2);
 
-								// SCALING THE OBJECT
+								// RESIZING THE OBJECT
 								selectedObject.scale.z = 1;
 								var tempBox = new THREE.Box3().setFromObject(selectedObject);
 								var tempHeight = tempBox.max.z - tempBox.min.z;
 								var newHeight = parseFloat(value);
-								selectedObject.scale.z = newHeight * 1 / tempHeight;
+								var newScale = newHeight * 1 / tempHeight;
+
+								// CHECKING IF PROPORTIONAL SIZE IS ACTIVATED
+								if (document.getElementById("objectProportional").checked==true)
+									{
+									selectedObject.scale.set(newScale,newScale,newScale);
+									}
+									else
+									{
+									selectedObject.scale.z = newScale;
+									}
 
 								// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION IF NO ROTATION
 								if (originalRotationX==0 && originalRotationY==0)
 									{
-									selectedObject.position.z = parseFloat(parseFloat(newHeight /2 + parseFloat(originalZ)).toFixed(2));
+									selectedObject.position.z = parseFloat(parseFloat(newHeight /2 + parseFloat(originalZ)).toFixed(2)).toFixed(2);
 									}
 
 								// SETTING THE ORIGINAL ROTATION TO THE OBJECT
@@ -3044,7 +3157,7 @@ function objectPropertiesPanelEnabled(state)
 								selectedObject.rotation.z = originalRotationZ;
 
 								// SETTING THE ORIGINAL VALUE
-								document.getElementById("objectHeight").value = parseFloat(oldHeight).toFixed(2);
+								document.getElementById("objectHeight").value = parseFloat(oldHeight);
 
 								// ERROR MESSAGE
 								alert(STRING_ERROR_POSITIVE);
@@ -3058,7 +3171,7 @@ function objectPropertiesPanelEnabled(state)
 							selectedObject.rotation.z = originalRotationZ;
 
 							// SETTING THE ORIGINAL VALUE
-							document.getElementById("objectHeight").value = parseFloat(oldHeight).toFixed(2);
+							document.getElementById("objectHeight").value = parseFloat(oldHeight);
 
 							// ERROR MESSAGE
 							alert(STRING_ERROR_DOUBLE);
@@ -3089,6 +3202,7 @@ function objectPropertiesPanelEnabled(state)
 						// GETTING THE OBJECT DEPTH
 						var box = new THREE.Box3().setFromObject(selectedObject);
 						var oldDepth = box.max.y - box.min.y;
+						var oldHeight = box.max.z - box.min.z;
 
 						// CHECKING IF IS A DOUBLE
 						if(isDouble(value)==true)
@@ -3096,17 +3210,36 @@ function objectPropertiesPanelEnabled(state)
 							if (value>0)
 								{
 								// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
-								value = parseFloat(value).toFixed(2);
+								value = parseFloat(parseFloat(document.getElementById("objectDepth").value) + parseFloat(document.getElementById("objectDepthCommaResidualData").value));
 
 								// GETTING THE ORIGINAL POSITION
-								var originalY = parseFloat(parseFloat(selectedObject.position.y).toFixed(2) - oldDepth / 2).toFixed(2);
+								var originalY = parseFloat(parseFloat(selectedObject.position.y).toFixed(2) - oldDepth / 2);
+								var originalZ = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - oldHeight / 2);
 
 								// SCALING THE OBJECT
 								selectedObject.scale.y = 1;
 								var tempBox = new THREE.Box3().setFromObject(selectedObject);
 								var tempDepth = tempBox.max.y - tempBox.min.y;
 								var newDepth = parseFloat(value);
-								selectedObject.scale.y = newDepth * 1 / tempDepth;
+								var newScale = newDepth * 1 / tempDepth;
+
+								// CHECKING IF PROPORTIONAL SIZE IS ACTIVATED
+								if (document.getElementById("objectProportional").checked==true)
+									{
+									selectedObject.scale.set(newScale,newScale,newScale);
+
+									// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION IF NO ROTATION
+									if (originalRotationX==0 && originalRotationY==0)
+										{
+										var newBox = new THREE.Box3().setFromObject(selectedObject);
+										var newHeight = newBox.max.z - newBox.min.z;
+										selectedObject.position.z = parseFloat(parseFloat(newHeight /2 + parseFloat(originalZ)).toFixed(2));
+										}
+									}
+									else
+									{
+									selectedObject.scale.y = newScale;
+									}
 
 								// RELOCATING THE OBJECT TO THE ORIGINAL Y POSITION
 								selectedObject.position.y = parseFloat(parseFloat(newDepth /2 + parseFloat(originalY)).toFixed(2));
@@ -3130,7 +3263,7 @@ function objectPropertiesPanelEnabled(state)
 								selectedObject.rotation.z = originalRotationZ;
 
 								// SETTING THE ORIGINAL VALUE
-								document.getElementById("objectDepth").value = parseFloat(oldDepth).toFixed(2);
+								document.getElementById("objectDepth").value = parseFloat(oldDepth);
 
 								// ERROR MESSAGE
 								alert(STRING_ERROR_POSITIVE);
@@ -3144,7 +3277,7 @@ function objectPropertiesPanelEnabled(state)
 							selectedObject.rotation.z = originalRotationZ;
 
 							// SETTING THE ORIGINAL VALUE
-							document.getElementById("objectDepth").value = parseFloat(oldDepth).toFixed(2);
+							document.getElementById("objectDepth").value = parseFloat(oldDepth);
 
 							// ERROR MESSAGE
 							alert(STRING_ERROR_DOUBLE);
@@ -3166,7 +3299,7 @@ function objectPropertiesPanelEnabled(state)
 						if(isDouble(value)==true)
 							{
 							// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
-							value = parseFloat(value).toFixed(2);
+							value = parseFloat(value);
 
 							// SETTING THE OBJECT POSITION
 							selectedObject.position.x = parseFloat(value);
@@ -3206,10 +3339,10 @@ function objectPropertiesPanelEnabled(state)
 						if(isDouble(value)==true)
 							{
 							// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
-							value = parseFloat(value).toFixed(2);
+							value = parseFloat(value);
 
 							// SETTING THE OBJECT POSITION
-							selectedObject.position.z = parseFloat((height/2)+parseFloat(value)).toFixed(2);
+							selectedObject.position.z = parseFloat((height/2)+parseFloat(value));
 
 							// UPDATING THE VISUAL CONTROL
 							controls2.update();
@@ -3242,7 +3375,7 @@ function objectPropertiesPanelEnabled(state)
 						if(isDouble(value)==true)
 							{
 							// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
-							value = parseFloat(value).toFixed(2);
+							value = parseFloat(value);
 
 							// SETTING THE OBJECT POSITION
 							selectedObject.position.y = parseFloat(value);
@@ -3278,13 +3411,13 @@ function objectPropertiesPanelEnabled(state)
 						if(isDouble(value)==true)
 							{
 							// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
-							value = parseFloat(value).toFixed(2);
+							value = parseFloat(value);
 
 							// SETTING THE OBJECT ROTATION
 							selectedObject.rotation.x = (value * Math.PI)/180;
 
 							// SETTING THE VALUE
-							document.getElementById("objectRotationX").value = parseFloat(value).toFixed(2);
+							document.getElementById("objectRotationX").value = parseFloat(value);
 
 							// UPDATING THE TEXTBOXS VALUES
 							updateTextBoxs();
@@ -3292,7 +3425,7 @@ function objectPropertiesPanelEnabled(state)
 							else
 							{
 							// SETTING THE ORIGINAL VALUE
-							document.getElementById("objectRotationX").value = (selectedObject.rotation.x * 180 / Math.PI).toFixed(2);
+							document.getElementById("objectRotationX").value = (selectedObject.rotation.x * 180 / Math.PI);
 
 							// ERROR MESSAGE
 							alert(STRING_ERROR_DOUBLE);
@@ -3314,13 +3447,13 @@ function objectPropertiesPanelEnabled(state)
 						if(isDouble(value)==true)
 							{
 							// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
-							value = parseFloat(value).toFixed(2);
+							value = parseFloat(value);
 
 							// SETTING THE OBJECT ROTATION
 							selectedObject.rotation.y = (value * Math.PI)/180;
 
 							// SETTING THE VALUE
-							document.getElementById("objectRotationY").value = parseFloat(value).toFixed(2);
+							document.getElementById("objectRotationY").value = parseFloat(value);
 
 							// UPDATING THE TEXTBOXS VALUES
 							updateTextBoxs();
@@ -3328,7 +3461,7 @@ function objectPropertiesPanelEnabled(state)
 							else
 							{
 							// SETTING THE ORIGINAL VALUE
-							document.getElementById("objectRotationY").value = (selectedObject.rotation.y * 180 / Math.PI).toFixed(2);
+							document.getElementById("objectRotationY").value = (selectedObject.rotation.y * 180 / Math.PI);
 
 							// ERROR MESSAGE
 							alert(STRING_ERROR_DOUBLE);
@@ -3350,13 +3483,13 @@ function objectPropertiesPanelEnabled(state)
 						if(isDouble(value)==true)
 							{
 							// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
-							value = parseFloat(value).toFixed(2);
+							value = parseFloat(value);
 
 							// SETTING THE OBJECT ROTATION
 							selectedObject.rotation.z = (value * Math.PI)/180;
 
 							// SETTING THE VALUE
-							document.getElementById("objectRotationZ").value = parseFloat(value).toFixed(2);
+							document.getElementById("objectRotationZ").value = parseFloat(value);
 
 							// UPDATING THE TEXTBOXS VALUES
 							updateTextBoxs();
@@ -3364,7 +3497,7 @@ function objectPropertiesPanelEnabled(state)
 							else
 							{
 							// SETTING THE ORIGINAL VALUE
-							document.getElementById("objectRotationZ").value = (selectedObject.rotation.z * 180 / Math.PI).toFixed(2);
+							document.getElementById("objectRotationZ").value = (selectedObject.rotation.z * 180 / Math.PI);
 
 							// ERROR MESSAGE
 							alert(STRING_ERROR_DOUBLE);
@@ -3585,7 +3718,7 @@ function objectPropertiesPanelEnabled(state)
 					// EXPORTING THE SCENE AS A STL MODEL
 					var exporter = new THREE.STLExporter();
 					var objectData = exporter.parse(tempScene);
-						
+
 					// ADDING THE MODEL TO THE VARIABLE THAT WILL HAVE ALL THE MODELS IN ONE FILE
 					if (finalResult=="")
 						{
@@ -3745,6 +3878,9 @@ function objectPropertiesPanelEnabled(state)
 
 					// UPDATING THE COLOR FIELD
 					updateColorField();
+
+					// UPDATING THE PROPORTIONAL VALUE
+					updateProportional();
 					}
 				}
 
@@ -3758,11 +3894,11 @@ function objectPropertiesPanelEnabled(state)
 					var oldWidth = box.max.x - box.min.x;
 					var oldDepth = box.max.y - box.min.y;
 					var oldHeight = box.max.z - box.min.z;
-					
+
 					// GETTING THE ORIGINAL POSITION
-					var originalX = parseFloat(parseFloat(selectedObject.position.x).toFixed(2) - oldWidth / 2).toFixed(2);
-					var originalY = parseFloat(parseFloat(selectedObject.position.y).toFixed(2) - oldDepth / 2).toFixed(2);
-					var originalZ = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - oldHeight / 2).toFixed(2);
+					var originalX = parseFloat(parseFloat(selectedObject.position.x).toFixed(2) - oldWidth / 2);
+					var originalY = parseFloat(parseFloat(selectedObject.position.y).toFixed(2) - oldDepth / 2);
+					var originalZ = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - oldHeight / 2);
 
 					// SETTING THE INITIAL OBJECT SIZE
 					selectedObject.scale.x = 1;
@@ -3786,6 +3922,9 @@ function objectPropertiesPanelEnabled(state)
 
 					// UPDATING THE VISUAL CONTROL
 					controls2.update();
+
+					// UPDATING THE PROPORTIONAL VALUE
+					updateProportional();
 					}
 				}
 
@@ -3855,6 +3994,14 @@ function objectPropertiesPanelEnabled(state)
 					}
 				}
 
+			function checkProportional()
+				{
+				if (document.getElementById("objectProportional").checked==true)
+					{
+					resetObjectScale();
+					}
+				}
+
 			function updateTextBoxs()
 				{
 				// CHECKING IF AN OBJECT WAS SELECTED
@@ -3880,9 +4027,38 @@ function objectPropertiesPanelEnabled(state)
 					var depth = box.max.y - box.min.y;
 
 					// SETTING THE VALUES
-					document.getElementById("objectWidth").value = parseFloat(width).toFixed(2);
-					document.getElementById("objectHeight").value = parseFloat(height).toFixed(2);
-					document.getElementById("objectDepth").value = parseFloat(depth).toFixed(2);
+					var n;
+					var numlength;
+
+					width = width.toFixed(10);
+					height = height.toFixed(10);
+					depth = depth.toFixed(10);
+
+					n = String(width).indexOf(".");
+					var widthValue = String(width).substr(0, n + 3);
+
+					n = String(height).indexOf(".")
+					var heightValue = String(height).substr(0, n + 3);
+
+					n = String(depth).indexOf(".")
+					var depthValue = String(depth).substr(0, n + 3);
+
+					document.getElementById("objectWidth").value = widthValue;
+					document.getElementById("objectHeight").value = heightValue;
+					document.getElementById("objectDepth").value = depthValue;
+
+					// SETTING ALL THE DIGITS AFTER TWO PLACES AFTER COMMA. IF THIS IS NOT DONE, THE PROPORTIONAL SCALING WILL NOT BE ACCURATE
+					n = String(width).indexOf(".");
+					var widthCommaValue = String(width).substr(n + 3, String(width).length);
+					document.getElementById("objectWidthCommaResidualData").value = "0.00" + widthCommaValue;
+
+					n = String(height).indexOf(".");
+					var heightCommaValue = String(height).substr(n + 3, String(height).length);
+					document.getElementById("objectHeightCommaResidualData").value = "0.00" + heightCommaValue;
+
+					n = String(depth).indexOf(".");
+					var depthCommaValue = String(depth).substr(n + 3, String(depth).length);
+					document.getElementById("objectDepthCommaResidualData").value = "0.00" + depthCommaValue;
 
 					// SETTING THE ORIGINAL ROTATION TO THE OBJECT
 					selectedObject.rotation.x = originalRotationX;
@@ -3891,9 +4067,9 @@ function objectPropertiesPanelEnabled(state)
 
 					// SETTING THE VALUES
 					document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
-					var finalPositionY = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - heightInitial / 2).toFixed(2);
-					if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY)).toFixed(2);}
-					document.getElementById("objectPositionY").value = finalPositionY;
+					var finalPositionY = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - heightInitial / 2);
+					if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY).toFixed(2));}
+					document.getElementById("objectPositionY").value = finalPositionY.toFixed(2);
 					document.getElementById("objectPositionZ").value = parseFloat(selectedObject.position.y).toFixed(2);
 					document.getElementById("objectRotationX").value = (selectedObject.rotation.x * 180 / Math.PI).toFixed(2);
 					document.getElementById("objectRotationY").value = (selectedObject.rotation.y * 180 / Math.PI).toFixed(2);
@@ -3989,6 +4165,19 @@ function objectPropertiesPanelEnabled(state)
 				else // SILVER
 					{
 					document.getElementById("materialColor").selectedIndex = 1;
+					}
+				}
+
+			function updateProportional()
+				{
+				// SETTING PROPORTIONAL SCALING VALUE
+				if (selectedObject.scale.x == selectedObject.scale.y && selectedObject.scale.x == selectedObject.scale.z)
+					{
+					document.getElementById("objectProportional").checked = true;
+					}
+					else
+					{
+					document.getElementById("objectProportional").checked = false;
 					}
 				}
 
