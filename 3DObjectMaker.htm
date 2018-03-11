@@ -1431,7 +1431,7 @@
 					// EXPORTING THE SCENE AS A STL MODEL
 					var exporter = new THREE.STLExporter();
 					var objectData = exporter.parse(tempScene);
-						
+
 					// ADDING THE MODEL TO THE VARIABLE THAT WILL HAVE ALL THE MODELS IN ONE FILE
 					if (finalResult=="")
 						{
@@ -1606,7 +1606,7 @@
 					var oldWidth = box.max.x - box.min.x;
 					var oldDepth = box.max.y - box.min.y;
 					var oldHeight = box.max.z - box.min.z;
-					
+
 					// GETTING THE ORIGINAL POSITION
 					var originalX = parseFloat(parseFloat(selectedObject.position.x).toFixed(2) - oldWidth / 2);
 					var originalY = parseFloat(parseFloat(selectedObject.position.y).toFixed(2) - oldDepth / 2);
@@ -1741,14 +1741,14 @@
 					// SETTING THE VALUES
 					var n;
 					var numlength;
-					
+
 					width = width.toFixed(10);
 					height = height.toFixed(10);
 					depth = depth.toFixed(10);
 
 					n = String(width).indexOf(".");
 					var widthValue = String(width).substr(0, n + 3);
-					
+
 					n = String(height).indexOf(".")
 					var heightValue = String(height).substr(0, n + 3);
 
