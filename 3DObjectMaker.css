@@ -540,8 +540,14 @@ body
 .panel_field4
 	{
 	float:left;
-  	width:100%;
-  	}
+	width:100%;
+	padding-bottom:5px;
+	}
+.panel_field5
+	{
+	float:left;
+	width:100%;
+	}
 .panel_fieldseparator
 	{
 	float:left;
@@ -584,6 +590,48 @@ body
 	background-color:#F2F2F2;
 	border:1px solid #D3D3D3;
 	color:silver;
+	}
+.panel_checkbox
+	{
+	display:inline;
+	border:1px silver solid;
+	background-color:#F2F2F2;
+	border:1px solid #D3D3D3;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius:5px;
+	}
+.panel_checkbox:disabled
+	{
+	background-color:#F2F2F2;
+	border:1px solid #D3D3D3;
+	}
+.panel_checkboxtext
+	{
+	display:inline;
+	color:black;
+	font-family:Arial;
+	font-size:13px;
+	text-align:left;
+	cursor:default;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	user-select:none;
+	}
+.panel_checkboxtext_disabled
+	{
+	display:inline;
+	color:silver;
+	font-family:Arial;
+	font-size:13px;
+	text-align:left;
+	cursor:default;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	user-select:none;
 	}
 .panel_textbox
 	{

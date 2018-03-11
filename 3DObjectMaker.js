@@ -957,6 +957,7 @@ var STRING_MATERIAL_PINK = "";
 var STRING_WIDTH = "";
 var STRING_HEIGHT = "";
 var STRING_DEPTH = "";
+var STRING_PROPORTIONALSCALING = "";
 var STRING_RESETSCALE = "";
 var STRING_POSITION_X = "";
 var STRING_POSITION_Y = "";
@@ -1007,6 +1008,7 @@ function initLanguage()
 		STRING_WIDTH = "Ancho (mm):";
 		STRING_HEIGHT = "Alto (mm):";
 		STRING_DEPTH = "Largo (mm):";
+		STRING_PROPORTIONALSCALING = "Tama\u00F1o proporcional";
 		STRING_RESETSCALE = "Restablecer tama\u00F1o";
 		STRING_POSITION_X = "Posici&oacute;n X (mm):";
 		STRING_POSITION_Y = "Posici&oacute;n Y (mm):";
@@ -1054,6 +1056,7 @@ function initLanguage()
 		STRING_WIDTH = "Width (mm):";
 		STRING_HEIGHT = "Height (mm):";
 		STRING_DEPTH = "Depth (mm):";
+		STRING_PROPORTIONALSCALING = "Proportional size";
 		STRING_RESETSCALE = "Reset size";
 		STRING_POSITION_X = "Position X (mm):";
 		STRING_POSITION_Y = "Position Y (mm):";
@@ -1100,6 +1103,7 @@ function initLanguage()
 	document.getElementById("labelWidth").innerHTML = STRING_WIDTH;
 	document.getElementById("labelHeight").innerHTML = STRING_HEIGHT;
 	document.getElementById("labelDepth").innerHTML = STRING_DEPTH;
+	document.getElementById("objectProportionalLabel").innerHTML = STRING_PROPORTIONALSCALING;
 	document.getElementById("resetScale").value = STRING_RESETSCALE;
 	document.getElementById("labelPositionX").innerHTML = STRING_POSITION_X;
 	document.getElementById("labelPositionY").innerHTML = STRING_POSITION_Y;
@@ -1290,6 +1294,7 @@ function objectPropertiesPanelEnabled(state)
 	document.getElementById("objectWidth").disabled = !state;
 	document.getElementById("objectHeight").disabled = !state;
 	document.getElementById("objectDepth").disabled = !state;
+	document.getElementById("objectProportional").disabled = !state;
 	document.getElementById("resetScale").disabled = !state;
 	document.getElementById("objectPositionX").disabled = !state;
 	document.getElementById("objectPositionY").disabled = !state;
@@ -1305,6 +1310,7 @@ function objectPropertiesPanelEnabled(state)
 		document.getElementById("objectWidth").blur();
 		document.getElementById("objectHeight").blur();
 		document.getElementById("objectDepth").blur();
+		document.getElementById("objectProportional").blur();
 		document.getElementById("resetScale").blur();
 		document.getElementById("objectPositionX").blur();
 		document.getElementById("objectPositionY").blur();
@@ -1326,12 +1332,15 @@ function objectPropertiesPanelEnabled(state)
 		document.getElementById("objectWidth").value = "";
 		document.getElementById("objectHeight").value = "";
 		document.getElementById("objectDepth").value = "";
+		document.getElementById("objectProportional").checked = false;
 		document.getElementById("objectPositionX").value = "";
 		document.getElementById("objectPositionY").value = "";
 		document.getElementById("objectPositionZ").value = "";
 		document.getElementById("objectRotationX").value = "";
 		document.getElementById("objectRotationY").value = "";
 		document.getElementById("objectRotationZ").value = "";
+		document.getElementById("objectProportionalLabel").classList.add("panel_checkboxtext_disabled");
+		document.getElementById("objectProportionalLabel").classList.remove("panel_checkboxtext");
 		document.getElementById("buttonMove").classList.add("menubar_button_move_disabled");
 		document.getElementById("buttonMove").classList.remove("menubar_button_move_enabled");
 		document.getElementById("buttonMove").classList.remove("menubar_button_move_selected");
@@ -1370,6 +1379,9 @@ function objectPropertiesPanelEnabled(state)
 		document.getElementById("labelRotationX").style.color = "#000000";
 		document.getElementById("labelRotationY").style.color = "#000000";
 		document.getElementById("labelRotationZ").style.color = "#000000";
+
+		document.getElementById("objectProportionalLabel").classList.add("panel_checkboxtext");
+		document.getElementById("objectProportionalLabel").classList.remove("panel_checkboxtext_disabled");
 
 		if (TYPE_CONTROL==TYPE_MOVE)
 			{
