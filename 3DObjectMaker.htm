@@ -6,17 +6,19 @@
 	<body>
 		<div class="menubar">
 			<div class="menubar_holder">
-				<div class="menubar_button" id="buttonNew" onclick="newProject();"></div>
+				<div class="menubar_button_new_enabled" id="buttonNew" onclick="newProject();"></div>
 			</div>
 			<div class="menubar_holder">
-				<label for="fileOpener" class="menubar_button" id="buttonImport"></label>
+				<label for="fileOpener" id="buttonImport">
+					<div class="menubar_button_open_enabled"></div>
+				</label>
 				<input type="file" class="menubar_buttonHidden" id="fileOpener" onChange="addModel(document.getElementById('fileOpener').files[0]);">
 			</div>
 			<div class="menubar_holder">
-				<div class="menubar_button" id="buttonExportSTL" onclick="exportToSTL();"></div>
+				<div class="menubar_button_exportstl_enabled" id="buttonExportSTL" onclick="exportToSTL();"></div>
 			</div>
 			<div class="menubar_holder">
-				<div class="menubar_button" id="buttonExportScene" onclick="exportToScene();"></div>
+				<div class="menubar_button_exportscene_enabled" id="buttonExportScene" onclick="exportToScene();"></div>
 			</div>
 			<div class="menubar_separator"></div>
 			<div class="menubar_holder">
