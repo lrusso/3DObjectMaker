@@ -1784,8 +1784,7 @@
 					document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
 					var finalPositionY = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - heightInitial / 2);
 					if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY).toFixed(2));}
-					var finalPositionYChecker = String(finalPositionY.toFixed(2)).substring(0,5);
-					if (finalPositionYChecker=="-0.00")
+					if (String(finalPositionY.toFixed(2))=="-0.00")
 						{
 						document.getElementById("objectPositionY").value = "0.00";
 						}
