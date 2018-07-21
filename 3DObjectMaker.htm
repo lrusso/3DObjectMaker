@@ -1068,6 +1068,7 @@
 							}
 							else
 							{
+							alert('');
 							// SETTING THE ORIGINAL VALUE
 							document.getElementById("objectPositionY").value = parseFloat(selectedObject.position.z - height / 2).toFixed(2);
 
@@ -1783,7 +1784,15 @@
 					document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
 					var finalPositionY = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - heightInitial / 2);
 					if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY).toFixed(2));}
-					document.getElementById("objectPositionY").value = finalPositionY.toFixed(2);
+					var finalPositionYChecker = String(finalPositionY.toFixed(2)).substring(0,5);
+					if (finalPositionYChecker=="-0.00")
+						{
+						document.getElementById("objectPositionY").value = "0.00";
+						}
+						else
+						{
+						document.getElementById("objectPositionY").value = finalPositionY.toFixed(2);
+						}
 					document.getElementById("objectPositionZ").value = parseFloat(selectedObject.position.y).toFixed(2);
 					document.getElementById("objectRotationX").value = (selectedObject.rotation.x * 180 / Math.PI).toFixed(2);
 					document.getElementById("objectRotationY").value = (selectedObject.rotation.y * 180 / Math.PI).toFixed(2);
