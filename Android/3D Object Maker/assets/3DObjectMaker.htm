@@ -3540,7 +3540,7 @@ function objectPropertiesPanelEnabled(state)
 							else
 							{
 							// SETTING THE ORIGINAL VALUE
-							document.getElementById("objectRotationX").value = (selectedObject.rotation.x * 180 / Math.PI);
+							document.getElementById("objectRotationX").value = (selectedObject.rotation.x * 180 / Math.PI).toFixed(2);
 
 							// ERROR MESSAGE
 							alert(STRING_ERROR_DOUBLE);
@@ -3576,7 +3576,7 @@ function objectPropertiesPanelEnabled(state)
 							else
 							{
 							// SETTING THE ORIGINAL VALUE
-							document.getElementById("objectRotationY").value = (selectedObject.rotation.y * 180 / Math.PI);
+							document.getElementById("objectRotationY").value = (selectedObject.rotation.y * 180 / Math.PI).toFixed(2);
 
 							// ERROR MESSAGE
 							alert(STRING_ERROR_DOUBLE);
@@ -3612,7 +3612,7 @@ function objectPropertiesPanelEnabled(state)
 							else
 							{
 							// SETTING THE ORIGINAL VALUE
-							document.getElementById("objectRotationZ").value = (selectedObject.rotation.z * 180 / Math.PI);
+							document.getElementById("objectRotationZ").value = (selectedObject.rotation.z * 180 / Math.PI).toFixed(2);
 
 							// ERROR MESSAGE
 							alert(STRING_ERROR_DOUBLE);
@@ -3748,12 +3748,11 @@ function objectPropertiesPanelEnabled(state)
 					}
 
 				// EXPORTING THE SCENE AS A STL FILE
-				var exporter = new THREE.STLExporter();
+				var exporter = new THREE.STLBinaryExporter();
 				var result = exporter.parse(sceneConverter);
 
 				// FORCING SAVING AS FILE
-				console.log("STLFILE---" + result);
-				//saveString(result, STRING_FILENAME + ".stl");
+				saveString(result, STRING_FILENAME + ".stl");
 
 				// HIDING THE LOADING SPLASH
 				document.getElementById("loading").style.display = "none";
@@ -3854,8 +3853,7 @@ function objectPropertiesPanelEnabled(state)
 				finalResult = gridSizeValue + "|" + finalResult;
 
 				// FORCING SAVING AS FILE
-				console.log("SCENEFILE---" + finalResult);
-				//saveString(finalResult, STRING_FILENAME + ".scene");
+				saveString(finalResult, STRING_FILENAME + ".scene");
 
 				// RETURNING THE OBJECTS TO THE MAIN SCENE
 				for (var i = 0; i < objects.length; i++)
@@ -4184,7 +4182,14 @@ function objectPropertiesPanelEnabled(state)
 					document.getElementById("objectPositionX").value = parseFloat(selectedObject.position.x).toFixed(2);
 					var finalPositionY = parseFloat(parseFloat(selectedObject.position.z).toFixed(2) - heightInitial / 2);
 					if (finalPositionY==0){finalPositionY = parseFloat(Math.abs(finalPositionY).toFixed(2));}
-					document.getElementById("objectPositionY").value = finalPositionY.toFixed(2);
+					if (String(finalPositionY.toFixed(2))=="-0.00")
+						{
+						document.getElementById("objectPositionY").value = "0.00";
+						}
+						else
+						{
+						document.getElementById("objectPositionY").value = finalPositionY.toFixed(2);
+						}
 					document.getElementById("objectPositionZ").value = parseFloat(selectedObject.position.y).toFixed(2);
 					document.getElementById("objectRotationX").value = (selectedObject.rotation.x * 180 / Math.PI).toFixed(2);
 					document.getElementById("objectRotationY").value = (selectedObject.rotation.y * 180 / Math.PI).toFixed(2);
