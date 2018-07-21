@@ -1141,7 +1141,7 @@
 							else
 							{
 							// SETTING THE ORIGINAL VALUE
-							document.getElementById("objectRotationX").value = (selectedObject.rotation.x * 180 / Math.PI);
+							document.getElementById("objectRotationX").value = (selectedObject.rotation.x * 180 / Math.PI).toFixed(2);
 
 							// ERROR MESSAGE
 							alert(STRING_ERROR_DOUBLE);
@@ -1177,7 +1177,7 @@
 							else
 							{
 							// SETTING THE ORIGINAL VALUE
-							document.getElementById("objectRotationY").value = (selectedObject.rotation.y * 180 / Math.PI);
+							document.getElementById("objectRotationY").value = (selectedObject.rotation.y * 180 / Math.PI).toFixed(2);
 
 							// ERROR MESSAGE
 							alert(STRING_ERROR_DOUBLE);
@@ -1213,7 +1213,7 @@
 							else
 							{
 							// SETTING THE ORIGINAL VALUE
-							document.getElementById("objectRotationZ").value = (selectedObject.rotation.z * 180 / Math.PI);
+							document.getElementById("objectRotationZ").value = (selectedObject.rotation.z * 180 / Math.PI).toFixed(2);
 
 							// ERROR MESSAGE
 							alert(STRING_ERROR_DOUBLE);
