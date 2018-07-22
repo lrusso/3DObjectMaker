@@ -3752,7 +3752,8 @@ function objectPropertiesPanelEnabled(state)
 				var result = exporter.parse(sceneConverter);
 
 				// FORCING SAVING AS FILE
-				saveString(result, STRING_FILENAME + ".stl");
+				console.log("STLFILE---" + result);
+				//saveString(result, STRING_FILENAME + ".stl");
 
 				// HIDING THE LOADING SPLASH
 				document.getElementById("loading").style.display = "none";
@@ -3853,7 +3854,8 @@ function objectPropertiesPanelEnabled(state)
 				finalResult = gridSizeValue + "|" + finalResult;
 
 				// FORCING SAVING AS FILE
-				saveString(finalResult, STRING_FILENAME + ".scene");
+				console.log("SCENEFILE---" + finalResult);
+				//saveString(finalResult, STRING_FILENAME + ".scene");
 
 				// RETURNING THE OBJECTS TO THE MAIN SCENE
 				for (var i = 0; i < objects.length; i++)
