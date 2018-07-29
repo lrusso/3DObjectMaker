@@ -3748,7 +3748,7 @@ function objectPropertiesPanelEnabled(state)
 					}
 
 				// EXPORTING THE SCENE AS A STL FILE
-				var exporter = new THREE.STLBinaryExporter();
+				var exporter = new THREE.STLExporter();
 				var result = exporter.parse(sceneConverter);
 
 				// FORCING SAVING AS FILE
