@@ -11,12 +11,16 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Calendar;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Gravity;
@@ -37,7 +41,8 @@ import android.widget.Toast;
 public class Main extends Activity
 	{
 	private WebView webView;
-	private ValueCallback<Uri> mUploadMessage;  
+	private ValueCallback<Uri> mUploadMessage;
+	private ValueCallback<Uri[]> mUploadMessage5;
 	private final static int FILECHOOSER_RESULTCODE=1;
 	private Context myContext;
 
@@ -91,7 +96,18 @@ public class Main extends Activity
         		i.setType("*/*");  
         		startActivityForResult(Intent.createChooser(i,"File Chooser"),FILECHOOSER_RESULTCODE);
         		}
-        	
+
+            // For Android 5.0
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> uploadMsg, WebChromeClient.FileChooserParams fileChooserParams)
+            	{
+        		mUploadMessage5 = uploadMsg;
+        		Intent i = new Intent(Intent.ACTION_GET_CONTENT);  
+        		i.addCategory(Intent.CATEGORY_OPENABLE);  
+        		i.setType("*/*");  
+        		startActivityForResult(Intent.createChooser(i,"File Chooser"),FILECHOOSER_RESULTCODE);
+                return true;
+            	}
+            
         	@Override public boolean onConsoleMessage(ConsoleMessage consoleMessage)
         		{
         		String stringMessage = consoleMessage.message();
@@ -173,17 +189,50 @@ public class Main extends Activity
                 return true;
         		}
         	});
+        
+        if (android.os.Build.VERSION.SDK_INT>=23) //MARSHMALLOW
+        	{
+        	try
+        		{
+        		iniciarVerificacionMarshmallow();	
+        		}
+				catch(Exception e)
+				{
+				}
+        	}
 		}
 
 	 @Override protected void onActivityResult(int requestCode, int resultCode, Intent intent)
 	 	{  
 		if(requestCode==FILECHOOSER_RESULTCODE)  
 			{  
-			if (null == mUploadMessage) return;
-			Uri result = intent == null || resultCode != RESULT_OK ? null : intent.getData();  
-			mUploadMessage.onReceiveValue(result);  
-			mUploadMessage = null;  
-		 	}
+	        if (android.os.Build.VERSION.SDK_INT>=21) //LOLLIPOP
+	        	{
+	        	try
+	        		{
+		       		if (null == mUploadMessage5) return;
+		       		Uri result = intent == null || resultCode != RESULT_OK ? null : intent.getData();  
+		       		mUploadMessage5.onReceiveValue(new Uri[]{result});  
+		       		mUploadMessage5 = null;  
+	        		}
+	        		catch(Exception e)
+	        		{
+	        		}
+	        	}
+	        	else
+	        	{
+	        	try
+	        		{
+		       		if (null == mUploadMessage) return;
+		       		Uri result = intent == null || resultCode != RESULT_OK ? null : intent.getData();  
+		       		mUploadMessage.onReceiveValue(result);  
+		       		mUploadMessage = null;  
+	        		}
+	        		catch(Exception e)
+	        		{
+	        		}
+	        	}
+	        }
 	 	}
 
 	@Override public boolean onCreateOptionsMenu(Menu menu)
@@ -315,5 +364,28 @@ public class Main extends Activity
             	}
         	}
         return null;
+		}
+
+	@TargetApi(Build.VERSION_CODES.M)
+	public void iniciarVerificacionMarshmallow()
+		{
+		if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+			{
+			String[] PERMISSIONS_STORAGE = {Manifest.permission.READ_EXTERNAL_STORAGE,
+											Manifest.permission.WRITE_EXTERNAL_STORAGE};
+			requestPermissions(PERMISSIONS_STORAGE, 123);
+			}
+		}
+		
+	@TargetApi(Build.VERSION_CODES.M)
+	@Override public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+		{
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode==123)
+        	{
+        	if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+        		{
+        		}
+        	}
 		}
 	}
