@@ -748,7 +748,8 @@ body
 	}
 .panel_checkbox
 	{
-	display:inline;
+	display:inline-block;
+	vertical-align:middle;
 	border:1px silver solid;
 	background-color:#F2F2F2;
 	border:1px solid #D3D3D3;
@@ -761,12 +762,15 @@ body
 	}
 .panel_checkbox:disabled
 	{
+	display:inline-block;
+	vertical-align:middle;
 	background-color:#F2F2F2;
 	border:1px solid #D3D3D3;
 	}
 .panel_checkboxtext
 	{
-	display:inline;
+	display:inline-block;
+	vertical-align:middle;
 	color:black;
 	font-family:Arial;
 	font-size:13px;
@@ -778,7 +782,8 @@ body
 	}
 .panel_checkboxtext_disabled
 	{
-	display:inline;
+	display:inline-block;
+	vertical-align:middle;
 	color:silver;
 	font-family:Arial;
 	font-size:13px;
