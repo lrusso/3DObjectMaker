@@ -18,6 +18,6 @@ Add geometric shapes (from the right panel) to the plataform to create your own 
 4) Select the material 'Hollow' (from the right panel)
 5) Export the work as a STL file (the object B will erase every object, partially or entirely, that is within it's space). Depending of how complex are the objects, the device may take a few minutes to perform the task.
 
-## HOW TO MOVE ARROUND THE PLATFORM:
+## HOW TO MOVE AROUND THE PLATFORM:
 
 One finger to rotate, two fingers to zoom in and out and three fingers to move the camera.
