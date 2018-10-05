@@ -1385,6 +1385,16 @@
 		a.rotation.x = originalRotationX;
 		a.rotation.y = originalRotationY;
 		a.rotation.z = originalRotationZ;
+
+		// CHECKING PROPORTIONAL SCALING
+		if (a.scale.x==a.scale.y && a.scale.y== a.scale.z)
+			{
+			document.getElementById("objectProportional").checked = true;
+			}
+			else
+			{
+			document.getElementById("objectProportional").checked = false;
+			}
 		}
 
 	function changeScopeObjectHeight(a,b)
@@ -1423,6 +1433,16 @@
 		a.rotation.x = originalRotationX;
 		a.rotation.y = originalRotationY;
 		a.rotation.z = originalRotationZ;
+
+		// CHECKING PROPORTIONAL SCALING
+		if (a.scale.x==a.scale.y && a.scale.y== a.scale.z)
+			{
+			document.getElementById("objectProportional").checked = true;
+			}
+			else
+			{
+			document.getElementById("objectProportional").checked = false;
+			}
 		}
 
 	function changeScopeObjectDepth(a,b)
@@ -1458,6 +1478,16 @@
 		a.rotation.x = originalRotationX;
 		a.rotation.y = originalRotationY;
 		a.rotation.z = originalRotationZ;
+
+		// CHECKING PROPORTIONAL SCALING
+		if (a.scale.x==a.scale.y && a.scale.y== a.scale.z)
+			{
+			document.getElementById("objectProportional").checked = true;
+			}
+			else
+			{
+			document.getElementById("objectProportional").checked = false;
+			}
 		}
 	};
 
