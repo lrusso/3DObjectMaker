@@ -24,6 +24,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -45,12 +46,14 @@ public class Main extends Activity
 	private static ValueCallback<Uri[]> mUploadMessage5;
 	private final static int FILECHOOSER_RESULTCODE=1;
 	private Context myContext;
+	private Activity myActivity;
 
 	@Override protected void onCreate(Bundle savedInstanceState)
 		{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		myContext = this;
+		myActivity = this;
 
 		webView = (WebView) findViewById(R.id.webView1);
 		webView.getSettings().setJavaScriptEnabled(true);
@@ -293,6 +296,44 @@ public class Main extends Activity
     		default:
     		return super.onOptionsItemSelected(item);
     		}
+		}
+	
+	@Override public boolean onKeyUp(int keyCode, KeyEvent event)
+		{
+		try
+			{
+			if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0)
+				{
+				clickInExit();
+				return false;
+				}
+			}
+			catch(NullPointerException e)
+			{
+			}
+		return super.onKeyUp(keyCode, event);
+		}
+	
+	private void clickInExit()
+		{
+		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener()
+			{
+			public void onClick(DialogInterface dialog, int which)
+				{
+				switch (which)
+					{
+					case DialogInterface.BUTTON_POSITIVE:
+					myActivity.finish();
+					System.exit(0);
+					break;
+		
+					case DialogInterface.BUTTON_NEGATIVE:
+					break;
+					}
+				}
+			};
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(R.string.textExit).setPositiveButton(R.string.textYes, dialogClickListener).setNegativeButton(R.string.textNo, dialogClickListener).show();
 		}
 	
 	private void clickInPrivacy()
