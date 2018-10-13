@@ -215,7 +215,7 @@
 
 			} else if ( child.name.search( "X" ) !== - 1 || child.name.search( "Y" ) !== - 1 || child.name.search( "Z" ) !== - 1 ) {
 
-				child.quaternion.setFromEuler( rotation );
+				//child.quaternion.setFromEuler( rotation );
 
 			}
 
