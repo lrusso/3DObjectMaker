@@ -90,9 +90,17 @@
 			<div class="menubar_holder">
 				<div class="menubar_button_rotate_disabled" id="buttonRotate" onclick="changeControlTypeRotate();"></div>
 			</div>
+			<div class="menubar_separator"></div>
 			<div class="menubar_holder">
-				<div class="menubar_button_copy_disabled" id="buttonDuplicate" onclick="duplicateObject();"></div>
+				<div class="menubar_button_cut_disabled" id="buttonCut" onclick="cutObject();"></div>
 			</div>
+			<div class="menubar_holder">
+				<div class="menubar_button_copy_disabled" id="buttonCopy" onclick="copyObject();"></div>
+			</div>
+			<div class="menubar_holder">
+				<div class="menubar_button_paste_disabled" id="buttonPaste" onclick="pasteObject();"></div>
+			</div>
+			<div class="menubar_separator"></div>
 			<div class="menubar_holder">
 				<div class="menubar_button_trash_disabled" id="buttonDelete" onclick="deleteObject();"></div>
 			</div>
@@ -236,6 +244,7 @@
 
 			var objects = [];
 			var selectedObject;
+			var clipboardObject;
 
 			function init()
 				{
@@ -1574,7 +1583,7 @@
 					}
 				}
 
-			function duplicateObject()
+			function cutObject()
 				{
 				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
@@ -1589,8 +1598,125 @@
 					selectedObject.applyMatrix(new THREE.Matrix4().makeRotationY(0));
 					selectedObject.applyMatrix(new THREE.Matrix4().makeRotationZ(0));
 
+					// COPYING THE OBJECT TO THE CLIPBOARD
+					clipboardObject = selectedObject.clone();
+					clipboardObject.traverse(function (child)
+						{
+						if (child instanceof THREE.Mesh)
+							{
+							child.material = child.material.clone();
+							}
+						});
+
+					// SETTING THE ORIGINAL ROTATION TO THE OBJECT
+					clipboardObject.rotation.x = originalRotationX;
+					clipboardObject.rotation.y = originalRotationY;
+					clipboardObject.rotation.z = originalRotationZ;
+
+					// SETTING THE ORIGINAL ROTATION TO THE OBJECT
+					selectedObject.rotation.x = originalRotationX;
+					selectedObject.rotation.y = originalRotationY;
+					selectedObject.rotation.z = originalRotationZ;
+
+					// SETTING THE POSITION OF THE MODEL
+					var box = new THREE.Box3().setFromObject(clipboardObject);
+					var height = box.max.z - box.min.z;
+					clipboardObject.position.x = 0;
+					clipboardObject.position.y = 0;
+					clipboardObject.position.z = height / 2;
+
+					// DELETING THE SELECTED OBJECT
+					scene.remove(selectedObject);
+
+					// DELETING THE OBJECT FROM THE OBJECTS ARRAY
+					objects = objects.filter(function(item)
+						{ 
+						return item !== selectedObject
+						})
+
+					// IF NO OBJECTS ARE SELECTED, HIDING THE VISUAL CONTROL
+					if (controls2!=null)
+						{
+						controls2.detach();
+						controls2.update();
+						controls2.visible = false;
+						selectedObject = null;
+						}
+
+					// DISABLING ALL THE TEXTBOXS AND BUTTONS
+					objectPropertiesPanelEnabled(false);					
+
+					// ACTIVATING THE BUTTON ICON
+					document.getElementById("buttonPaste").classList.add("menubar_button_paste_enabled");
+					document.getElementById("buttonPaste").classList.remove("menubar_button_paste_disabled");
+					}
+				}
+
+			function copyObject()
+				{
+				// CHECKING IF AN OBJECT WAS SELECTED
+				if (selectedObject!=null)
+					{
+					// GETTING THE ORIGINAL ROTATION OF THE OBJECT
+					var originalRotationX = selectedObject.rotation.x;
+					var originalRotationY = selectedObject.rotation.y;
+					var originalRotationZ = selectedObject.rotation.z;
+
+					// SETTING THE OBJECT ROTATION TO 0
+					selectedObject.applyMatrix(new THREE.Matrix4().makeRotationX(0));
+					selectedObject.applyMatrix(new THREE.Matrix4().makeRotationY(0));
+					selectedObject.applyMatrix(new THREE.Matrix4().makeRotationZ(0));
+
+					// COPYING THE OBJECT TO THE CLIPBOARD
+					clipboardObject = selectedObject.clone();
+					clipboardObject.traverse(function (child)
+						{
+						if (child instanceof THREE.Mesh)
+							{
+							child.material = child.material.clone();
+							}
+						});
+
+					// SETTING THE ORIGINAL ROTATION TO THE OBJECT
+					clipboardObject.rotation.x = originalRotationX;
+					clipboardObject.rotation.y = originalRotationY;
+					clipboardObject.rotation.z = originalRotationZ;
+
+					// SETTING THE ORIGINAL ROTATION TO THE OBJECT
+					selectedObject.rotation.x = originalRotationX;
+					selectedObject.rotation.y = originalRotationY;
+					selectedObject.rotation.z = originalRotationZ;
+
+					// SETTING THE POSITION OF THE MODEL
+					var box = new THREE.Box3().setFromObject(clipboardObject);
+					var height = box.max.z - box.min.z;
+					clipboardObject.position.x = 0;
+					clipboardObject.position.y = 0;
+					clipboardObject.position.z = height / 2;
+
+					// ACTIVATING THE BUTTON ICON
+					document.getElementById("buttonPaste").classList.add("menubar_button_paste_enabled");
+					document.getElementById("buttonPaste").classList.remove("menubar_button_paste_disabled");
+					}
+				}
+
+			function pasteObject()
+				{
+				// CHECKING IF AN OBJECT WAS SELECTED
+				if (clipboardObject!=null)
+					{
+					// GETTING THE ORIGINAL ROTATION OF THE OBJECT
+					var originalRotationX = clipboardObject.rotation.x;
+					var originalRotationY = clipboardObject.rotation.y;
+					var originalRotationZ = clipboardObject.rotation.z;
+
+					// SETTING THE OBJECT ROTATION TO 0
+					clipboardObject.applyMatrix(new THREE.Matrix4().makeRotationX(0));
+					clipboardObject.applyMatrix(new THREE.Matrix4().makeRotationY(0));
+					clipboardObject.applyMatrix(new THREE.Matrix4().makeRotationZ(0));
+
 					// DUPLICATING THE OBJECT
-					var duplicated = selectedObject.clone();
+					var duplicated = clipboardObject.clone();
 					duplicated.traverse(function (child)
 						{
 						if (child instanceof THREE.Mesh)
@@ -1605,9 +1731,9 @@
 					duplicated.rotation.z = originalRotationZ;
 
 					// SETTING THE ORIGINAL ROTATION TO THE OBJECT
-					selectedObject.rotation.x = originalRotationX;
-					selectedObject.rotation.y = originalRotationY;
-					selectedObject.rotation.z = originalRotationZ;
+					clipboardObject.rotation.x = originalRotationX;
+					clipboardObject.rotation.y = originalRotationY;
+					clipboardObject.rotation.z = originalRotationZ;
 
 					// SETTING THE POSITION OF THE MODEL
 					var box = new THREE.Box3().setFromObject(duplicated);
@@ -1626,7 +1752,6 @@
 						controls2.detach();
 						controls2.update();
 						controls2.visible = false;
-						selectedObject = null;
 						}
 
 					// DISABLING ALL THE TEXTBOXS AND BUTTONS

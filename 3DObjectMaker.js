@@ -1334,8 +1334,10 @@ function objectPropertiesPanelEnabled(state)
 		document.getElementById("buttonRotate").classList.add("menubar_button_rotate_disabled");
 		document.getElementById("buttonRotate").classList.remove("menubar_button_rotate_enabled");
 		document.getElementById("buttonRotate").classList.remove("menubar_button_rotate_selected");
-		document.getElementById("buttonDuplicate").classList.add("menubar_button_copy_disabled");
-		document.getElementById("buttonDuplicate").classList.remove("menubar_button_copy_enabled");
+		document.getElementById("buttonCut").classList.add("menubar_button_cut_disabled");
+		document.getElementById("buttonCut").classList.remove("menubar_button_cut_enabled");
+		document.getElementById("buttonCopy").classList.add("menubar_button_copy_disabled");
+		document.getElementById("buttonCopy").classList.remove("menubar_button_copy_enabled");
 		document.getElementById("buttonDelete").classList.add("menubar_button_trash_disabled");
 		document.getElementById("buttonDelete").classList.remove("menubar_button_trash_enabled");
 		}
@@ -1410,8 +1412,10 @@ function objectPropertiesPanelEnabled(state)
 			document.getElementById("buttonMove").classList.remove("menubar_button_move_selected");
 			}
 
-		document.getElementById("buttonDuplicate").classList.add("menubar_button_copy_enabled");
-		document.getElementById("buttonDuplicate").classList.remove("menubar_button_copy_disabled");
+		document.getElementById("buttonCut").classList.add("menubar_button_cut_enabled");
+		document.getElementById("buttonCut").classList.remove("menubar_button_cut_disabled");
+		document.getElementById("buttonCopy").classList.add("menubar_button_copy_enabled");
+		document.getElementById("buttonCopy").classList.remove("menubar_button_copy_disabled");
 		document.getElementById("buttonDelete").classList.add("menubar_button_trash_enabled");
 		document.getElementById("buttonDelete").classList.remove("menubar_button_trash_disabled");
 		}
