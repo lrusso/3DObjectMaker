@@ -168,13 +168,14 @@ body
 	width:24px;
 	background-color:#F2F2F2;
 	border:1px solid #D3D3D3;
-	padding-top:5px;
-	padding-bottom:5px;
+	padding-top:3px;
+	padding-bottom:7px;
 	padding-left:10px;
 	padding-right:10px;
 	margin-left:12px;
 	color:silver;
 	cursor:default;
+	display:inline-block;
 	-webkit-border-radius:5px;
 	-moz-border-radius:5px;
 	border-radius:5px;
