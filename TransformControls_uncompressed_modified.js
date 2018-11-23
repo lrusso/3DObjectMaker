@@ -879,6 +879,8 @@
 
 		}
 
+		var setUndoChecker = true;
+
 		function onPointerMove( event ) {
 
 			if ( scope.object === undefined || scope.axis === null || _dragging === false || ( event.button !== undefined && event.button !== 0 ) ) return;
@@ -913,6 +915,12 @@
 
 					if (totalDistanceX>minDistanceMove || totalDistanceY>minDistanceMove)
 						{
+
+						if (setUndoChecker==true)
+							{
+							setUndo(true);
+							setUndoChecker = false;
+							}
 
 						if ( scope.axis.search( "X" ) === - 1 ) point.x = 0;
 						if ( scope.axis.search( "Y" ) === - 1 ) point.y = 0;
@@ -967,6 +975,12 @@
 			} else if ( _mode === "scale" ) {
 
 				if ( scope.space === "local" ) {
+
+					if (setUndoChecker==true)
+						{
+						setUndo(true);
+						setUndoChecker = false;
+						}
 
 					if ( scope.axis === "XYZ" ) {
 
@@ -1034,6 +1048,7 @@
 							scope.object.rotation.y = originalRotationY;
 							scope.object.rotation.z = originalRotationZ;
 							}
+
 							}
 						}
 						else
@@ -1199,6 +1214,11 @@
 
 			} else if ( _mode === "rotate" ) {
 
+				if (setUndoChecker==true)
+					{
+					setUndo(true);
+					setUndoChecker = false;
+					}
 				point.sub( worldPosition );
 				point.multiply( parentScale );
 				tempVector.copy( offset ).sub( worldPosition );
@@ -1321,6 +1341,7 @@
 			}
 
 			_dragging = false;
+			setUndoChecker = true;
 
 			if ( 'TouchEvent' in window && event instanceof TouchEvent ) {
 

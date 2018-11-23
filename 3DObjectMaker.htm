@@ -104,6 +104,13 @@
 			</div>
 			<div class="menubar_separator"></div>
 			<div class="menubar_holder">
+				<div class="menubar_button_undo_disabled" id="buttonUndo" onclick="getUndo();"></div>
+			</div>
+			<div class="menubar_holder">
+				<div class="menubar_button_redo_disabled" id="buttonRedo" onclick="getRedo();"></div>
+			</div>
+			<div class="menubar_separator"></div>
+			<div class="menubar_holder">
 				<div class="menubar_button_trash_disabled" id="buttonDelete" onclick="deleteObject();"></div>
 			</div>
 		</div>
@@ -248,6 +255,331 @@
 			var selectedObject;
 			var clipboardObject;
 
+			var sceneUndo01 = -1;
+			var sceneUndo02 = -1;
+			var sceneUndo03 = -1;
+			var sceneUndo04 = -1;
+			var sceneUndo05 = -1;
+			var sceneUndo06 = -1;
+			var sceneUndo07 = -1;
+			var sceneUndo08 = -1;
+			var sceneUndo09 = -1;
+			var sceneUndo10 = -1;
+
+			var sceneRedo01 = -1;
+			var sceneRedo02 = -1;
+			var sceneRedo03 = -1;
+			var sceneRedo04 = -1;
+			var sceneRedo05 = -1;
+			var sceneRedo06 = -1;
+			var sceneRedo07 = -1;
+			var sceneRedo08 = -1;
+			var sceneRedo09 = -1;
+			var sceneRedo10 = -1;
+
+			function setUndo(a)
+				{
+				var selectedUndo = - 1;
+
+				if (sceneUndo01==-1)		{selectedUndo = 1;sceneUndo01 = [];}
+				else if (sceneUndo02==-1)	{selectedUndo = 2;sceneUndo02 = [];}
+				else if (sceneUndo03==-1)	{selectedUndo = 3;sceneUndo03 = [];}
+				else if (sceneUndo04==-1)	{selectedUndo = 4;sceneUndo04 = [];}
+				else if (sceneUndo05==-1)	{selectedUndo = 5;sceneUndo05 = [];}
+				else if (sceneUndo06==-1)	{selectedUndo = 6;sceneUndo06 = [];}
+				else if (sceneUndo07==-1)	{selectedUndo = 7;sceneUndo07 = [];}
+				else if (sceneUndo08==-1)	{selectedUndo = 8;sceneUndo08 = [];}
+				else if (sceneUndo09==-1)	{selectedUndo = 9;sceneUndo09 = [];}
+				else if (sceneUndo10==-1)	{selectedUndo = 10;sceneUndo10 = [];}
+				else
+					{
+					sceneUndo01 = sceneUndo02;
+					sceneUndo02 = sceneUndo03;
+					sceneUndo03 = sceneUndo04;
+					sceneUndo04 = sceneUndo05;
+					sceneUndo05 = sceneUndo06;
+					sceneUndo06 = sceneUndo07;
+					sceneUndo07 = sceneUndo08;
+					sceneUndo08 = sceneUndo09;
+					sceneUndo09 = sceneUndo10;
+					sceneUndo10 = [];
+					selectedUndo = 10;
+					}
+
+				for (var i = 0; i < objects.length; i++)
+					{
+					var tempObject = objects[i];
+
+					// GETTING THE ORIGINAL ROTATION OF THE OBJECT
+					var originalRotationX = tempObject.rotation.x;
+					var originalRotationY = tempObject.rotation.y;
+					var originalRotationZ = tempObject.rotation.z;
+
+					// SETTING THE OBJECT ROTATION TO 0
+					tempObject.applyMatrix(new THREE.Matrix4().makeRotationX(0));
+					tempObject.applyMatrix(new THREE.Matrix4().makeRotationY(0));
+					tempObject.applyMatrix(new THREE.Matrix4().makeRotationZ(0));
+
+					// DUPLICATING THE OBJECT
+					var duplicated = tempObject.clone();
+					duplicated.traverse(function (child)
+						{
+						if (child instanceof THREE.Mesh)
+							{
+							child.material = child.material.clone();
+							}
+						});
+
+					// SETTING THE ORIGINAL ROTATION AND POSITION TO THE OBJECT
+					duplicated.rotation.x = originalRotationX;
+					duplicated.rotation.y = originalRotationY;
+					duplicated.rotation.z = originalRotationZ;
+					duplicated.position.x = tempObject.position.x;
+					duplicated.position.y = tempObject.position.y;
+					duplicated.position.z = tempObject.position.z;
+
+					if (selectedUndo==1){sceneUndo01.push(duplicated);}
+					else if (selectedUndo==2){sceneUndo02.push(duplicated);}
+					else if (selectedUndo==3){sceneUndo03.push(duplicated);}
+					else if (selectedUndo==4){sceneUndo04.push(duplicated);}
+					else if (selectedUndo==5){sceneUndo05.push(duplicated);}
+					else if (selectedUndo==6){sceneUndo06.push(duplicated);}
+					else if (selectedUndo==7){sceneUndo07.push(duplicated);}
+					else if (selectedUndo==8){sceneUndo08.push(duplicated);}
+					else if (selectedUndo==9){sceneUndo09.push(duplicated);}
+					else if (selectedUndo==10){sceneUndo10.push(duplicated);}
+					
+					// CLEARING REDO IF A NEW ACTION WAS EXECUTED
+					if (a==true)
+						{
+						sceneRedo01 = -1;
+						sceneRedo02 = -1;
+						sceneRedo03 = -1;
+						sceneRedo04 = -1;
+						sceneRedo05 = -1;
+						sceneRedo06 = -1;
+						sceneRedo07 = -1;
+						sceneRedo08 = -1;
+						sceneRedo09 = -1;
+						sceneRedo10 = -1;
+						document.getElementById("buttonRedo").classList.add("menubar_button_redo_disabled");
+						document.getElementById("buttonRedo").classList.remove("menubar_button_redo_enabled");
+						}
+					}
+
+				document.getElementById("buttonUndo").classList.add("menubar_button_undo_enabled");
+				document.getElementById("buttonUndo").classList.remove("menubar_button_undo_disabled");
+				}
+
+			function setRedo()
+				{
+				var selectedRedo = - 1;
+
+				if (sceneRedo01==-1)		{selectedRedo = 1;sceneRedo01 = [];}
+				else if (sceneRedo02==-1)	{selectedRedo = 2;sceneRedo02 = [];}
+				else if (sceneRedo03==-1)	{selectedRedo = 3;sceneRedo03 = [];}
+				else if (sceneRedo04==-1)	{selectedRedo = 4;sceneRedo04 = [];}
+				else if (sceneRedo05==-1)	{selectedRedo = 5;sceneRedo05 = [];}
+				else if (sceneRedo06==-1)	{selectedRedo = 6;sceneRedo06 = [];}
+				else if (sceneRedo07==-1)	{selectedRedo = 7;sceneRedo07 = [];}
+				else if (sceneRedo08==-1)	{selectedRedo = 8;sceneRedo08 = [];}
+				else if (sceneRedo09==-1)	{selectedRedo = 9;sceneRedo09 = [];}
+				else if (sceneRedo10==-1)	{selectedRedo = 10;sceneRedo10 = [];}
+				else
+					{
+					sceneRedo01 = sceneRedo02;
+					sceneRedo02 = sceneRedo03;
+					sceneRedo03 = sceneRedo04;
+					sceneRedo04 = sceneRedo05;
+					sceneRedo05 = sceneRedo06;
+					sceneRedo06 = sceneRedo07;
+					sceneRedo07 = sceneRedo08;
+					sceneRedo08 = sceneRedo09;
+					sceneRedo09 = sceneRedo10;
+					sceneRedo10 = [];
+					selectedRedo = 10;
+					}
+
+				for (var i = 0; i < objects.length; i++)
+					{
+					var tempObject = objects[i];
+
+					// GETTING THE ORIGINAL ROTATION OF THE OBJECT
+					var originalRotationX = tempObject.rotation.x;
+					var originalRotationY = tempObject.rotation.y;
+					var originalRotationZ = tempObject.rotation.z;
+
+					// SETTING THE OBJECT ROTATION TO 0
+					tempObject.applyMatrix(new THREE.Matrix4().makeRotationX(0));
+					tempObject.applyMatrix(new THREE.Matrix4().makeRotationY(0));
+					tempObject.applyMatrix(new THREE.Matrix4().makeRotationZ(0));
+
+					// DUPLICATING THE OBJECT
+					var duplicated = tempObject.clone();
+					duplicated.traverse(function (child)
+						{
+						if (child instanceof THREE.Mesh)
+							{
+							child.material = child.material.clone();
+							}
+						});
+
+					// SETTING THE ORIGINAL ROTATION AND POSITION TO THE OBJECT
+					duplicated.rotation.x = originalRotationX;
+					duplicated.rotation.y = originalRotationY;
+					duplicated.rotation.z = originalRotationZ;
+					duplicated.position.x = tempObject.position.x;
+					duplicated.position.y = tempObject.position.y;
+					duplicated.position.z = tempObject.position.z;
+
+					if (selectedRedo==1){sceneRedo01.push(duplicated);}
+					else if (selectedRedo==2){sceneRedo02.push(duplicated);}
+					else if (selectedRedo==3){sceneRedo03.push(duplicated);}
+					else if (selectedRedo==4){sceneRedo04.push(duplicated);}
+					else if (selectedRedo==5){sceneRedo05.push(duplicated);}
+					else if (selectedRedo==6){sceneRedo06.push(duplicated);}
+					else if (selectedRedo==7){sceneRedo07.push(duplicated);}
+					else if (selectedRedo==8){sceneRedo08.push(duplicated);}
+					else if (selectedRedo==9){sceneRedo09.push(duplicated);}
+					else if (selectedRedo==10){sceneRedo10.push(duplicated);}
+					}
+
+				document.getElementById("buttonRedo").classList.add("menubar_button_redo_enabled");
+				document.getElementById("buttonRedo").classList.remove("menubar_button_redo_disabled");
+				}
+
+			function getUndo()
+				{
+				var selectedUndo = - 1;
+
+				if (sceneUndo10!=-1)		{selectedUndo = 10;}
+				else if (sceneUndo09!=-1)	{selectedUndo = 9;}
+				else if (sceneUndo08!=-1)	{selectedUndo = 8;}
+				else if (sceneUndo07!=-1)	{selectedUndo = 7;}
+				else if (sceneUndo06!=-1)	{selectedUndo = 6;}
+				else if (sceneUndo05!=-1)	{selectedUndo = 5;}
+				else if (sceneUndo04!=-1)	{selectedUndo = 4;}
+				else if (sceneUndo03!=-1)	{selectedUndo = 3;}
+				else if (sceneUndo02!=-1)	{selectedUndo = 2;}
+				else if (sceneUndo01!=-1)	{selectedUndo = 1;}
+
+				if (selectedUndo != -1)
+					{
+					setRedo();
+
+					// DELETES EVERY OBJECT IN THE SCENE
+					for (var i = 0; i < objects.length; i++)
+						{
+						scene.remove(objects[i]);
+						}
+					objects = [];
+
+					// ADD EVERY OBJECT TO THE SCENE
+					if (selectedUndo==1){for (var i = 0; i < sceneUndo01.length; i++){scene.add(sceneUndo01[i]);objects.push(sceneUndo01[i]);}}
+					else if (selectedUndo==2){for (var i = 0; i < sceneUndo02.length; i++){scene.add(sceneUndo02[i]);objects.push(sceneUndo02[i]);}}
+					else if (selectedUndo==3){for (var i = 0; i < sceneUndo03.length; i++){scene.add(sceneUndo03[i]);objects.push(sceneUndo03[i]);}}
+					else if (selectedUndo==4){for (var i = 0; i < sceneUndo04.length; i++){scene.add(sceneUndo04[i]);objects.push(sceneUndo04[i]);}}
+					else if (selectedUndo==5){for (var i = 0; i < sceneUndo05.length; i++){scene.add(sceneUndo05[i]);objects.push(sceneUndo05[i]);}}
+					else if (selectedUndo==6){for (var i = 0; i < sceneUndo06.length; i++){scene.add(sceneUndo06[i]);objects.push(sceneUndo06[i]);}}
+					else if (selectedUndo==7){for (var i = 0; i < sceneUndo07.length; i++){scene.add(sceneUndo07[i]);objects.push(sceneUndo07[i]);}}
+					else if (selectedUndo==8){for (var i = 0; i < sceneUndo08.length; i++){scene.add(sceneUndo08[i]);objects.push(sceneUndo08[i]);}}
+					else if (selectedUndo==9){for (var i = 0; i < sceneUndo09.length; i++){scene.add(sceneUndo09[i]);objects.push(sceneUndo09[i]);}}
+					else if (selectedUndo==10){for (var i = 0; i < sceneUndo10.length; i++){scene.add(sceneUndo10[i]);objects.push(sceneUndo10[i]);}}
+
+					// HIDING THE VISUAL CONTROL
+					if (controls2!=null)
+						{
+						controls2.detach();
+						controls2.update();
+						controls2.visible = false;
+						selectedObject = null;
+						}
+
+					// DISABLING ALL THE TEXTBOXS AND BUTTONS
+					objectPropertiesPanelEnabled(false);
+
+					if (selectedUndo==10){sceneUndo10 = -1;}
+					else if (selectedUndo==9){sceneUndo09 = -1;}
+					else if (selectedUndo==8){sceneUndo08 = -1;}
+					else if (selectedUndo==7){sceneUndo07 = -1;}
+					else if (selectedUndo==6){sceneUndo06 = -1;}
+					else if (selectedUndo==5){sceneUndo05 = -1;}
+					else if (selectedUndo==4){sceneUndo04 = -1;}
+					else if (selectedUndo==3){sceneUndo03 = -1;}
+					else if (selectedUndo==2){sceneUndo02 = -1;}
+					else if (selectedUndo==1){sceneUndo01 = -1;
+											  document.getElementById("buttonUndo").classList.add("menubar_button_undo_disabled");
+											  document.getElementById("buttonUndo").classList.remove("menubar_button_undo_enabled");
+											}
+					}
+				}
+
+			function getRedo()
+				{
+				var selectedRedo = - 1;
+
+				if (sceneRedo10!=-1)		{selectedRedo = 10;}
+				else if (sceneRedo09!=-1)	{selectedRedo = 9;}
+				else if (sceneRedo08!=-1)	{selectedRedo = 8;}
+				else if (sceneRedo07!=-1)	{selectedRedo = 7;}
+				else if (sceneRedo06!=-1)	{selectedRedo = 6;}
+				else if (sceneRedo05!=-1)	{selectedRedo = 5;}
+				else if (sceneRedo04!=-1)	{selectedRedo = 4;}
+				else if (sceneRedo03!=-1)	{selectedRedo = 3;}
+				else if (sceneRedo02!=-1)	{selectedRedo = 2;}
+				else if (sceneRedo01!=-1)	{selectedRedo = 1;}
+
+				if (selectedRedo != -1)
+					{
+					setUndo(false);
+
+					// DELETES EVERY ITEM IN THE SCENE
+					for (var i = 0; i < objects.length; i++)
+						{
+						scene.remove(objects[i]);
+						}
+					objects = [];
+
+					// ADD EVERY OBJECT TO THE SCENE
+					if (selectedRedo==1){for (var i = 0; i < sceneRedo01.length; i++){scene.add(sceneRedo01[i]);objects.push(sceneRedo01[i]);}}
+					else if (selectedRedo==2){for (var i = 0; i < sceneRedo02.length; i++){scene.add(sceneRedo02[i]);objects.push(sceneRedo02[i]);}}
+					else if (selectedRedo==3){for (var i = 0; i < sceneRedo03.length; i++){scene.add(sceneRedo03[i]);objects.push(sceneRedo03[i]);}}
+					else if (selectedRedo==4){for (var i = 0; i < sceneRedo04.length; i++){scene.add(sceneRedo04[i]);objects.push(sceneRedo04[i]);}}
+					else if (selectedRedo==5){for (var i = 0; i < sceneRedo05.length; i++){scene.add(sceneRedo05[i]);objects.push(sceneRedo05[i]);}}
+					else if (selectedRedo==6){for (var i = 0; i < sceneRedo06.length; i++){scene.add(sceneRedo06[i]);objects.push(sceneRedo06[i]);}}
+					else if (selectedRedo==7){for (var i = 0; i < sceneRedo07.length; i++){scene.add(sceneRedo07[i]);objects.push(sceneRedo07[i]);}}
+					else if (selectedRedo==8){for (var i = 0; i < sceneRedo08.length; i++){scene.add(sceneRedo08[i]);objects.push(sceneRedo08[i]);}}
+					else if (selectedRedo==9){for (var i = 0; i < sceneRedo09.length; i++){scene.add(sceneRedo09[i]);objects.push(sceneRedo09[i]);}}
+					else if (selectedRedo==10){for (var i = 0; i < sceneRedo10.length; i++){scene.add(sceneRedo10[i]);objects.push(sceneRedo10[i]);}}
+
+					// HIDING THE VISUAL CONTROL
+					if (controls2!=null)
+						{
+						controls2.detach();
+						controls2.update();
+						controls2.visible = false;
+						selectedObject = null;
+						}
+
+					// DISABLING ALL THE TEXTBOXS AND BUTTONS
+					objectPropertiesPanelEnabled(false);
+
+					if (selectedRedo==10){sceneRedo10 = -1;}
+					else if (selectedRedo==9){sceneRedo09 = -1;}
+					else if (selectedRedo==8){sceneRedo08 = -1;}
+					else if (selectedRedo==7){sceneRedo07 = -1;}
+					else if (selectedRedo==6){sceneRedo06 = -1;}
+					else if (selectedRedo==5){sceneRedo05 = -1;}
+					else if (selectedRedo==4){sceneRedo04 = -1;}
+					else if (selectedRedo==3){sceneRedo03 = -1;}
+					else if (selectedRedo==2){sceneRedo02 = -1;}
+					else if (selectedRedo==1){sceneRedo01 = -1;
+											  document.getElementById("buttonRedo").classList.add("menubar_button_redo_disabled");
+											  document.getElementById("buttonRedo").classList.remove("menubar_button_redo_enabled");
+											}
+					}
+				}
+
 			function init()
 				{
 				initLanguage();
@@ -269,6 +601,34 @@
 
 				document.getElementById("buttonRotate").classList.add("menubar_button_rotate_disabled");
 				document.getElementById("buttonRotate").classList.remove("menubar_button_rotate_enabled");
+
+				// CLEARING HISTORY OF UNDO & REDO
+				document.getElementById("buttonUndo").classList.add("menubar_button_undo_disabled");
+				document.getElementById("buttonUndo").classList.remove("menubar_button_undo_enabled");
+				document.getElementById("buttonRedo").classList.add("menubar_button_redo_disabled");
+				document.getElementById("buttonRedo").classList.remove("menubar_button_redo_enabled");
+
+				sceneUndo01 = -1;
+				sceneUndo02 = -1;
+				sceneUndo03 = -1;
+				sceneUndo04 = -1;
+				sceneUndo05 = -1;
+				sceneUndo06 = -1;
+				sceneUndo07 = -1;
+				sceneUndo08 = -1;
+				sceneUndo09 = -1;
+				sceneUndo10 = -1;
+
+				sceneRedo01 = -1;
+				sceneRedo02 = -1;
+				sceneRedo03 = -1;
+				sceneRedo04 = -1;
+				sceneRedo05 = -1;
+				sceneRedo06 = -1;
+				sceneRedo07 = -1;
+				sceneRedo08 = -1;
+				sceneRedo09 = -1;
+				sceneRedo10 = -1;
 
 				container = document.getElementById("container");
 				container.innerHTML= "";
@@ -343,6 +703,14 @@
 						var contents = event.target.result;
 						if (extension=="scene")
 							{
+							// DELETES EVERY OBJECT IN THE SCENE
+							for (var i = 0; i < objects.length; i++)
+								{
+								selectedObject = objects[i];
+								scene.remove(objects[i]);
+								}
+							objects = [];
+
 							// LOADING THE SIZE OF THE GRID
 							var limitGrid = contents.indexOf("|");
 							var gridSizeData = contents.substring(0, limitGrid);
@@ -413,6 +781,46 @@
 								scene.add(mesh);
 								objects.push(mesh);
 								}
+
+							// CLEARING HISTORY OF UNDO & REDO
+							document.getElementById("buttonUndo").classList.add("menubar_button_undo_disabled");
+							document.getElementById("buttonUndo").classList.remove("menubar_button_undo_enabled");
+							document.getElementById("buttonRedo").classList.add("menubar_button_redo_disabled");
+							document.getElementById("buttonRedo").classList.remove("menubar_button_redo_enabled");
+
+							sceneUndo01 = -1;
+							sceneUndo02 = -1;
+							sceneUndo03 = -1;
+							sceneUndo04 = -1;
+							sceneUndo05 = -1;
+							sceneUndo06 = -1;
+							sceneUndo07 = -1;
+							sceneUndo08 = -1;
+							sceneUndo09 = -1;
+							sceneUndo10 = -1;
+
+							sceneRedo01 = -1;
+							sceneRedo02 = -1;
+							sceneRedo03 = -1;
+							sceneRedo04 = -1;
+							sceneRedo05 = -1;
+							sceneRedo06 = -1;
+							sceneRedo07 = -1;
+							sceneRedo08 = -1;
+							sceneRedo09 = -1;
+							sceneRedo10 = -1;
+
+							// HIDING THE VISUAL CONTROL
+							if (controls2!=null)
+								{
+								controls2.detach();
+								controls2.update();
+								controls2.visible = false;
+								selectedObject = null;
+								}
+
+							// DISABLING ALL THE TEXTBOXS AND BUTTONS
+							objectPropertiesPanelEnabled(false);
 							}
 							else
 							{
@@ -558,6 +966,8 @@
 
 			function addShape(a)
 				{
+				setUndo(true);
+
 				// CREATING THE SHAPE
 				var geometry = new THREE.STLLoader().parse(a);
 				geometry.computeFaceNormals();
@@ -617,6 +1027,8 @@
 				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
+					setUndo(true);
+
 					var selectedObjectColorIndex = document.getElementById("materialColor").selectedIndex;
 					
 					if (selectedObjectColorIndex==0) // HOLLOW
@@ -791,6 +1203,8 @@
 							{
 							if (value>0)
 								{
+								setUndo(true);
+
 								// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
 								value = parseFloat(parseFloat(document.getElementById("objectWidth").value) + parseFloat(document.getElementById("objectWidthCommaResidualData").value));
 
@@ -896,6 +1310,8 @@
 							{
 							if (value>0)
 								{
+								setUndo(true);
+
 								// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
 								value = parseFloat(parseFloat(document.getElementById("objectHeight").value) + parseFloat(document.getElementById("objectHeightCommaResidualData").value));
 
@@ -996,6 +1412,8 @@
 							{
 							if (value>0)
 								{
+								setUndo(true);
+
 								// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
 								value = parseFloat(parseFloat(document.getElementById("objectDepth").value) + parseFloat(document.getElementById("objectDepthCommaResidualData").value));
 
@@ -1085,6 +1503,8 @@
 						// CHECKING IF IS A DOUBLE
 						if(isDouble(value)==true)
 							{
+							setUndo(true);
+
 							// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
 							value = parseFloat(value);
 
@@ -1125,6 +1545,8 @@
 						// CHECKING IF IS A DOUBLE
 						if(isDouble(value)==true)
 							{
+							setUndo(true);
+
 							// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
 							value = parseFloat(value);
 
@@ -1161,6 +1583,8 @@
 						// CHECKING IF IS A DOUBLE
 						if(isDouble(value)==true)
 							{
+							setUndo(true);
+
 							// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
 							value = parseFloat(value);
 
@@ -1197,6 +1621,8 @@
 						// CHECKING IF IS A DOUBLE
 						if(isDouble(value)==true)
 							{
+							setUndo(true);
+
 							// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
 							value = parseFloat(value);
 
@@ -1233,6 +1659,8 @@
 						// CHECKING IF IS A DOUBLE
 						if(isDouble(value)==true)
 							{
+							setUndo(true);
+
 							// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
 							value = parseFloat(value);
 
@@ -1269,6 +1697,8 @@
 						// CHECKING IF IS A DOUBLE
 						if(isDouble(value)==true)
 							{
+							setUndo(true);
+
 							// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
 							value = parseFloat(value);
 
@@ -1561,6 +1991,8 @@
 					var message = confirm(STRING_DELETE_WARNING);
 					if (message == true)
 						{
+						setUndo(true);
+
 						// DELETING THE OBJECT FROM THE SCENE
 						scene.remove(selectedObject);
 
