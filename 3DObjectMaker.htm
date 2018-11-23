@@ -266,6 +266,17 @@
 			var sceneUndo09 = -1;
 			var sceneUndo10 = -1;
 
+			var sceneUndo01GridSize = -1;
+			var sceneUndo02GridSize = -1;
+			var sceneUndo03GridSize = -1;
+			var sceneUndo04GridSize = -1;
+			var sceneUndo05GridSize = -1;
+			var sceneUndo06GridSize = -1;
+			var sceneUndo07GridSize = -1;
+			var sceneUndo08GridSize = -1;
+			var sceneUndo09GridSize = -1;
+			var sceneUndo10GridSize = -1;
+
 			var sceneRedo01 = -1;
 			var sceneRedo02 = -1;
 			var sceneRedo03 = -1;
@@ -276,6 +287,17 @@
 			var sceneRedo08 = -1;
 			var sceneRedo09 = -1;
 			var sceneRedo10 = -1;
+
+			var sceneRedo01GridSize = -1;
+			var sceneRedo02GridSize = -1;
+			var sceneRedo03GridSize = -1;
+			var sceneRedo04GridSize = -1;
+			var sceneRedo05GridSize = -1;
+			var sceneRedo06GridSize = -1;
+			var sceneRedo07GridSize = -1;
+			var sceneRedo08GridSize = -1;
+			var sceneRedo09GridSize = -1;
+			var sceneRedo10GridSize = -1;
 
 			function setUndo(a)
 				{
@@ -338,15 +360,15 @@
 					duplicated.position.y = tempObject.position.y;
 					duplicated.position.z = tempObject.position.z;
 
-					if (selectedUndo==1){sceneUndo01.push(duplicated);}
-					else if (selectedUndo==2){sceneUndo02.push(duplicated);}
-					else if (selectedUndo==3){sceneUndo03.push(duplicated);}
-					else if (selectedUndo==4){sceneUndo04.push(duplicated);}
-					else if (selectedUndo==5){sceneUndo05.push(duplicated);}
-					else if (selectedUndo==6){sceneUndo06.push(duplicated);}
-					else if (selectedUndo==7){sceneUndo07.push(duplicated);}
-					else if (selectedUndo==8){sceneUndo08.push(duplicated);}
-					else if (selectedUndo==9){sceneUndo09.push(duplicated);}
+					if (selectedUndo==1)	  {sceneUndo01.push(duplicated);}
+					else if (selectedUndo==2) {sceneUndo02.push(duplicated);}
+					else if (selectedUndo==3) {sceneUndo03.push(duplicated);}
+					else if (selectedUndo==4) {sceneUndo04.push(duplicated);}
+					else if (selectedUndo==5) {sceneUndo05.push(duplicated);}
+					else if (selectedUndo==6) {sceneUndo06.push(duplicated);}
+					else if (selectedUndo==7) {sceneUndo07.push(duplicated);}
+					else if (selectedUndo==8) {sceneUndo08.push(duplicated);}
+					else if (selectedUndo==9) {sceneUndo09.push(duplicated);}
 					else if (selectedUndo==10){sceneUndo10.push(duplicated);}
 					
 					// CLEARING REDO IF A NEW ACTION WAS EXECUTED
@@ -362,10 +384,33 @@
 						sceneRedo08 = -1;
 						sceneRedo09 = -1;
 						sceneRedo10 = -1;
+
+						sceneRedo01GridSize = -1;
+						sceneRedo02GridSize = -1;
+						sceneRedo03GridSize = -1;
+						sceneRedo04GridSize = -1;
+						sceneRedo05GridSize = -1;
+						sceneRedo06GridSize = -1;
+						sceneRedo07GridSize = -1;
+						sceneRedo08GridSize = -1;
+						sceneRedo09GridSize = -1;
+						sceneRedo10GridSize = -1;
+
 						document.getElementById("buttonRedo").classList.add("menubar_button_redo_disabled");
 						document.getElementById("buttonRedo").classList.remove("menubar_button_redo_enabled");
 						}
 					}
+
+				if (selectedUndo==1)	  {sceneUndo01GridSize = gridSizeValue;}
+				else if (selectedUndo==2) {sceneUndo02GridSize = gridSizeValue;}
+				else if (selectedUndo==3) {sceneUndo03GridSize = gridSizeValue;}
+				else if (selectedUndo==4) {sceneUndo04GridSize = gridSizeValue;}
+				else if (selectedUndo==5) {sceneUndo05GridSize = gridSizeValue;}
+				else if (selectedUndo==6) {sceneUndo06GridSize = gridSizeValue;}
+				else if (selectedUndo==7) {sceneUndo07GridSize = gridSizeValue;}
+				else if (selectedUndo==8) {sceneUndo08GridSize = gridSizeValue;}
+				else if (selectedUndo==9) {sceneUndo09GridSize = gridSizeValue;}
+				else if (selectedUndo==10){sceneUndo10GridSize = gridSizeValue;}
 
 				document.getElementById("buttonUndo").classList.add("menubar_button_undo_enabled");
 				document.getElementById("buttonUndo").classList.remove("menubar_button_undo_disabled");
@@ -432,17 +477,28 @@
 					duplicated.position.y = tempObject.position.y;
 					duplicated.position.z = tempObject.position.z;
 
-					if (selectedRedo==1){sceneRedo01.push(duplicated);}
-					else if (selectedRedo==2){sceneRedo02.push(duplicated);}
-					else if (selectedRedo==3){sceneRedo03.push(duplicated);}
-					else if (selectedRedo==4){sceneRedo04.push(duplicated);}
-					else if (selectedRedo==5){sceneRedo05.push(duplicated);}
-					else if (selectedRedo==6){sceneRedo06.push(duplicated);}
-					else if (selectedRedo==7){sceneRedo07.push(duplicated);}
-					else if (selectedRedo==8){sceneRedo08.push(duplicated);}
-					else if (selectedRedo==9){sceneRedo09.push(duplicated);}
+					if (selectedRedo==1)	  {sceneRedo01.push(duplicated);}
+					else if (selectedRedo==2) {sceneRedo02.push(duplicated);}
+					else if (selectedRedo==3) {sceneRedo03.push(duplicated);}
+					else if (selectedRedo==4) {sceneRedo04.push(duplicated);}
+					else if (selectedRedo==5) {sceneRedo05.push(duplicated);}
+					else if (selectedRedo==6) {sceneRedo06.push(duplicated);}
+					else if (selectedRedo==7) {sceneRedo07.push(duplicated);}
+					else if (selectedRedo==8) {sceneRedo08.push(duplicated);}
+					else if (selectedRedo==9) {sceneRedo09.push(duplicated);}
 					else if (selectedRedo==10){sceneRedo10.push(duplicated);}
 					}
+
+				if (selectedRedo==1)	  {sceneRedo01GridSize = gridSizeValue;}
+				else if (selectedRedo==2) {sceneRedo02GridSize = gridSizeValue;}
+				else if (selectedRedo==3) {sceneRedo03GridSize = gridSizeValue;}
+				else if (selectedRedo==4) {sceneRedo04GridSize = gridSizeValue;}
+				else if (selectedRedo==5) {sceneRedo05GridSize = gridSizeValue;}
+				else if (selectedRedo==6) {sceneRedo06GridSize = gridSizeValue;}
+				else if (selectedRedo==7) {sceneRedo07GridSize = gridSizeValue;}
+				else if (selectedRedo==8) {sceneRedo08GridSize = gridSizeValue;}
+				else if (selectedRedo==9) {sceneRedo09GridSize = gridSizeValue;}
+				else if (selectedRedo==10){sceneRedo10GridSize = gridSizeValue;}
 
 				document.getElementById("buttonRedo").classList.add("menubar_button_redo_enabled");
 				document.getElementById("buttonRedo").classList.remove("menubar_button_redo_disabled");
@@ -475,16 +531,16 @@
 					objects = [];
 
 					// ADD EVERY OBJECT TO THE SCENE
-					if (selectedUndo==1){for (var i = 0; i < sceneUndo01.length; i++){scene.add(sceneUndo01[i]);objects.push(sceneUndo01[i]);}}
-					else if (selectedUndo==2){for (var i = 0; i < sceneUndo02.length; i++){scene.add(sceneUndo02[i]);objects.push(sceneUndo02[i]);}}
-					else if (selectedUndo==3){for (var i = 0; i < sceneUndo03.length; i++){scene.add(sceneUndo03[i]);objects.push(sceneUndo03[i]);}}
-					else if (selectedUndo==4){for (var i = 0; i < sceneUndo04.length; i++){scene.add(sceneUndo04[i]);objects.push(sceneUndo04[i]);}}
-					else if (selectedUndo==5){for (var i = 0; i < sceneUndo05.length; i++){scene.add(sceneUndo05[i]);objects.push(sceneUndo05[i]);}}
-					else if (selectedUndo==6){for (var i = 0; i < sceneUndo06.length; i++){scene.add(sceneUndo06[i]);objects.push(sceneUndo06[i]);}}
-					else if (selectedUndo==7){for (var i = 0; i < sceneUndo07.length; i++){scene.add(sceneUndo07[i]);objects.push(sceneUndo07[i]);}}
-					else if (selectedUndo==8){for (var i = 0; i < sceneUndo08.length; i++){scene.add(sceneUndo08[i]);objects.push(sceneUndo08[i]);}}
-					else if (selectedUndo==9){for (var i = 0; i < sceneUndo09.length; i++){scene.add(sceneUndo09[i]);objects.push(sceneUndo09[i]);}}
-					else if (selectedUndo==10){for (var i = 0; i < sceneUndo10.length; i++){scene.add(sceneUndo10[i]);objects.push(sceneUndo10[i]);}}
+					if (selectedUndo==1)	   {for (var i = 0; i < sceneUndo01.length; i++){scene.add(sceneUndo01[i]);objects.push(sceneUndo01[i]);}changeEnvironment(sceneUndo01GridSize);gridSizeValue = sceneUndo01GridSize;document.getElementById("gridSize").value=sceneUndo01GridSize;}
+					else if (selectedUndo==2)  {for (var i = 0; i < sceneUndo02.length; i++){scene.add(sceneUndo02[i]);objects.push(sceneUndo02[i]);}changeEnvironment(sceneUndo02GridSize);gridSizeValue = sceneUndo02GridSize;document.getElementById("gridSize").value=sceneUndo02GridSize;}
+					else if (selectedUndo==3)  {for (var i = 0; i < sceneUndo03.length; i++){scene.add(sceneUndo03[i]);objects.push(sceneUndo03[i]);}changeEnvironment(sceneUndo03GridSize);gridSizeValue = sceneUndo03GridSize;document.getElementById("gridSize").value=sceneUndo03GridSize;}
+					else if (selectedUndo==4)  {for (var i = 0; i < sceneUndo04.length; i++){scene.add(sceneUndo04[i]);objects.push(sceneUndo04[i]);}changeEnvironment(sceneUndo04GridSize);gridSizeValue = sceneUndo04GridSize;document.getElementById("gridSize").value=sceneUndo04GridSize;}
+					else if (selectedUndo==5)  {for (var i = 0; i < sceneUndo05.length; i++){scene.add(sceneUndo05[i]);objects.push(sceneUndo05[i]);}changeEnvironment(sceneUndo05GridSize);gridSizeValue = sceneUndo05GridSize;document.getElementById("gridSize").value=sceneUndo05GridSize;}
+					else if (selectedUndo==6)  {for (var i = 0; i < sceneUndo06.length; i++){scene.add(sceneUndo06[i]);objects.push(sceneUndo06[i]);}changeEnvironment(sceneUndo06GridSize);gridSizeValue = sceneUndo06GridSize;document.getElementById("gridSize").value=sceneUndo06GridSize;}
+					else if (selectedUndo==7)  {for (var i = 0; i < sceneUndo07.length; i++){scene.add(sceneUndo07[i]);objects.push(sceneUndo07[i]);}changeEnvironment(sceneUndo07GridSize);gridSizeValue = sceneUndo07GridSize;document.getElementById("gridSize").value=sceneUndo07GridSize;}
+					else if (selectedUndo==8)  {for (var i = 0; i < sceneUndo08.length; i++){scene.add(sceneUndo08[i]);objects.push(sceneUndo08[i]);}changeEnvironment(sceneUndo08GridSize);gridSizeValue = sceneUndo08GridSize;document.getElementById("gridSize").value=sceneUndo08GridSize;}
+					else if (selectedUndo==9)  {for (var i = 0; i < sceneUndo09.length; i++){scene.add(sceneUndo09[i]);objects.push(sceneUndo09[i]);}changeEnvironment(sceneUndo09GridSize);gridSizeValue = sceneUndo09GridSize;document.getElementById("gridSize").value=sceneUndo09GridSize;}
+					else if (selectedUndo==10) {for (var i = 0; i < sceneUndo10.length; i++){scene.add(sceneUndo10[i]);objects.push(sceneUndo10[i]);}changeEnvironment(sceneUndo10GridSize);gridSizeValue = sceneUndo10GridSize;document.getElementById("gridSize").value=sceneUndo10GridSize;}
 
 					// HIDING THE VISUAL CONTROL
 					if (controls2!=null)
@@ -498,16 +554,16 @@
 					// DISABLING ALL THE TEXTBOXS AND BUTTONS
 					objectPropertiesPanelEnabled(false);
 
-					if (selectedUndo==10){sceneUndo10 = -1;}
-					else if (selectedUndo==9){sceneUndo09 = -1;}
-					else if (selectedUndo==8){sceneUndo08 = -1;}
-					else if (selectedUndo==7){sceneUndo07 = -1;}
-					else if (selectedUndo==6){sceneUndo06 = -1;}
-					else if (selectedUndo==5){sceneUndo05 = -1;}
-					else if (selectedUndo==4){sceneUndo04 = -1;}
-					else if (selectedUndo==3){sceneUndo03 = -1;}
-					else if (selectedUndo==2){sceneUndo02 = -1;}
-					else if (selectedUndo==1){sceneUndo01 = -1;
+					if (selectedUndo==10)	 {sceneUndo10 = -1;sceneUndo10GridSize = -1;}
+					else if (selectedUndo==9){sceneUndo09 = -1;sceneUndo09GridSize = -1;}
+					else if (selectedUndo==8){sceneUndo08 = -1;sceneUndo08GridSize = -1;}
+					else if (selectedUndo==7){sceneUndo07 = -1;sceneUndo07GridSize = -1;}
+					else if (selectedUndo==6){sceneUndo06 = -1;sceneUndo06GridSize = -1;}
+					else if (selectedUndo==5){sceneUndo05 = -1;sceneUndo05GridSize = -1;}
+					else if (selectedUndo==4){sceneUndo04 = -1;sceneUndo04GridSize = -1;}
+					else if (selectedUndo==3){sceneUndo03 = -1;sceneUndo03GridSize = -1;}
+					else if (selectedUndo==2){sceneUndo02 = -1;sceneUndo02GridSize = -1;}
+					else if (selectedUndo==1){sceneUndo01 = -1;sceneUndo01GridSize = -1;
 											  document.getElementById("buttonUndo").classList.add("menubar_button_undo_disabled");
 											  document.getElementById("buttonUndo").classList.remove("menubar_button_undo_enabled");
 											}
@@ -541,16 +597,16 @@
 					objects = [];
 
 					// ADD EVERY OBJECT TO THE SCENE
-					if (selectedRedo==1){for (var i = 0; i < sceneRedo01.length; i++){scene.add(sceneRedo01[i]);objects.push(sceneRedo01[i]);}}
-					else if (selectedRedo==2){for (var i = 0; i < sceneRedo02.length; i++){scene.add(sceneRedo02[i]);objects.push(sceneRedo02[i]);}}
-					else if (selectedRedo==3){for (var i = 0; i < sceneRedo03.length; i++){scene.add(sceneRedo03[i]);objects.push(sceneRedo03[i]);}}
-					else if (selectedRedo==4){for (var i = 0; i < sceneRedo04.length; i++){scene.add(sceneRedo04[i]);objects.push(sceneRedo04[i]);}}
-					else if (selectedRedo==5){for (var i = 0; i < sceneRedo05.length; i++){scene.add(sceneRedo05[i]);objects.push(sceneRedo05[i]);}}
-					else if (selectedRedo==6){for (var i = 0; i < sceneRedo06.length; i++){scene.add(sceneRedo06[i]);objects.push(sceneRedo06[i]);}}
-					else if (selectedRedo==7){for (var i = 0; i < sceneRedo07.length; i++){scene.add(sceneRedo07[i]);objects.push(sceneRedo07[i]);}}
-					else if (selectedRedo==8){for (var i = 0; i < sceneRedo08.length; i++){scene.add(sceneRedo08[i]);objects.push(sceneRedo08[i]);}}
-					else if (selectedRedo==9){for (var i = 0; i < sceneRedo09.length; i++){scene.add(sceneRedo09[i]);objects.push(sceneRedo09[i]);}}
-					else if (selectedRedo==10){for (var i = 0; i < sceneRedo10.length; i++){scene.add(sceneRedo10[i]);objects.push(sceneRedo10[i]);}}
+					if (selectedRedo==1)	   {for (var i = 0; i < sceneRedo01.length; i++){scene.add(sceneRedo01[i]);objects.push(sceneRedo01[i]);}changeEnvironment(sceneRedo01GridSize);gridSizeValue = sceneRedo01GridSize;document.getElementById("gridSize").value=sceneRedo01GridSize;}
+					else if (selectedRedo==2)  {for (var i = 0; i < sceneRedo02.length; i++){scene.add(sceneRedo02[i]);objects.push(sceneRedo02[i]);}changeEnvironment(sceneRedo02GridSize);gridSizeValue = sceneRedo02GridSize;document.getElementById("gridSize").value=sceneRedo02GridSize;}
+					else if (selectedRedo==3)  {for (var i = 0; i < sceneRedo03.length; i++){scene.add(sceneRedo03[i]);objects.push(sceneRedo03[i]);}changeEnvironment(sceneRedo03GridSize);gridSizeValue = sceneRedo03GridSize;document.getElementById("gridSize").value=sceneRedo03GridSize;}
+					else if (selectedRedo==4)  {for (var i = 0; i < sceneRedo04.length; i++){scene.add(sceneRedo04[i]);objects.push(sceneRedo04[i]);}changeEnvironment(sceneRedo04GridSize);gridSizeValue = sceneRedo04GridSize;document.getElementById("gridSize").value=sceneRedo04GridSize;}
+					else if (selectedRedo==5)  {for (var i = 0; i < sceneRedo05.length; i++){scene.add(sceneRedo05[i]);objects.push(sceneRedo05[i]);}changeEnvironment(sceneRedo05GridSize);gridSizeValue = sceneRedo05GridSize;document.getElementById("gridSize").value=sceneRedo05GridSize;}
+					else if (selectedRedo==6)  {for (var i = 0; i < sceneRedo06.length; i++){scene.add(sceneRedo06[i]);objects.push(sceneRedo06[i]);}changeEnvironment(sceneRedo06GridSize);gridSizeValue = sceneRedo06GridSize;document.getElementById("gridSize").value=sceneRedo06GridSize;}
+					else if (selectedRedo==7)  {for (var i = 0; i < sceneRedo07.length; i++){scene.add(sceneRedo07[i]);objects.push(sceneRedo07[i]);}changeEnvironment(sceneRedo07GridSize);gridSizeValue = sceneRedo07GridSize;document.getElementById("gridSize").value=sceneRedo07GridSize;}
+					else if (selectedRedo==8)  {for (var i = 0; i < sceneRedo08.length; i++){scene.add(sceneRedo08[i]);objects.push(sceneRedo08[i]);}changeEnvironment(sceneRedo08GridSize);gridSizeValue = sceneRedo08GridSize;document.getElementById("gridSize").value=sceneRedo08GridSize;}
+					else if (selectedRedo==9)  {for (var i = 0; i < sceneRedo09.length; i++){scene.add(sceneRedo09[i]);objects.push(sceneRedo09[i]);}changeEnvironment(sceneRedo09GridSize);gridSizeValue = sceneRedo09GridSize;document.getElementById("gridSize").value=sceneRedo09GridSize;}
+					else if (selectedRedo==10) {for (var i = 0; i < sceneRedo10.length; i++){scene.add(sceneRedo10[i]);objects.push(sceneRedo10[i]);}changeEnvironment(sceneRedo10GridSize);gridSizeValue = sceneRedo10GridSize;document.getElementById("gridSize").value=sceneRedo10GridSize;}
 
 					// HIDING THE VISUAL CONTROL
 					if (controls2!=null)
@@ -564,16 +620,16 @@
 					// DISABLING ALL THE TEXTBOXS AND BUTTONS
 					objectPropertiesPanelEnabled(false);
 
-					if (selectedRedo==10){sceneRedo10 = -1;}
-					else if (selectedRedo==9){sceneRedo09 = -1;}
-					else if (selectedRedo==8){sceneRedo08 = -1;}
-					else if (selectedRedo==7){sceneRedo07 = -1;}
-					else if (selectedRedo==6){sceneRedo06 = -1;}
-					else if (selectedRedo==5){sceneRedo05 = -1;}
-					else if (selectedRedo==4){sceneRedo04 = -1;}
-					else if (selectedRedo==3){sceneRedo03 = -1;}
-					else if (selectedRedo==2){sceneRedo02 = -1;}
-					else if (selectedRedo==1){sceneRedo01 = -1;
+					if (selectedRedo==10)	 {sceneRedo10 = -1;sceneRedo10GridSize = -1;}
+					else if (selectedRedo==9){sceneRedo09 = -1;sceneRedo09GridSize = -1;}
+					else if (selectedRedo==8){sceneRedo08 = -1;sceneRedo08GridSize = -1;}
+					else if (selectedRedo==7){sceneRedo07 = -1;sceneRedo07GridSize = -1;}
+					else if (selectedRedo==6){sceneRedo06 = -1;sceneRedo06GridSize = -1;}
+					else if (selectedRedo==5){sceneRedo05 = -1;sceneRedo05GridSize = -1;}
+					else if (selectedRedo==4){sceneRedo04 = -1;sceneRedo04GridSize = -1;}
+					else if (selectedRedo==3){sceneRedo03 = -1;sceneRedo03GridSize = -1;}
+					else if (selectedRedo==2){sceneRedo02 = -1;sceneRedo02GridSize = -1;}
+					else if (selectedRedo==1){sceneRedo01 = -1;sceneRedo01GridSize = -1;
 											  document.getElementById("buttonRedo").classList.add("menubar_button_redo_disabled");
 											  document.getElementById("buttonRedo").classList.remove("menubar_button_redo_enabled");
 											}
@@ -619,6 +675,17 @@
 				sceneUndo09 = -1;
 				sceneUndo10 = -1;
 
+				sceneUndo01GridSize = -1;
+				sceneUndo02GridSize = -1;
+				sceneUndo03GridSize = -1;
+				sceneUndo04GridSize = -1;
+				sceneUndo05GridSize = -1;
+				sceneUndo06GridSize = -1;
+				sceneUndo07GridSize = -1;
+				sceneUndo08GridSize = -1;
+				sceneUndo09GridSize = -1;
+				sceneUndo10GridSize = -1;
+
 				sceneRedo01 = -1;
 				sceneRedo02 = -1;
 				sceneRedo03 = -1;
@@ -629,6 +696,17 @@
 				sceneRedo08 = -1;
 				sceneRedo09 = -1;
 				sceneRedo10 = -1;
+
+				sceneRedo01GridSize = -1;
+				sceneRedo02GridSize = -1;
+				sceneRedo03GridSize = -1;
+				sceneRedo04GridSize = -1;
+				sceneRedo05GridSize = -1;
+				sceneRedo06GridSize = -1;
+				sceneRedo07GridSize = -1;
+				sceneRedo08GridSize = -1;
+				sceneRedo09GridSize = -1;
+				sceneRedo10GridSize = -1;
 
 				container = document.getElementById("container");
 				container.innerHTML= "";
@@ -798,6 +876,17 @@
 							sceneUndo09 = -1;
 							sceneUndo10 = -1;
 
+							sceneUndo01GridSize = -1;
+							sceneUndo02GridSize = -1;
+							sceneUndo03GridSize = -1;
+							sceneUndo04GridSize = -1;
+							sceneUndo05GridSize = -1;
+							sceneUndo06GridSize = -1;
+							sceneUndo07GridSize = -1;
+							sceneUndo08GridSize = -1;
+							sceneUndo09GridSize = -1;
+							sceneUndo10GridSize = -1;
+
 							sceneRedo01 = -1;
 							sceneRedo02 = -1;
 							sceneRedo03 = -1;
@@ -808,6 +897,17 @@
 							sceneRedo08 = -1;
 							sceneRedo09 = -1;
 							sceneRedo10 = -1;
+
+							sceneRedo01GridSize = -1;
+							sceneRedo02GridSize = -1;
+							sceneRedo03GridSize = -1;
+							sceneRedo04GridSize = -1;
+							sceneRedo05GridSize = -1;
+							sceneRedo06GridSize = -1;
+							sceneRedo07GridSize = -1;
+							sceneRedo08GridSize = -1;
+							sceneRedo09GridSize = -1;
+							sceneRedo10GridSize = -1;
 
 							// HIDING THE VISUAL CONTROL
 							if (controls2!=null)
@@ -1018,6 +1118,7 @@
 
 			function changeGridSize(a)
 				{
+				setUndo(true);
 				document.getElementById("gridSize").blur();
 				changeEnvironment(a);
 				gridSizeValue = a;
