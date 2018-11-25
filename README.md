@@ -14,10 +14,10 @@ Add geometric shapes (from the right panel) to the plataform to create your own 
 
 ## HOW TO CUT OBJECTS:
 
-1) Add object A to the plaform
-2) Add object B to the platform
-3) Select object B
-4) Select the material 'Hollow' (from the right panel)
+1) Add object A to the plaform.
+2) Add object B to the platform.
+3) Select object B.
+4) Select the material 'Hollow' (from the right panel).
 5) Export the work as a STL file (the object B will erase every object, partially or entirely, that is within it's space). Depending of how complex are the objects, the device may take a few minutes to perform the task.
 
 ## HOW TO MOVE AROUND THE PLATFORM:
