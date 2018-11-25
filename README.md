@@ -10,7 +10,7 @@ App version: https://play.google.com/store/apps/details?id=ar.com.lrusso.dobject
 
 ## HOW TO USE THE IT:
 
-Add geometric shapes (from the right panel) to the plataform to create your own object. Also you can import STL, OBJ and 3DS models to the plataform. Later, export the object as STL file (for 3d printing) or as a SCENE file (to keep working on it later).
+Add geometric shapes (from the right panel) to the plataform to create your own object. Also you can import STL, OBJ and 3DS models to the plataform. Later, export the object as STL file (for 3D printing) or as a SCENE file (to keep working on it later).
 
 ## HOW TO CUT OBJECTS:
 
@@ -22,4 +22,5 @@ Add geometric shapes (from the right panel) to the plataform to create your own 
 
 ## HOW TO MOVE AROUND THE PLATFORM:
 
-One finger to rotate, two fingers to zoom in and out and three fingers to move the camera.
+In the App: One finger to rotate, two fingers to zoom in and out and three fingers to move the camera.
+In the Web: With your mouse, hold left-click and move the mouse to rotate, use the mouse wheel to zoom in and out and hold the right-click and move the mouse to move the camera.
