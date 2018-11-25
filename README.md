@@ -1,6 +1,6 @@
 # 3D Object Maker
 
-3D Object Maker compatible with models in STL, OBJ and 3DS format. You can export your work ready to print in 3D (STL format) or to keep working on it later (SCENE format). The App requires the Chrome Web browser installed in the smartphone or tablet.
+3D Object Maker compatible with models in STL, OBJ and 3DS format. You can export your work ready to print in 3D (STL format) or to keep working on it later (SCENE format). The App version requires the Chrome Web browser installed in the smartphone or tablet.
 
 ![alt screenshot](https://raw.githubusercontent.com/lrusso/3DObjectMaker/master/3DObjectMaker.png)
 
@@ -8,7 +8,7 @@ Web version: https://3dobjectmaker.lrusso.com.ar
 
 App version: https://play.google.com/store/apps/details?id=ar.com.lrusso.dobjectmaker
 
-## HOW TO USE THE APP:
+## HOW TO USE THE IT:
 
 Add geometric shapes (from the right panel) to the plataform to create your own object. Also you can import STL model to the plataform. Later, export the object as STL file (for 3d printing) or as a SCENE file (to keep working on it later).
 
