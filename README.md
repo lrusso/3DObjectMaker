@@ -23,4 +23,5 @@ Add geometric shapes (from the right panel) to the plataform to create your own 
 ## HOW TO MOVE AROUND THE PLATFORM:
 
 In the App: One finger to rotate, two fingers to zoom in and out and three fingers to move the camera.
+
 In the Web: With your mouse, hold left-click and move the mouse to rotate, use the mouse wheel to zoom in and out and hold the right-click and move the mouse to move the camera.
