@@ -10,7 +10,7 @@ App version: https://play.google.com/store/apps/details?id=ar.com.lrusso.dobject
 
 ## HOW TO USE THE IT:
 
-Add geometric shapes (from the right panel) to the plataform to create your own object. Also you can import STL model to the plataform. Later, export the object as STL file (for 3d printing) or as a SCENE file (to keep working on it later).
+Add geometric shapes (from the right panel) to the plataform to create your own object. Also you can import STL, OBJ and 3DS models to the plataform. Later, export the object as STL file (for 3d printing) or as a SCENE file (to keep working on it later).
 
 ## HOW TO CUT OBJECTS:
 
