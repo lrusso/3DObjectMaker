@@ -8,7 +8,7 @@ Web version: https://3dobjectmaker.lrusso.com.ar
 
 App version: https://play.google.com/store/apps/details?id=ar.com.lrusso.dobjectmaker
 
-## HOW TO USE THE IT:
+## HOW TO USE THIS SOFTWARE:
 
 Add geometric shapes (from the right panel) to the plataform to create your own object. Also you can import STL, OBJ and 3DS models to the plataform. Later, export the object as STL file (for 3D printing) or as a SCENE file (to keep working on it later).
 
