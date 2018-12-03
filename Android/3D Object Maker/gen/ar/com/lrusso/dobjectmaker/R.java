@@ -17,10 +17,11 @@ public final class R {
         public static final int rounded_corners2=0x7f020003;
     }
     public static final class id {
-        public static final int about=0x7f060003;
+        public static final int about=0x7f060004;
         public static final int action_settings=0x7f060001;
-        public static final int privacy=0x7f060002;
+        public static final int privacy=0x7f060003;
         public static final int webView1=0x7f060000;
+        public static final int zoomout=0x7f060002;
     }
     public static final class layout {
         public static final int main=0x7f030000;
@@ -37,12 +38,15 @@ public final class R {
         public static final int textAbout=0x7f040003;
         public static final int textAboutMessage=0x7f040004;
         public static final int textExit=0x7f040006;
-        public static final int textFileName=0x7f04000b;
-        public static final int textFileSaved=0x7f04000c;
+        public static final int textFileName=0x7f04000e;
+        public static final int textFileSaved=0x7f04000f;
         public static final int textNo=0x7f040008;
         public static final int textOK=0x7f040005;
         public static final int textPrivacy=0x7f040009;
         public static final int textPrivacyText=0x7f04000a;
         public static final int textYes=0x7f040007;
+        public static final int textZoomOut=0x7f04000b;
+        public static final int textZoomOutNoteText=0x7f04000d;
+        public static final int textZoomOutNoteTitle=0x7f04000c;
     }
 }

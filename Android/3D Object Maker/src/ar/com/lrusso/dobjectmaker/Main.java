@@ -3,6 +3,8 @@ package ar.com.lrusso.dobjectmaker;
 import android.text.Html;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,6 +25,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -54,6 +57,8 @@ public class Main extends Activity
 		setContentView(R.layout.main);
 		myContext = this;
 		myActivity = this;
+		
+		showLowResDeviceMessage();
 
 		webView = (WebView) findViewById(R.id.webView1);
 		webView.getSettings().setJavaScriptEnabled(true);
@@ -279,7 +284,19 @@ public class Main extends Activity
 				{  
     			public boolean onMenuItemClick(MenuItem item)
     				{
-	    			if (item.getTitle().toString().contains(getResources().getString(R.string.textPrivacy)))
+        			if (item.getTitle().toString().contains(getResources().getString(R.string.textZoomOut)))
+        				{
+        				try
+        					{
+            				webView.getSettings().setUseWideViewPort(false);
+            				webView.getSettings().setUseWideViewPort(true);
+            				webView.setInitialScale(1);        				
+        					}
+        					catch(Exception e)
+        					{
+        					}
+        				}
+        			else if (item.getTitle().toString().contains(getResources().getString(R.string.textPrivacy)))
 						{
 	    				clickInPrivacy();
 						}
@@ -450,5 +467,58 @@ public class Main extends Activity
         		{
         		}
         	}
+		}
+	
+	private String getImportantNoteShowed()
+		{
+		String result = "";
+		DataInputStream in = null;
+		try
+			{
+			in = new DataInputStream(openFileInput("note.cfg"));
+			for (;;)
+    			{
+				result = result + in.readUTF();
+    			}
+			}
+			catch (Exception e)
+			{
+			}
+		try
+			{
+			in.close();
+			}
+			catch(Exception e)
+			{
+			}
+		return result;
+		}
+
+	private void setImportantNoteShowed()
+		{
+		try
+			{
+			DataOutputStream out = new DataOutputStream(openFileOutput("note.cfg", Context.MODE_PRIVATE));
+			out.writeUTF("123");
+			out.close();
+			}
+    		catch(Exception e)
+    		{
+    		}
+		}
+
+	public void showLowResDeviceMessage()
+		{
+		if (getImportantNoteShowed()=="")
+			{
+			ContextThemeWrapper themedContext = new ContextThemeWrapper(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar);
+			new AlertDialog.Builder(themedContext).setCancelable(false).setTitle(getResources().getString(R.string.textZoomOutNoteTitle)).setMessage(getResources().getString(R.string.textZoomOutNoteText)).setPositiveButton(getResources().getString(R.string.textOK),new DialogInterface.OnClickListener()
+				{
+				public void onClick(DialogInterface dialog,int which)
+					{
+					setImportantNoteShowed();
+					}
+				}).show();
+			}
 		}
 	}
