@@ -2526,7 +2526,7 @@ function addMouse()
 	mouse = new THREE.Vector2();
 	}
 
-function addWirePlane(a,b)
+function addWirePlane(a)
 	{
 	if (plane!=null)
 		{
@@ -2538,7 +2538,7 @@ function addWirePlane(a,b)
 	var division_y=Math.floor(y/10);
 	plane = new THREE.Mesh(new THREE.PlaneGeometry(x,y,division_x,division_y),new THREE.MeshPhongMaterial({emissive:0x484848,color:0x000000,wireframe:true,wireframeLinewidth:1}));
 	plane.position.x = 0;
-	plane.position.y = parseFloat(b);
+	plane.position.y = 0;
 	plane.position.z = 0;
 	scene.add(plane);
 	}
@@ -2549,37 +2549,42 @@ function changeEnvironment(value)
 		{
 		printer.scale.x = 0.5;
 		printer.scale.y = 0.5;
-		addWirePlane(value,10);
+		printer.position.y = 10;
+		addWirePlane(value);
 		addLightFocus(value);
 		}
 	else if (value==20)
 		{
 		printer.scale.x = 1;
 		printer.scale.y = 1;
-		addWirePlane(value,0);
+		printer.position.y = 20;
+		addWirePlane(value);
 		addLightFocus(value);
 		}
 	else if (value==30)
 		{
 		printer.scale.x = 1.5;
 		printer.scale.y = 1.5;
-		addWirePlane(value,-10);
+		printer.position.y = 30;
+		addWirePlane(value);
 		addLightFocus(value);
 		}
 	else if (value==40)
 		{
 		printer.scale.x = 2;
 		printer.scale.y = 2;
-		addWirePlane(value,-20);
+		printer.position.y = 40;
+		addWirePlane(value);
 		addLightFocus(value);
 		}
 	else if (value==50)
 		{
 		printer.scale.x = 2.5;
 		printer.scale.y = 2.5;
-		addWirePlane(value,-30);
+		printer.position.y = 50;
+		addWirePlane(value);
 		addLightFocus(value);
-		}		
+		}
 	}
 
 function addControls()
@@ -3279,7 +3284,7 @@ function init()
 	addLight();
 	addLightFocus(gridSizeValue);
 	addPrinter();
-	addWirePlane(gridSizeValue,0);
+	addWirePlane(gridSizeValue);
 	addRaycaster();
 	addMouse();
 	addControls();
