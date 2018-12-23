@@ -1011,7 +1011,7 @@ function initLanguage()
 		STRING_FILENAME = "3D_Proyecto";
 		STRING_DELETE_WARNING = "\u00BFDesea eliminar el objeto seleccionado?";
 		STRING_ERROR_EMPTYWORKSPACE = "Debe haber al menos un objeto en el plano de trabajo.";
-		STRING_ERROR_LOSECHANGES = "\u00BFPerder cualquier cambio no guardado?";
+		STRING_ERROR_LOSECHANGES = "\u00BFPerder cambios no guardados?";
 		STRING_ERROR_INTEGER = "ERROR: Debe ingresar un n\u00famero entero.";
 		STRING_ERROR_DOUBLE = "ERROR: Debe ingresar un n\u00famero entero o decimal.";
 		STRING_ERROR_POSITIVE = "ERROR: Debe ingresar un n\u00famero positivo.";
@@ -1055,7 +1055,7 @@ function initLanguage()
 		STRING_FILENAME = "3D_Project";
 		STRING_DELETE_WARNING = "Delete the selected object?";
 		STRING_ERROR_EMPTYWORKSPACE = "There must be at least one object in the workspace.";
-		STRING_ERROR_LOSECHANGES = "Lose any unsaved changes?";
+		STRING_ERROR_LOSECHANGES = "Lose unsaved changes?";
 		STRING_ERROR_INTEGER = "ERROR: You must input an integer number.";
 		STRING_ERROR_DOUBLE = "ERROR: You must input an integer or double number.";
 		STRING_ERROR_POSITIVE = "ERROR: You must input a positive number.";

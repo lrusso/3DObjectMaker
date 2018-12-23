@@ -71,7 +71,7 @@
 				<div class="menubar_button_new_enabled" id="buttonNew" onclick="newProject();"></div>
 			</div>
 			<div class="menubar_holder">
-				<label for="fileOpener" id="buttonImport">
+				<label for="fileOpener" id="buttonImport" onclick="var executeOpenProject = false;if (sceneDirty==true){var message = confirm(STRING_ERROR_LOSECHANGES);if (message == true){executeOpenProject = true;}}else{executeOpenProject = true;}if (executeOpenProject==true){return true;}else{return false;}">
 					<span class="menubar_button_open_enabled">&nbsp;</span>
 				</label>
 				<input type="file" class="menubar_buttonHidden" id="fileOpener" onChange="addModel(document.getElementById('fileOpener').files[0]);">
@@ -255,6 +255,8 @@
 			var selectedObject;
 			var clipboardObject;
 
+			var sceneDirty = false;
+
 			var sceneUndo01 = -1;
 			var sceneUndo02 = -1;
 			var sceneUndo03 = -1;
@@ -414,6 +416,11 @@
 
 				document.getElementById("buttonUndo").classList.add("menubar_button_undo_enabled");
 				document.getElementById("buttonUndo").classList.remove("menubar_button_undo_disabled");
+
+				if (a==true)
+					{
+					sceneDirty = true;
+					}
 				}
 
 			function setRedo()
@@ -502,6 +509,8 @@
 
 				document.getElementById("buttonRedo").classList.add("menubar_button_redo_enabled");
 				document.getElementById("buttonRedo").classList.remove("menubar_button_redo_disabled");
+
+				sceneDirty = true;
 				}
 
 			function getUndo()
@@ -857,6 +866,9 @@
 								// ADDING THE MODEL TO SCENE
 								scene.add(mesh);
 								objects.push(mesh);
+
+								// CLEARING DIRTY SCENE CHECKER
+								sceneDirty = false;
 								}
 
 							// CLEARING HISTORY OF UNDO & REDO
@@ -1827,33 +1839,39 @@
 
 			function newProject()
 				{
-				// CHECKING IF THERE IS ANY OBJECTS IN THE PLATFORM
-				if (objects.length>0)
+				var executeNewProject = false;
+				if (sceneDirty==true)
 					{
-					// ASKING IF LOSE CHANGES
 					var message = confirm(STRING_ERROR_LOSECHANGES);
 					if (message == true)
 						{
-						// RESTARTING EVERYTHING
-						init();
-
-						// IF NO OBJECTS ARE SELECTED, HIDING THE VISUAL CONTROL
-						if (controls2!=null)
-							{
-							controls2.detach();
-							controls2.update();
-							controls2.visible = false;
-							selectedObject = null;
-							}
-
-						// DISABLING ALL THE TEXTBOXS AND BUTTONS
-						objectPropertiesPanelEnabled(false);
+						executeNewProject = true;
 						}
 					}
 					else
 					{
+					executeNewProject = true;
+					}
+
+				if (executeNewProject==true)
+					{					
 					// RESTARTING EVERYTHING
 					init();
+
+					// IF NO OBJECTS ARE SELECTED, HIDING THE VISUAL CONTROL
+					if (controls2!=null)
+						{
+						controls2.detach();
+						controls2.update();
+						controls2.visible = false;
+						selectedObject = null;
+						}
+
+					// DISABLING ALL THE TEXTBOXS AND BUTTONS
+					objectPropertiesPanelEnabled(false);
+
+					// CLEARING DIRTY SCENE CHECKER
+					sceneDirty = false;
 					}
 				}
 
@@ -1879,6 +1897,9 @@
 
 					// LOADING THE SCRIPT 1 SECONDS LATER
 					setTimeout(exportToSTLExecute, 1000);
+
+					// CLEARING DIRTY SCENE CHECKER
+					sceneDirty = false;
 					}
 					else
 					{
@@ -1984,6 +2005,9 @@
 
 					// LOADING THE SCRIPT 1 SECONDS LATER
 					setTimeout(exportToSceneExecute, 1000);
+
+					// CLEARING DIRTY SCENE CHECKER
+					sceneDirty = false;
 					}
 					else
 					{
