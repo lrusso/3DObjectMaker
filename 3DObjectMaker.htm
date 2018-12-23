@@ -869,6 +869,12 @@
 
 								// CLEARING DIRTY SCENE CHECKER
 								sceneDirty = false;
+
+								// RELOCATING THE CAMERA
+								camera.up = new THREE.Vector3(0,0,1);
+								camera.position.set(0, -325, 170);
+								renderer.render(scene,camera);
+								controls.update();
 								}
 
 							// CLEARING HISTORY OF UNDO & REDO
