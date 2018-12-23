@@ -1202,7 +1202,7 @@
 				<div class="menubar_button_new_enabled" id="buttonNew" onclick="newProject();"></div>
 			</div>
 			<div class="menubar_holder">
-				<label for="fileOpener" id="buttonImport">
+				<label for="fileOpener" id="buttonImport" onclick="var executeOpenProject = false;if (sceneDirty==true){var message = confirm(STRING_ERROR_LOSECHANGES);if (message == true){executeOpenProject = true;}}else{executeOpenProject = true;}if (executeOpenProject==true){return true;}else{return false;}">
 					<span class="menubar_button_open_enabled">&nbsp;</span>
 				</label>
 				<input type="file" class="menubar_buttonHidden" id="fileOpener" onChange="addModel(document.getElementById('fileOpener').files[0]);">
@@ -2385,7 +2385,7 @@ function initLanguage()
 		STRING_FILENAME = "3D_Proyecto";
 		STRING_DELETE_WARNING = "\u00BFDesea eliminar el objeto seleccionado?";
 		STRING_ERROR_EMPTYWORKSPACE = "Debe haber al menos un objeto en el plano de trabajo.";
-		STRING_ERROR_LOSECHANGES = "\u00BFPerder cualquier cambio no guardado?";
+		STRING_ERROR_LOSECHANGES = "\u00BFPerder cambios no guardados?";
 		STRING_ERROR_INTEGER = "ERROR: Debe ingresar un n\u00famero entero.";
 		STRING_ERROR_DOUBLE = "ERROR: Debe ingresar un n\u00famero entero o decimal.";
 		STRING_ERROR_POSITIVE = "ERROR: Debe ingresar un n\u00famero positivo.";
@@ -2429,7 +2429,7 @@ function initLanguage()
 		STRING_FILENAME = "3D_Project";
 		STRING_DELETE_WARNING = "Delete the selected object?";
 		STRING_ERROR_EMPTYWORKSPACE = "There must be at least one object in the workspace.";
-		STRING_ERROR_LOSECHANGES = "Lose any unsaved changes?";
+		STRING_ERROR_LOSECHANGES = "Lose unsaved changes?";
 		STRING_ERROR_INTEGER = "ERROR: You must input an integer number.";
 		STRING_ERROR_DOUBLE = "ERROR: You must input an integer or double number.";
 		STRING_ERROR_POSITIVE = "ERROR: You must input a positive number.";
@@ -2813,6 +2813,8 @@ var objects = [];
 var selectedObject;
 var clipboardObject;
 
+var sceneDirty = false;
+
 var sceneUndo01 = -1;
 var sceneUndo02 = -1;
 var sceneUndo03 = -1;
@@ -2972,6 +2974,11 @@ function setUndo(a)
 
 	document.getElementById("buttonUndo").classList.add("menubar_button_undo_enabled");
 	document.getElementById("buttonUndo").classList.remove("menubar_button_undo_disabled");
+
+	if (a==true)
+		{
+		sceneDirty = true;
+		}
 	}
 
 function setRedo()
@@ -3060,6 +3067,8 @@ function setRedo()
 
 	document.getElementById("buttonRedo").classList.add("menubar_button_redo_enabled");
 	document.getElementById("buttonRedo").classList.remove("menubar_button_redo_disabled");
+
+	sceneDirty = true;
 	}
 
 function getUndo()
@@ -3415,6 +3424,15 @@ function addModel(file)
 					// ADDING THE MODEL TO SCENE
 					scene.add(mesh);
 					objects.push(mesh);
+
+					// CLEARING DIRTY SCENE CHECKER
+					sceneDirty = false;
+
+					// RELOCATING THE CAMERA
+					camera.up = new THREE.Vector3(0,0,1);
+					camera.position.set(0, -325, 170);
+					renderer.render(scene,camera);
+					controls.update();
 					}
 
 				// CLEARING HISTORY OF UNDO & REDO
@@ -4385,33 +4403,39 @@ function changeObjectRotationZ(e)
 
 function newProject()
 	{
-	// CHECKING IF THERE IS ANY OBJECTS IN THE PLATFORM
-	if (objects.length>0)
+	var executeNewProject = false;
+	if (sceneDirty==true)
 		{
-		// ASKING IF LOSE CHANGES
 		var message = confirm(STRING_ERROR_LOSECHANGES);
 		if (message == true)
 			{
-			// RESTARTING EVERYTHING
-			init();
-
-			// IF NO OBJECTS ARE SELECTED, HIDING THE VISUAL CONTROL
-			if (controls2!=null)
-				{
-				controls2.detach();
-				controls2.update();
-				controls2.visible = false;
-				selectedObject = null;
-				}
-
-			// DISABLING ALL THE TEXTBOXS AND BUTTONS
-			objectPropertiesPanelEnabled(false);
+			executeNewProject = true;
 			}
 		}
 		else
 		{
+		executeNewProject = true;
+		}
+
+	if (executeNewProject==true)
+		{
 		// RESTARTING EVERYTHING
 		init();
+
+		// IF NO OBJECTS ARE SELECTED, HIDING THE VISUAL CONTROL
+		if (controls2!=null)
+			{
+			controls2.detach();
+			controls2.update();
+			controls2.visible = false;
+			selectedObject = null;
+			}
+
+		// DISABLING ALL THE TEXTBOXS AND BUTTONS
+		objectPropertiesPanelEnabled(false);
+
+		// CLEARING DIRTY SCENE CHECKER
+		sceneDirty = false;
 		}
 	}
 
@@ -4437,6 +4461,9 @@ function exportToSTL()
 
 		// LOADING THE SCRIPT 1 SECONDS LATER
 		setTimeout(exportToSTLExecute, 1000);
+
+		// CLEARING DIRTY SCENE CHECKER
+		sceneDirty = false;
 		}
 		else
 		{
@@ -4543,6 +4570,9 @@ function exportToScene()
 
 		// LOADING THE SCRIPT 1 SECONDS LATER
 		setTimeout(exportToSceneExecute, 1000);
+
+		// CLEARING DIRTY SCENE CHECKER
+		sceneDirty = false;
 		}
 		else
 		{
