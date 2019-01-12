@@ -1202,7 +1202,7 @@
 				<div class="menubar_button_new_enabled" id="buttonNew" onclick="newProject();"></div>
 			</div>
 			<div class="menubar_holder">
-				<label for="fileOpener" id="buttonImport" onclick="var executeOpenProject = false;if (sceneDirty==true){var message = confirm(STRING_ERROR_LOSECHANGES);if (message == true){executeOpenProject = true;}}else{executeOpenProject = true;}if (executeOpenProject==true){return true;}else{return false;}">
+				<label for="fileOpener" id="buttonImport">
 					<span class="menubar_button_open_enabled">&nbsp;</span>
 				</label>
 				<input type="file" class="menubar_buttonHidden" id="fileOpener" onChange="addModel(document.getElementById('fileOpener').files[0]);">
@@ -3312,9 +3312,6 @@ function addModel(file)
 	extensionFinal = extension;
 	var reader = new FileReader();
 
-	// SHOWING THE LOADING SPLASH
-	document.getElementById("loading").style.display = "block";
-
 	if (extension=="stl")
 		{
 		reader.readAsArrayBuffer(file);
@@ -3348,157 +3345,185 @@ function addModel(file)
 			var contents = event.target.result;
 			if (extension=="scene")
 				{
-				// DELETES EVERY OBJECT IN THE SCENE
-				for (var i = 0; i < objects.length; i++)
+				// CHECKS FOR UNSAVED CHANGES (ONLY FOR SCENE FILES).
+				// BECAUSE A SCENE FILE DELETES EVERYTHING ON THE PLATFORM WHEN LOADED
+				var executeOpenProject = false;
+				if (sceneDirty==true)
 					{
-					scene.remove(objects[i]);
-					}
-				objects = [];
-
-				// LOADING THE SIZE OF THE GRID
-				var limitGrid = contents.indexOf("|");
-				var gridSizeData = contents.substring(0, limitGrid);
-				changeEnvironment(parseFloat(gridSizeData));
-				gridSizeValue = parseFloat(gridSizeData);
-				document.getElementById("gridSize").value = parseFloat(gridSizeData);
-
-				// LOADING EVERY MODEL STORED IN THE FILE
-				var models = contents.substring(limitGrid + 1, contents.length)
-				models = models.split("3D_OBJECT_MAKER_SEPARATOR");
-				for (var i = 0; i < models.length - 1; i++)
-					{
-					// GETTING THE LOCATION OF THE MODEL
-					var limit = models[i].indexOf("|");
-					var objectData = models[i].substring(0, limit);
-					var objectDataValues = objectData.split(",");
-
-					// GETTING THE MODEL DATA
-					var modelData = models[i].substring(limit+1, models[i].length);
-
-					// CREATING THE MODEL
-					var geometry = loadObjectGeometry(extension,modelData);
-					var material = loadObjectMaterial();
-					var mesh = new THREE.Mesh(geometry, material);
-
-					// SETTING THE COLOR OF THE MODEL
-					var colorModelImported = "0x" + objectDataValues[0];
-					mesh.material.color.setHex(colorModelImported);
-					if (objectDataValues[0]=="000000")
+					var message = confirm(STRING_ERROR_LOSECHANGES);
+					if (message == true)
 						{
-						mesh.material.transparent = true;
-						mesh.material.opacity = 0.5;
-						mesh.material.needsUpdate = true;
+						executeOpenProject = true;
 						}
-						else
-						{
-						mesh.material.transparent = false;
-						mesh.material.opacity = 1;
-						mesh.material.needsUpdate = true;
-						}
-
-					// SETTING THE SIZE OF THE MODEL
-					mesh.scale.x = 1;
-					mesh.scale.y = 1;
-					mesh.scale.z = 1;
-					var box = new THREE.Box3().setFromObject(mesh);
-					var height = box.max.z - box.min.z;
-					var width = box.max.x - box.min.x;
-					var depth = box.max.y - box.min.y;
-					var storedWidth = parseFloat(objectDataValues[1]);
-					var storedHeight = parseFloat(objectDataValues[2]);
-					var storedDepth = parseFloat(objectDataValues[3]);
-					mesh.scale.x = storedWidth * 1 / width;
-					mesh.scale.z = storedHeight * 1 / height;
-					mesh.scale.y = storedDepth * 1 / depth;
-
-					// SETTING THE ROTATION OF THE MODEL
-					mesh.applyMatrix(new THREE.Matrix4().makeRotationX(objectDataValues[7]));
-					mesh.applyMatrix(new THREE.Matrix4().makeRotationY(objectDataValues[8]));
-					mesh.applyMatrix(new THREE.Matrix4().makeRotationZ(objectDataValues[9]));
-
-					// SETTING THE POSITION OF THE MODEL
-					mesh.position.x = parseFloat(objectDataValues[4]);
-					mesh.position.y = parseFloat(objectDataValues[5]);
-					mesh.position.z = parseFloat(objectDataValues[6]);
-
-					// ADDING THE MODEL TO SCENE
-					scene.add(mesh);
-					objects.push(mesh);
-
-					// CLEARING DIRTY SCENE CHECKER
-					sceneDirty = false;
-
-					// RELOCATING THE CAMERA
-					camera.up = new THREE.Vector3(0,0,1);
-					camera.position.set(0, -325, 170);
-					renderer.render(scene,camera);
-					controls.update();
 					}
-
-				// CLEARING HISTORY OF UNDO & REDO
-				document.getElementById("buttonUndo").classList.add("menubar_button_undo_disabled");
-				document.getElementById("buttonUndo").classList.remove("menubar_button_undo_enabled");
-				document.getElementById("buttonRedo").classList.add("menubar_button_redo_disabled");
-				document.getElementById("buttonRedo").classList.remove("menubar_button_redo_enabled");
-
-				sceneUndo01 = -1;
-				sceneUndo02 = -1;
-				sceneUndo03 = -1;
-				sceneUndo04 = -1;
-				sceneUndo05 = -1;
-				sceneUndo06 = -1;
-				sceneUndo07 = -1;
-				sceneUndo08 = -1;
-				sceneUndo09 = -1;
-				sceneUndo10 = -1;
-
-				sceneUndo01GridSize = -1;
-				sceneUndo02GridSize = -1;
-				sceneUndo03GridSize = -1;
-				sceneUndo04GridSize = -1;
-				sceneUndo05GridSize = -1;
-				sceneUndo06GridSize = -1;
-				sceneUndo07GridSize = -1;
-				sceneUndo08GridSize = -1;
-				sceneUndo09GridSize = -1;
-				sceneUndo10GridSize = -1;
-
-				sceneRedo01 = -1;
-				sceneRedo02 = -1;
-				sceneRedo03 = -1;
-				sceneRedo04 = -1;
-				sceneRedo05 = -1;
-				sceneRedo06 = -1;
-				sceneRedo07 = -1;
-				sceneRedo08 = -1;
-				sceneRedo09 = -1;
-				sceneRedo10 = -1;
-
-				sceneRedo01GridSize = -1;
-				sceneRedo02GridSize = -1;
-				sceneRedo03GridSize = -1;
-				sceneRedo04GridSize = -1;
-				sceneRedo05GridSize = -1;
-				sceneRedo06GridSize = -1;
-				sceneRedo07GridSize = -1;
-				sceneRedo08GridSize = -1;
-				sceneRedo09GridSize = -1;
-				sceneRedo10GridSize = -1;
-
-				// HIDING THE VISUAL CONTROL
-				if (controls2!=null)
+					else
 					{
-					controls2.detach();
-					controls2.update();
-					controls2.visible = false;
-					selectedObject = null;
+					executeOpenProject = true;
 					}
 
-				// DISABLING ALL THE TEXTBOXS AND BUTTONS
-				objectPropertiesPanelEnabled(false);
+				if (executeOpenProject==true)
+					{
+					// SHOWING THE LOADING SPLASH
+					document.getElementById("loading").style.display = "block";
+
+					// DELETES EVERY OBJECT IN THE SCENE
+					for (var i = 0; i < objects.length; i++)
+						{
+						scene.remove(objects[i]);
+						}
+					objects = [];
+
+					// LOADING THE SIZE OF THE GRID
+					var limitGrid = contents.indexOf("|");
+					var gridSizeData = contents.substring(0, limitGrid);
+					changeEnvironment(parseFloat(gridSizeData));
+					gridSizeValue = parseFloat(gridSizeData);
+					document.getElementById("gridSize").value = parseFloat(gridSizeData);
+
+					// LOADING EVERY MODEL STORED IN THE FILE
+					var models = contents.substring(limitGrid + 1, contents.length)
+					models = models.split("3D_OBJECT_MAKER_SEPARATOR");
+					for (var i = 0; i < models.length - 1; i++)
+						{
+						// GETTING THE LOCATION OF THE MODEL
+						var limit = models[i].indexOf("|");
+						var objectData = models[i].substring(0, limit);
+						var objectDataValues = objectData.split(",");
+
+						// GETTING THE MODEL DATA
+						var modelData = models[i].substring(limit+1, models[i].length);
+
+						// CREATING THE MODEL
+						var geometry = loadObjectGeometry(extension,modelData);
+						var material = loadObjectMaterial();
+						var mesh = new THREE.Mesh(geometry, material);
+
+						// SETTING THE COLOR OF THE MODEL
+						var colorModelImported = "0x" + objectDataValues[0];
+						mesh.material.color.setHex(colorModelImported);
+						if (objectDataValues[0]=="000000")
+							{
+							mesh.material.transparent = true;
+							mesh.material.opacity = 0.5;
+							mesh.material.needsUpdate = true;
+							}
+							else
+							{
+							mesh.material.transparent = false;
+							mesh.material.opacity = 1;
+							mesh.material.needsUpdate = true;
+							}
+
+						// SETTING THE SIZE OF THE MODEL
+						mesh.scale.x = 1;
+						mesh.scale.y = 1;
+						mesh.scale.z = 1;
+						var box = new THREE.Box3().setFromObject(mesh);
+						var height = box.max.z - box.min.z;
+						var width = box.max.x - box.min.x;
+						var depth = box.max.y - box.min.y;
+						var storedWidth = parseFloat(objectDataValues[1]);
+						var storedHeight = parseFloat(objectDataValues[2]);
+						var storedDepth = parseFloat(objectDataValues[3]);
+						mesh.scale.x = storedWidth * 1 / width;
+						mesh.scale.z = storedHeight * 1 / height;
+						mesh.scale.y = storedDepth * 1 / depth;
+
+						// SETTING THE ROTATION OF THE MODEL
+						mesh.applyMatrix(new THREE.Matrix4().makeRotationX(objectDataValues[7]));
+						mesh.applyMatrix(new THREE.Matrix4().makeRotationY(objectDataValues[8]));
+						mesh.applyMatrix(new THREE.Matrix4().makeRotationZ(objectDataValues[9]));
+
+						// SETTING THE POSITION OF THE MODEL
+						mesh.position.x = parseFloat(objectDataValues[4]);
+						mesh.position.y = parseFloat(objectDataValues[5]);
+						mesh.position.z = parseFloat(objectDataValues[6]);
+
+						// ADDING THE MODEL TO SCENE
+						scene.add(mesh);
+						objects.push(mesh);
+
+						// CLEARING DIRTY SCENE CHECKER
+						sceneDirty = false;
+
+						// RELOCATING THE CAMERA
+						camera.up = new THREE.Vector3(0,0,1);
+						camera.position.set(0, -325, 170);
+						renderer.render(scene,camera);
+						controls.update();
+						}
+
+					// CLEARING HISTORY OF UNDO & REDO
+					document.getElementById("buttonUndo").classList.add("menubar_button_undo_disabled");
+					document.getElementById("buttonUndo").classList.remove("menubar_button_undo_enabled");
+					document.getElementById("buttonRedo").classList.add("menubar_button_redo_disabled");
+					document.getElementById("buttonRedo").classList.remove("menubar_button_redo_enabled");
+
+					sceneUndo01 = -1;
+					sceneUndo02 = -1;
+					sceneUndo03 = -1;
+					sceneUndo04 = -1;
+					sceneUndo05 = -1;
+					sceneUndo06 = -1;
+					sceneUndo07 = -1;
+					sceneUndo08 = -1;
+					sceneUndo09 = -1;
+					sceneUndo10 = -1;
+
+					sceneUndo01GridSize = -1;
+					sceneUndo02GridSize = -1;
+					sceneUndo03GridSize = -1;
+					sceneUndo04GridSize = -1;
+					sceneUndo05GridSize = -1;
+					sceneUndo06GridSize = -1;
+					sceneUndo07GridSize = -1;
+					sceneUndo08GridSize = -1;
+					sceneUndo09GridSize = -1;
+					sceneUndo10GridSize = -1;
+
+					sceneRedo01 = -1;
+					sceneRedo02 = -1;
+					sceneRedo03 = -1;
+					sceneRedo04 = -1;
+					sceneRedo05 = -1;
+					sceneRedo06 = -1;
+					sceneRedo07 = -1;
+					sceneRedo08 = -1;
+					sceneRedo09 = -1;
+					sceneRedo10 = -1;
+
+					sceneRedo01GridSize = -1;
+					sceneRedo02GridSize = -1;
+					sceneRedo03GridSize = -1;
+					sceneRedo04GridSize = -1;
+					sceneRedo05GridSize = -1;
+					sceneRedo06GridSize = -1;
+					sceneRedo07GridSize = -1;
+					sceneRedo08GridSize = -1;
+					sceneRedo09GridSize = -1;
+					sceneRedo10GridSize = -1;
+
+					// HIDING THE VISUAL CONTROL
+					if (controls2!=null)
+						{
+						controls2.detach();
+						controls2.update();
+						controls2.visible = false;
+						selectedObject = null;
+						}
+
+					// DISABLING ALL THE TEXTBOXS AND BUTTONS
+					objectPropertiesPanelEnabled(false);
+
+					// HIDDING THE LOADING SPLASH
+					document.getElementById("loading").style.display = "none";
+					}
 				}
 				else
 				{
+				// SHOWING THE LOADING SPLASH
+				document.getElementById("loading").style.display = "block";
+
 				setUndo(true);
 
 				// CREATING THE MODEL
@@ -3548,10 +3573,10 @@ function addModel(file)
 
 				// UPDATING THE PROPORTIONAL VALUE
 				updateProportional();
-				}
 
-			// HIDDING THE LOADING SPLASH
-			document.getElementById("loading").style.display = "none";
+				// HIDDING THE LOADING SPLASH
+				document.getElementById("loading").style.display = "none";
+				}
 			}
 			catch(err)
 			{
