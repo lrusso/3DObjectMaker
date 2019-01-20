@@ -22,6 +22,16 @@ Add geometric shapes (from the right panel) to the plataform to create your own 
 
 ![alt hollow](https://raw.githubusercontent.com/lrusso/3DObjectMaker/master/3DObjectMakerHollow.png)
 
+## HOW TO FUSION OBJECTS:
+
+1) Add object A to the plaform.
+2) Add object B to the platform.
+3) Select object B.
+4) Select any material for both objects (except 'Hollow') from the right panel.
+5) Export the work as a STL file.
+
+![alt fusion](https://raw.githubusercontent.com/lrusso/3DObjectMaker/master/3DObjectMakerFusion.png)
+
 ## HOW TO MOVE AROUND THE PLATFORM:
 
 In the App: One finger to rotate, two fingers to zoom in and out and three fingers to move the camera.
