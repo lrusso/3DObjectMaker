@@ -27,7 +27,7 @@ Add geometric shapes (from the right panel) to the plataform to create your own 
 1) Add object A to the plaform.
 2) Add object B to the platform.
 3) Select object B.
-4) Select any material for both objects (except 'Hollow') from the right panel.
+4) Select any material (except 'Hollow') from the right panel.
 5) Export the work as a STL file.
 
 ![alt fusion](https://raw.githubusercontent.com/lrusso/3DObjectMaker/master/3DObjectMakerFusion.png)
