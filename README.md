@@ -1,6 +1,6 @@
 # 3D Object Maker
 
-3D Object Maker compatible with models in STL, OBJ and 3DS format. You can export your work ready to print in 3D (STL format) or to keep working on it later (SCENE format). The App version requires the Chrome Web browser installed in the smartphone or tablet.
+3D Object Maker compatible with models in STL, OBJ and 3DS format. You can export your work ready to print in 3D (STL format) or to keep working on it later (SCENE format).
 
 ![alt screenshot](https://raw.githubusercontent.com/lrusso/3DObjectMaker/master/3DObjectMaker.png)
 
