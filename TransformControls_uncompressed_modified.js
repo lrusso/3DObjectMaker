@@ -1393,14 +1393,10 @@
 		var originalX = parseFloat(parseFloat(a.position.x).toFixed(2) - oldWidth / 2).toFixed(2);
 
 		// SCALING THE OBJECT
-		a.scale.x = 1;
-		var tempBox = new THREE.Box3().setFromObject(a);
-		var tempWidth = tempBox.max.x - tempBox.min.x;
-		var newWidth = parseFloat(b).toFixed(2);
-		a.scale.x = newWidth * 1 / tempWidth;
+		a.scale.x = parseFloat(b).toFixed(2) * a.scale.x / oldWidth;
 
 		// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION
-		a.position.x = parseFloat(parseFloat(newWidth /2 + parseFloat(originalX)).toFixed(2));
+		a.position.x = parseFloat(parseFloat(parseFloat(b).toFixed(2) /2 + parseFloat(originalX)).toFixed(2));
 
 		// SETTING THE ORIGINAL ROTATION TO THE OBJECT
 		a.rotation.x = originalRotationX;
@@ -1438,16 +1434,12 @@
 		var originalZ = parseFloat(parseFloat(a.position.z).toFixed(2) - oldHeight / 2).toFixed(2);
 
 		// SCALING THE OBJECT
-		a.scale.z = 1;
-		var tempBox = new THREE.Box3().setFromObject(a);
-		var tempHeight = tempBox.max.z - tempBox.min.z;
-		var newHeight = parseFloat(b);
-		a.scale.z = newHeight * 1 / tempHeight;
+		a.scale.z = parseFloat(b) * a.scale.z / oldHeight;
 
 		// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION IF NO ROTATION
 		if (originalRotationX==0 && originalRotationY==0)
 			{
-			a.position.z = parseFloat(parseFloat(newHeight /2 + parseFloat(originalZ)).toFixed(2));
+			a.position.z = parseFloat(parseFloat(parseFloat(b) /2 + parseFloat(originalZ)).toFixed(2));
 			}
 
 		// SETTING THE ORIGINAL ROTATION TO THE OBJECT
@@ -1486,14 +1478,14 @@
 		var originalY = parseFloat(parseFloat(a.position.y).toFixed(2) - oldDepth / 2).toFixed(2);
 
 		// SCALING THE OBJECT
-		a.scale.y = 1;
-		var tempBox = new THREE.Box3().setFromObject(a);
-		var tempDepth = tempBox.max.y - tempBox.min.y;
-		var newDepth = parseFloat(b);
-		a.scale.y = newDepth * 1 / tempDepth;
+		a.scale.y = parseFloat(b) * a.scale.y / oldDepth;
 
-		// RELOCATING THE OBJECT TO THE ORIGINAL Y POSITION
-		a.position.y = parseFloat(parseFloat(newDepth /2 + parseFloat(originalY)).toFixed(2));
+		// RELOCATING THE OBJECT TO THE ORIGINAL Z POSITION IF NO ROTATION
+		if (originalRotationX==0 && originalRotationY==0)
+			{
+			// RELOCATING THE OBJECT TO THE ORIGINAL Y POSITION
+			a.position.y = parseFloat(parseFloat(parseFloat(b) /2 + parseFloat(originalY)).toFixed(2));
+			}
 
 		// SETTING THE ORIGINAL ROTATION TO THE OBJECT
 		a.rotation.x = originalRotationX;
