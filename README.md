@@ -8,11 +8,11 @@ Web version: https://3dobjectmaker.lrusso.com.ar
 
 App version: https://play.google.com/store/apps/details?id=ar.com.lrusso.dobjectmaker
 
-## HOW TO USE THIS SOFTWARE:
+## HOW TO USE THIS SOFTWARE
 
 Add geometric shapes (from the right panel) to the plataform to create your own object. Also you can import STL, OBJ and 3DS models to the plataform. Later, export the object as STL file (for 3D printing) or as a SCENE file (to keep working on it later).
 
-## HOW TO CUT OBJECTS:
+## HOW TO CUT OBJECTS
 
 1) Add object A to the plaform.
 2) Add object B to the platform.
@@ -22,7 +22,7 @@ Add geometric shapes (from the right panel) to the plataform to create your own 
 
 ![alt hollow](https://raw.githubusercontent.com/lrusso/3DObjectMaker/master/3DObjectMakerHollow.png)
 
-## HOW TO FUSION OBJECTS:
+## HOW TO FUSION OBJECTS
 
 1) Add object A to the plaform.
 2) Add object B to the platform.
@@ -32,8 +32,8 @@ Add geometric shapes (from the right panel) to the plataform to create your own 
 
 ![alt fusion](https://raw.githubusercontent.com/lrusso/3DObjectMaker/master/3DObjectMakerFusion.png)
 
-## HOW TO MOVE AROUND THE PLATFORM:
+## HOW TO MOVE AROUND THE PLATFORM
 
-In the App: One finger to rotate, two fingers to zoom in and out and three fingers to move the camera.
+- In the App: One finger to rotate, two fingers to zoom in and out and three fingers to move the camera.
 
-In the Web: With your mouse, hold left-click and move the mouse to rotate, use the mouse wheel to zoom in and out and hold the right-click and move the mouse to move the camera.
+- In the Web: With your mouse, hold left-click and move the mouse to rotate, use the mouse wheel to zoom in and out and hold the right-click and move the mouse to move the camera.
