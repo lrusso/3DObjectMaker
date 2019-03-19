@@ -4,9 +4,11 @@
 
 ![alt screenshot](https://raw.githubusercontent.com/lrusso/3DObjectMaker/master/3DObjectMaker.png)
 
-Web version: https://3dobjectmaker.lrusso.com.ar
+## Web version
+https://3dobjectmaker.lrusso.com.ar
 
-App version: https://play.google.com/store/apps/details?id=ar.com.lrusso.dobjectmaker
+## App version
+https://play.google.com/store/apps/details?id=ar.com.lrusso.dobjectmaker
 
 ## HOW TO USE THIS SOFTWARE
 
