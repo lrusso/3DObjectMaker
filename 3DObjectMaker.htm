@@ -1731,9 +1731,10 @@
 							{
 							// GETTING A NUMBER WITH TWO DIGITS AFTER COMMA
 							value = parseFloat(value);
+							var objectPosition = parseFloat(selectedObject.position.z);
 
 							// CHECKING OBJECT POSITION IS DIFFERENT
-							if (selectedObject.position.z.toFixed(2) < parseFloat((height/2)+parseFloat(value)).toFixed(2) || selectedObject.position.z.toFixed(2) > parseFloat((height/2)+parseFloat(value)).toFixed(2))
+							if (objectPosition.toFixed(2) < parseFloat((height/2)+parseFloat(value)).toFixed(2) || objectPosition.toFixed(2) > parseFloat((height/2)+parseFloat(value)).toFixed(2))
 								{
 								// SETTING THE UNDO RECORD
 								setUndo(true);
