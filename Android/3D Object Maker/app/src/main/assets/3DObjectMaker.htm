@@ -3430,9 +3430,15 @@ function addModel(file)
 						mesh.scale.y = storedDepth * 1 / depth;
 
 						// SETTING THE ROTATION OF THE MODEL
-						mesh.applyMatrix(new THREE.Matrix4().makeRotationX(objectDataValues[7]));
-						mesh.applyMatrix(new THREE.Matrix4().makeRotationY(objectDataValues[8]));
-						mesh.applyMatrix(new THREE.Matrix4().makeRotationZ(objectDataValues[9]));
+						var valueRotationX = ((objectDataValues[7]) * 180 / Math.PI).toFixed(2);
+						valueRotationX = (valueRotationX * Math.PI)/180;
+						var valueRotationY = ((objectDataValues[8]) * 180 / Math.PI).toFixed(2);
+						valueRotationY = (valueRotationY * Math.PI)/180;
+						var valueRotationZ = ((objectDataValues[9]) * 180 / Math.PI).toFixed(2);
+						valueRotationZ = (valueRotationZ * Math.PI)/180;
+						mesh.rotation.x = valueRotationX;
+						mesh.rotation.y = valueRotationY;
+						mesh.rotation.z = valueRotationZ;
 
 						// SETTING THE POSITION OF THE MODEL
 						mesh.position.x = parseFloat(objectDataValues[4]);
