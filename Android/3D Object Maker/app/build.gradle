@@ -6,8 +6,8 @@ android {
         applicationId "ar.com.lrusso.dobjectmaker"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 48
-        versionName "1.6.9.7"
+        versionCode 49
+        versionName "1.6.9.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

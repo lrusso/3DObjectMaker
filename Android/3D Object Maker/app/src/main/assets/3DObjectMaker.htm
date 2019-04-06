@@ -4830,6 +4830,8 @@ function cutObject()
 	// CHECKING IF AN OBJECT WAS SELECTED
 	if (selectedObject!=null)
 		{
+		setUndo(true);
+
 		// GETTING THE ORIGINAL ROTATION OF THE OBJECT
 		var originalRotationX = selectedObject.rotation.x;
 		var originalRotationY = selectedObject.rotation.y;
@@ -4947,6 +4949,8 @@ function pasteObject()
 	// CHECKING IF AN OBJECT WAS SELECTED
 	if (clipboardObject!=null)
 		{
+		setUndo(true);
+
 		// GETTING THE ORIGINAL ROTATION OF THE OBJECT
 		var originalRotationX = clipboardObject.rotation.x;
 		var originalRotationY = clipboardObject.rotation.y;
