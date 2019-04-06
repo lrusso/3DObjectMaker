@@ -734,7 +734,6 @@
 
 				addScene();
 				addLight();
-				addLightFocus(gridSizeValue);
 				addPrinter();
 				addWirePlane(gridSizeValue);
 				addRaycaster();
@@ -2275,6 +2274,8 @@
 				// CHECKING IF AN OBJECT WAS SELECTED
 				if (selectedObject!=null)
 					{
+					setUndo(true);
+
 					// GETTING THE ORIGINAL ROTATION OF THE OBJECT
 					var originalRotationX = selectedObject.rotation.x;
 					var originalRotationY = selectedObject.rotation.y;
@@ -2331,7 +2332,7 @@
 						}
 
 					// DISABLING ALL THE TEXTBOXS AND BUTTONS
-					objectPropertiesPanelEnabled(false);					
+					objectPropertiesPanelEnabled(false);
 
 					// ACTIVATING THE BUTTON ICON
 					document.getElementById("buttonPaste").classList.add("menubar_button_paste_enabled");
@@ -2392,6 +2393,8 @@
 				// CHECKING IF AN OBJECT WAS SELECTED
 				if (clipboardObject!=null)
 					{
+					setUndo(true);
+
 					// GETTING THE ORIGINAL ROTATION OF THE OBJECT
 					var originalRotationX = clipboardObject.rotation.x;
 					var originalRotationY = clipboardObject.rotation.y;

@@ -1109,19 +1109,6 @@ function addLight()
 	scene.add(light);
 	}
 
-function addLightFocus(a)
-	{
-	if (lightFocus!=null)
-		{
-		scene.remove(lightFocus);
-		}
-	var lightFocusIntensity = a * 10;
-	var lightFocusY = lightFocusIntensity * 0.85;
-	lightFocus = new THREE.PointLight(0xc0c0c0,1,parseFloat(lightFocusIntensity));
-	lightFocus.position.set(0,0,parseFloat(lightFocusY));
-	scene.add(lightFocus);
-	}
-
 function addPrinter()
 	{
 	var material = 	new THREE.MeshPhongMaterial({color:0xd3d3d3});
@@ -1177,7 +1164,6 @@ function changeEnvironment(value)
 		printer.scale.y = 0.5;
 		printer.position.y = 10;
 		addWirePlane(value);
-		addLightFocus(value);
 		}
 	else if (value==20)
 		{
@@ -1185,7 +1171,6 @@ function changeEnvironment(value)
 		printer.scale.y = 1;
 		printer.position.y = 20;
 		addWirePlane(value);
-		addLightFocus(value);
 		}
 	else if (value==30)
 		{
@@ -1193,7 +1178,6 @@ function changeEnvironment(value)
 		printer.scale.y = 1.5;
 		printer.position.y = 30;
 		addWirePlane(value);
-		addLightFocus(value);
 		}
 	else if (value==40)
 		{
@@ -1201,7 +1185,6 @@ function changeEnvironment(value)
 		printer.scale.y = 2;
 		printer.position.y = 40;
 		addWirePlane(value);
-		addLightFocus(value);
 		}
 	else if (value==50)
 		{
@@ -1209,7 +1192,6 @@ function changeEnvironment(value)
 		printer.scale.y = 2.5;
 		printer.position.y = 50;
 		addWirePlane(value);
-		addLightFocus(value);
 		}
 	}
 
