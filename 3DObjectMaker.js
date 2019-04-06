@@ -1255,6 +1255,23 @@ function loadObjectMaterial()
 	return new THREE.MeshPhongMaterial({color:0xffffff});
 	}
 
+function updateEdgeHelper(mesh)
+	{
+	scene.remove(edgeHelper);
+	var edges = new THREE.EdgesGeometry(mesh.geometry,50);
+	edgeHelper = new THREE.LineSegments(edges,new THREE.LineBasicMaterial({color:0x333333}));
+	edgeHelper.rotation.y = mesh.rotation.y;
+	edgeHelper.rotation.x = mesh.rotation.x;
+	edgeHelper.rotation.z = mesh.rotation.z;
+	edgeHelper.position.y = mesh.position.y;
+	edgeHelper.position.x = mesh.position.x;
+	edgeHelper.position.z = mesh.position.z;
+	edgeHelper.scale.x = mesh.scale.x;
+	edgeHelper.scale.y = mesh.scale.y;
+	edgeHelper.scale.z = mesh.scale.z;
+	scene.add(edgeHelper);
+	}
+
 function isInt(value)
 	{
 	var er = /^-?[0-9]+$/;
