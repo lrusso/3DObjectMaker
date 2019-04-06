@@ -247,7 +247,7 @@
 			var TYPE_SCALE = 2;
 			var TYPE_ROTATE = 3;
 			var TYPE_CONTROL;
-			var container, camera, scene, renderer, controls, controls2, raycaster, mouse, light, lightFocus, printer, plane, edgeHelper;
+			var container, camera, scene, renderer, controls, controls2, raycaster, mouse, light, lightFocus, printer, plane;
 
 			var extensionFinal;
 			var gridSizeValue = 20;
@@ -1003,7 +1003,6 @@
 							controls2.addEventListener("change",function ()
 								{
 								updateTextBoxs();
-								updateEdgeHelper(selectedObject);
 								});
 
 							// SELECTING THE DUPLICATED OBJECT
@@ -1023,9 +1022,6 @@
 
 							// UPDATING THE PROPORTIONAL VALUE
 							updateProportional();
-
-							// UPDATING THE EDGE HELPER
-							updateEdgeHelper(selectedObject);
 
 							// HIDDING THE LOADING SPLASH
 							document.getElementById("loading").style.display = "none";
@@ -1087,7 +1083,6 @@
 						controls2.addEventListener("change",function ()
 							{
 							updateTextBoxs();
-							updateEdgeHelper(selectedObject);
 							});
 
 						// SETTING VISIBLE THE VISUAL CONTROL
@@ -1106,9 +1101,6 @@
 
 						// UPDATING THE PROPORTIONAL VALUE
 						updateProportional();
-
-						// UPDATING THE EDGE HELPER
-						updateEdgeHelper(selectedObject);
 						}
 						else
 						{
@@ -1120,9 +1112,6 @@
 							controls2.visible = false;
 							selectedObject = null;
 							}
-
-						// REMOVING THE EDGE HELPER
-						scene.remove(edgeHelper);
 
 						// DISABLING ALL THE TEXTBOXS AND BUTTONS
 						objectPropertiesPanelEnabled(false);
@@ -1160,7 +1149,6 @@
 				controls2.addEventListener("change",function ()
 					{
 					updateTextBoxs();
-					updateEdgeHelper(selectedObject);
 					});
 
 				// SELECTING THE DUPLICATED OBJECT
@@ -1180,9 +1168,6 @@
 
 				// UPDATING THE PROPORTIONAL VALUE
 				updateProportional();
-
-				// UPDATING THE EDGE HELPER
-				updateEdgeHelper(selectedObject);
 				}
 
 			function changeGridSize(a)
@@ -1428,9 +1413,6 @@
 
 								// UPDATING THE TEXTBOXS VALUES
 								updateTextBoxs();
-
-								// UPDATING THE EDGE HELPER
-								updateEdgeHelper(selectedObject);
 								}
 								else
 								{
@@ -1539,9 +1521,6 @@
 
 								// UPDATING THE TEXTBOXS VALUES
 								updateTextBoxs();
-
-								// UPDATING THE EDGE HELPER
-								updateEdgeHelper(selectedObject);
 								}
 								else
 								{
@@ -1660,9 +1639,6 @@
 
 								// UPDATING THE TEXTBOXS VALUES
 								updateTextBoxs();
-
-								// UPDATING THE EDGE HELPER
-								updateEdgeHelper(selectedObject);
 								}
 								else
 								{
@@ -1777,9 +1753,6 @@
 
 								// UPDATING THE TEXTBOXS VALUES
 								updateTextBoxs();
-
-								// UPDATING THE EDGE HELPER
-								updateEdgeHelper(selectedObject);
 								}
 								else
 								{
@@ -1876,9 +1849,6 @@
 
 								// UPDATING THE TEXTBOXS VALUES
 								updateTextBoxs();
-
-								// UPDATING THE EDGE HELPER
-								updateEdgeHelper(selectedObject);
 								}
 								else
 								{
@@ -1927,9 +1897,6 @@
 
 								// UPDATING THE TEXTBOXS VALUES
 								updateTextBoxs();
-
-								// UPDATING THE EDGE HELPER
-								updateEdgeHelper(selectedObject);
 								}
 								else
 								{
@@ -1978,9 +1945,6 @@
 
 								// UPDATING THE TEXTBOXS VALUES
 								updateTextBoxs();
-
-								// UPDATING THE EDGE HELPER
-								updateEdgeHelper(selectedObject);
 								}
 								else
 								{
@@ -2302,9 +2266,6 @@
 
 						// DISABLING ALL THE TEXTBOXS AND BUTTONS
 						objectPropertiesPanelEnabled(false);
-
-						// DELETING THE EDGEHELPER
-						scene.remove(edgeHelper);
 						}
 					}
 				}
@@ -2355,9 +2316,6 @@
 
 					// DELETING THE SELECTED OBJECT
 					scene.remove(selectedObject);
-
-					// DELETING THE EDGEHELPER
-					scene.remove(edgeHelper);
 
 					// DELETING THE OBJECT FROM THE OBJECTS ARRAY
 					objects = objects.filter(function(item)
@@ -2513,9 +2471,6 @@
 
 					// UPDATING THE PROPORTIONAL VALUE
 					updateProportional();
-
-					// UPDATING THE EDGE HELPER
-					updateEdgeHelper(selectedObject);
 					}
 				}
 
@@ -2560,9 +2515,6 @@
 
 					// UPDATING THE PROPORTIONAL VALUE
 					updateProportional();
-
-					// UPDATING THE EDGE HELPER
-					updateEdgeHelper(selectedObject);
 					}
 				}
 
