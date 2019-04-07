@@ -4,15 +4,15 @@ body
 	overflow:hidden;
 	margin:0;
 	padding:0;
-	min-height:625px;
+	min-width:1048px;
 	}
 .content1
 	{
-	position:absolute;
+	position:fixed;
+	top:57px;
 	left:0;
-	right:0;
-	height:100%;
-	margin-right:220px;
+	right:220px;
+	bottom:0;
 	overflow:hidden;
 	text-align:center;
 	z-index:0;
@@ -24,18 +24,14 @@ body
 	}
 .content2
 	{
-	position:absolute;
+	position:fixed;
+	overflow:hidden;
 	font-family:Arial;
 	font-size:13px;
 	width:220px;
-	height:100%;
 	top:0;
 	right:0;
-	max-width:100%;
-	max-height:100%;
-	min-height:625px;
-	overflow:hidden;
-	padding-top:10px;
+	bottom:0;
 	text-align:center;
 	border-left:1px solid silver;
 	background-color:#F2F2F2;
@@ -68,7 +64,7 @@ body
 	float:left;
 	border-left:1px solid #D3D3D3;
 	margin-left:12px;
-	height:100px;	
+	height:100px;
 	width:1px;
 	}
 .menubar_button
@@ -924,7 +920,6 @@ body
 	font-size:13px;
 	text-align:left;
 	padding-top:1px;
-	padding-left:10px;
 	overflow:hidden;
 	cursor:default;
 	-webkit-user-select:none;
@@ -941,7 +936,6 @@ body
 	float:left;
 	text-align:left;
 	width:100%;
-	padding-left:5px;
 	padding-bottom:5px;
 	}
 .panel_field5
@@ -949,24 +943,31 @@ body
 	float:left;
 	width:200px;
 	text-align:left,;
-	padding-left:10px;
 	padding-right:10px;
+	}
+.panel_field6
+	{
+	float:left;
+	width:100%;
+	height:20px;
+	font-size:10px;
+	line-height:10px;
 	}
 .panel_fieldseparator
 	{
 	float:left;
-	width:100%;
+	width:207px;
 	}
 .panel_hr
 	{
 	height:1px;
 	border:0;
 	border-top:1px solid silver;
+	margin-right:5px;
 	}
 .panel_button
 	{
 	width:100%;
-	line-height:27px;
 	height:27px;
 	color:black;
 	font-family:Arial;
@@ -1196,7 +1197,8 @@ body
 	}
 .models_container1
 	{
-	text-align:center;
+	text-align:left;
+	margin-left:1px;
 	-webkit-user-select:none;
 	-moz-user-select:none;
 	user-select:none;
