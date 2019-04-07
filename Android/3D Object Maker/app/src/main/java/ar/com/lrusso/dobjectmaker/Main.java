@@ -65,7 +65,7 @@ public class Main extends Activity
         webView.getSettings().setAllowFileAccess(true);
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setUseWideViewPort(true);
-        
+
 		// LOADING THE HTML DOCUMENT
 		String resultHTML = loadAssetTextAsString("3DObjectMaker.htm");
         
@@ -119,6 +119,7 @@ public class Main extends Activity
         	@Override public boolean onConsoleMessage(ConsoleMessage consoleMessage)
         		{
         		String stringMessage = consoleMessage.message();
+
         		if (stringMessage.startsWith("STLFILE---") || stringMessage.startsWith("SCENEFILE---"))
         			{
             	    String path = Environment.getExternalStorageDirectory() + File.separator  + "3DObjectMaker";

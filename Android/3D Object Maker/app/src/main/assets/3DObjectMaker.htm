@@ -3,7 +3,6 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>3D Object Maker</title>
-		<meta name="viewport" content="width=1048">
 		<style>
 			body
 				{
@@ -11,16 +10,15 @@
 				overflow:hidden;
 				margin:0;
 				padding:0;
-				min-height:625px;
+				min-width:1048px;
 				}
 			.content1
 				{
-				position:absolute;
+				position:fixed;
+				top:57px;
 				left:0;
-				right:0;
-				height:100%;
-				min-height:580px;
-				margin-right:220px;
+				right:220px;
+				bottom:0;
 				overflow:hidden;
 				text-align:center;
 				z-index:0;
@@ -32,23 +30,27 @@
 				}
 			.content2
 				{
-				position:absolute;
+				position:fixed;
+				overflow:hidden;
 				font-family:Arial;
 				font-size:13px;
 				width:220px;
-				height:100%;
 				top:0;
 				right:0;
-				max-width:100%;
-				max-height:100%;
-				min-height:625px;
-				overflow:hidden;
-				padding-top:10px;
+				bottom:0;
 				text-align:center;
 				border-left:1px solid silver;
 				background-color:#F2F2F2;
 				}
-			
+			.content2scroller
+				{
+				width:100%;
+				height:100%;
+				overflow-y:scroll;
+				padding-left:8px;
+				padding-top:10px;
+				padding-right:20px;
+				}
 			.menubar
 				{
 				border-bottom:1px solid silver;
@@ -76,7 +78,7 @@
 				float:left;
 				border-left:1px solid #D3D3D3;
 				margin-left:12px;
-				height:100px;	
+				height:100px;
 				width:1px;
 				}
 			.menubar_button
@@ -231,6 +233,16 @@
 				background-repeat:no-repeat;
 				background-position:center;
 				}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			.menubar_button_move_disabled
 				{
 				font-family:Arial;
@@ -799,7 +811,7 @@
 				font-size:13px;
 				text-align:left;
 				padding-top:1px;
-				padding-left:10px;
+				overflow:hidden;
 				cursor:default;
 				-webkit-user-select:none;
 				-moz-user-select:none;
@@ -815,32 +827,38 @@
 				float:left;
 				text-align:left;
 				width:100%;
-				padding-left:5px;
 				padding-bottom:5px;
 				}
 			.panel_field5
 				{
 				float:left;
 				width:200px;
-				text-align:left,;
-				padding-left:10px;
+				text-align:left;
 				padding-right:10px;
+				}
+			.panel_field6
+				{
+				float:left;
+				width:100%;
+				height:20px;
+				font-size:10px;
+				line-height:10px;
 				}
 			.panel_fieldseparator
 				{
 				float:left;
-				width:100%;
+				width:207px;
 				}
 			.panel_hr
 				{
 				height:1px;
 				border:0;
 				border-top:1px solid silver;
+				margin-right:5px;
 				}
 			.panel_button
 				{
 				width:100%;
-				line-height:27px;
 				height:27px;
 				color:black;
 				font-family:Arial;
@@ -914,13 +932,12 @@
 				{
 				width:100%;
 				line-height:25px;
+				padding-top:2px;
 				height:25px;
 				color:black;
 				font-family:Arial;
 				font-size:13px;
-				line-height:25px;
 				text-align:left;
-				padding-top:2px;
 				padding-left:4px;
 				padding-right:4px;
 				border:1px silver solid;
@@ -941,13 +958,12 @@
 				{
 				width:100%;
 				line-height:25px;
+				padding-top:2px;
 				height:25px;
 				color:black;
 				font-family:Arial;
 				font-size:13px;
-				line-height:25px;
 				text-align:left;
-				padding-top:2px;
 				padding-left:4px;
 				padding-right:4px;
 				border:1px silver solid;
@@ -1066,7 +1082,8 @@
 				}
 			.models_container1
 				{
-				text-align:center;
+				text-align:left;
+				margin-left:1px;
 				-webkit-user-select:none;
 				-moz-user-select:none;
 				user-select:none;
@@ -1250,127 +1267,129 @@
 		</div>
 		<div class="content1" id="container"></div>
 		<div class="content2">
-			<div class="models_container1">
-				<div class="models_container2">
-					<div class="models_cube" onclick="addShape(MODEL_CUBE);"></div>
-					<div class="models_cylinder" onclick="addShape(MODEL_CYLINDER);"></div>
-					<div class="models_tube" onclick="addShape(MODEL_TUBE);"></div>
-					<div class="models_pyramid" onclick="addShape(MODEL_PYRAMID);"></div>
-					<div class="models_roof1" onclick="addShape(MODEL_ROOF1);"></div>
-					<div class="models_wedge" onclick="addShape(MODEL_WEDGE);"></div>
-					<div class="models_cone" onclick="addShape(MODEL_CONE);"></div>
-					<div class="models_paraboloide" onclick="addShape(MODEL_PARABOLOIDE);"></div>
-					<div class="models_sphere" onclick="addShape(MODEL_SPHERE);"></div>
-					<div class="models_halfsphere" onclick="addShape(MODEL_HALFSPHERE);"></div>
-					<div class="models_roof2" onclick="addShape(MODEL_ROOF2);"></div>
-					<div class="models_text" onclick="addText()"></div>
+			<div class="content2scroller" id="content2scroller">
+				<div class="models_container1">
+					<div class="models_container2">
+						<div class="models_cube" onclick="addShape(MODEL_CUBE);"></div>
+						<div class="models_cylinder" onclick="addShape(MODEL_CYLINDER);"></div>
+						<div class="models_tube" onclick="addShape(MODEL_TUBE);"></div>
+						<div class="models_pyramid" onclick="addShape(MODEL_PYRAMID);"></div>
+						<div class="models_roof1" onclick="addShape(MODEL_ROOF1);"></div>
+						<div class="models_wedge" onclick="addShape(MODEL_WEDGE);"></div>
+						<div class="models_cone" onclick="addShape(MODEL_CONE);"></div>
+						<div class="models_paraboloide" onclick="addShape(MODEL_PARABOLOIDE);"></div>
+						<div class="models_sphere" onclick="addShape(MODEL_SPHERE);"></div>
+						<div class="models_halfsphere" onclick="addShape(MODEL_HALFSPHERE);"></div>
+						<div class="models_roof2" onclick="addShape(MODEL_ROOF2);"></div>
+						<div class="models_text" onclick="addText()"></div>
+					</div>
 				</div>
-			</div>
 
-			<div class="panel_fieldseparator"><hr class="panel_hr"></div>
+				<div class="panel_fieldseparator"><hr class="panel_hr"></div>
 
-			<div class="panel_field1b">
-				<div class="panel_field2"><span id="labelGrid"></span></div>
-				<div class="panel_field3">
-					<select class="panel_selectbox" id="gridSize" onchange="changeGridSize(document.getElementById('gridSize').value)">
-						<option value="10">10 cm</option>
-						<option selected value="20">20 cm</option>
-						<option value="30">30 cm</option>
-						<option value="40">40 cm</option>
-						<option value="50">50 cm</option>
-					</select>
+				<div class="panel_field1b">
+					<div class="panel_field2"><span id="labelGrid"></span></div>
+					<div class="panel_field3">
+						<select class="panel_selectbox" id="gridSize" onchange="changeGridSize(document.getElementById('gridSize').value)">
+							<option value="10">10 cm</option>
+							<option selected value="20">20 cm</option>
+							<option value="30">30 cm</option>
+							<option value="40">40 cm</option>
+							<option value="50">50 cm</option>
+						</select>
+					</div>
 				</div>
-			</div>
 
-			<div class="panel_fieldseparator"><hr class="panel_hr"></div>
+				<div class="panel_fieldseparator"><hr class="panel_hr"></div>
 
-			<div class="panel_field1b">
-				<div class="panel_field2"><span id="labelMaterial"></span></div>
-				<div class="panel_field3">
-					<select class="panel_selectbox" id="materialColor" onchange="changeObjectColor()" disabled>
-						<option class="panel_selectbox_option_hollow" id="labelHollow" value="0">&nbsp;</option>
-						<option class="panel_selectbox_option_silver" id="labelSilver" value="0">&nbsp;</option>
-						<option class="panel_selectbox_option_gray" id="labelGray" value="0">&nbsp;</option>
-						<option class="panel_selectbox_option_aqua" id="labelAqua" value="0">&nbsp;</option>
-						<option class="panel_selectbox_option_blue" id="labelBlue" value="0">&nbsp;</option>
-						<option class="panel_selectbox_option_navyblue" id="labelNavyBlue" value="0">&nbsp;</option>
-						<option class="panel_selectbox_option_fuchsia" id="labelFuchsia" value="0">&nbsp;</option>
-						<option class="panel_selectbox_option_green" id="labelGreen" value="0">&nbsp;</option>
-						<option class="panel_selectbox_option_teal" id="labelTeal" value="0">&nbsp;</option>
-						<option class="panel_selectbox_option_lightgreen" id="labelLightGreen" value="0">&nbsp;</option>
-						<option class="panel_selectbox_option_lime" id="labelLime" value="0">&nbsp;</option>
-						<option class="panel_selectbox_option_brown" id="labelBrown" value="0">&nbsp;</option>
-						<option class="panel_selectbox_option_olive" id="labelOlive" value="0">&nbsp;</option>
-						<option class="panel_selectbox_option_purple" id="labelPurple" value="0">&nbsp;</option>
-						<option class="panel_selectbox_option_violet" id="labelViolet" value="0">&nbsp;</option>
-						<option class="panel_selectbox_option_red" id="labelRed" value="0">&nbsp;</option>
-						<option class="panel_selectbox_option_yellow" id="labelYellow" value="0">&nbsp;</option>
-						<option class="panel_selectbox_option_gold" id="labelGold" value="0">&nbsp;</option>
-						<option class="panel_selectbox_option_orange" id="labelOrange" value="0">&nbsp;</option>
-						<option class="panel_selectbox_option_pink" id="labelPink" value="0">&nbsp;</option>
-					</select>
+				<div class="panel_field1b">
+					<div class="panel_field2"><span id="labelMaterial"></span></div>
+					<div class="panel_field3">
+						<select class="panel_selectbox" id="materialColor" onchange="changeObjectColor()" disabled>
+							<option class="panel_selectbox_option_hollow" id="labelHollow" value="0">&nbsp;</option>
+							<option class="panel_selectbox_option_silver" id="labelSilver" value="0">&nbsp;</option>
+							<option class="panel_selectbox_option_gray" id="labelGray" value="0">&nbsp;</option>
+							<option class="panel_selectbox_option_aqua" id="labelAqua" value="0">&nbsp;</option>
+							<option class="panel_selectbox_option_blue" id="labelBlue" value="0">&nbsp;</option>
+							<option class="panel_selectbox_option_navyblue" id="labelNavyBlue" value="0">&nbsp;</option>
+							<option class="panel_selectbox_option_fuchsia" id="labelFuchsia" value="0">&nbsp;</option>
+							<option class="panel_selectbox_option_green" id="labelGreen" value="0">&nbsp;</option>
+							<option class="panel_selectbox_option_teal" id="labelTeal" value="0">&nbsp;</option>
+							<option class="panel_selectbox_option_lightgreen" id="labelLightGreen" value="0">&nbsp;</option>
+							<option class="panel_selectbox_option_lime" id="labelLime" value="0">&nbsp;</option>
+							<option class="panel_selectbox_option_brown" id="labelBrown" value="0">&nbsp;</option>
+							<option class="panel_selectbox_option_olive" id="labelOlive" value="0">&nbsp;</option>
+							<option class="panel_selectbox_option_purple" id="labelPurple" value="0">&nbsp;</option>
+							<option class="panel_selectbox_option_violet" id="labelViolet" value="0">&nbsp;</option>
+							<option class="panel_selectbox_option_red" id="labelRed" value="0">&nbsp;</option>
+							<option class="panel_selectbox_option_yellow" id="labelYellow" value="0">&nbsp;</option>
+							<option class="panel_selectbox_option_gold" id="labelGold" value="0">&nbsp;</option>
+							<option class="panel_selectbox_option_orange" id="labelOrange" value="0">&nbsp;</option>
+							<option class="panel_selectbox_option_pink" id="labelPink" value="0">&nbsp;</option>
+						</select>
+					</div>
 				</div>
+
+				<div class="panel_fieldseparator"><hr class="panel_hr"></div>
+
+				<div class="panel_field1">
+					<div class="panel_field2"><span id="labelWidth"></span></div>
+					<div class="panel_field3"><input type="text" id="objectWidth" onkeydown="return changeObjectWidth(event)" class="panel_textbox" disabled><input type="hidden" id="objectWidthCommaResidualData"></div>
+				</div>
+
+				<div class="panel_field1">
+					<div class="panel_field2"><span id="labelHeight"></span></div>
+					<div class="panel_field3"><input type="text" id="objectHeight" onkeydown="return changeObjectHeight(event)" class="panel_textbox" disabled><input type="hidden" id="objectHeightCommaResidualData"></div>
+				</div>
+
+				<div class="panel_field1">
+					<div class="panel_field2"><span id="labelDepth"></span></div>
+					<div class="panel_field3"><input type="text" id="objectDepth" onkeydown="return changeObjectDepth(event)" class="panel_textbox" disabled><input type="hidden" id="objectDepthCommaResidualData"></div>
+				</div>
+
+				<div class="panel_field4">
+					<input type="checkbox" class="panel_checkbox" id="objectProportional" onclick="checkProportional();" disabled><label class="panel_checkboxtext_disabled" id="objectProportionalLabel" onclick="document.getElementById('objectProportional').click();"></label>
+				</div>
+
+				<div class="panel_field5">
+					<input type="submit" class="panel_button" id="resetScale" onclick="resetObjectScale();" value="" disabled>
+				</div>
+
+				<div class="panel_fieldseparator"><hr class="panel_hr"></div>
+
+				<div class="panel_field1">
+					<div class="panel_field2"><span id="labelPositionX"></span></div>
+					<div class="panel_field3"><input type="text" id="objectPositionX" onkeydown="return changeObjectPositionX(event)" class="panel_textbox" disabled></div>
+				</div>
+
+				<div class="panel_field1">
+					<div class="panel_field2"><span id="labelPositionY"></span></div>
+					<div class="panel_field3"><input type="text" id="objectPositionY" onkeydown="return changeObjectPositionY(event)" class="panel_textbox" disabled></div>
+				</div>
+
+				<div class="panel_field1b">
+					<div class="panel_field2"><span id="labelPositionZ"></span></div>
+					<div class="panel_field3"><input type="text" id="objectPositionZ" onkeydown="return changeObjectPositionZ(event)" class="panel_textbox" disabled></div>
+				</div>
+
+				<div class="panel_fieldseparator"><hr class="panel_hr"></div>
+
+				<div class="panel_field1">
+					<div class="panel_field2"><span id="labelRotationX"></span></div>
+					<div class="panel_field3"><input type="text" id="objectRotationX" onkeydown="return changeObjectRotationX(event)" class="panel_textbox" disabled></div>
+				</div>
+
+				<div class="panel_field1">
+					<div class="panel_field2"><span id="labelRotationY"></span></div>
+					<div class="panel_field3"><input type="text" id="objectRotationY" onkeydown="return changeObjectRotationY(event)" class="panel_textbox" disabled></div>
+				</div>
+
+				<div class="panel_field1b">
+					<div class="panel_field2"><span id="labelRotationZ"></span></div>
+					<div class="panel_field3"><input type="text" id="objectRotationZ" onkeydown="return changeObjectRotationZ(event)" class="panel_textbox" disabled></div>
+				</div>
+				<div class="panel_field6"></div>
 			</div>
-
-			<div class="panel_fieldseparator"><hr class="panel_hr"></div>
-
-			<div class="panel_field1">
-				<div class="panel_field2"><span id="labelWidth"></span></div>
-				<div class="panel_field3"><input type="text" id="objectWidth" onkeydown="return changeObjectWidth(event)" class="panel_textbox" disabled><input type="hidden" id="objectWidthCommaResidualData"></div>
-			</div>
-
-			<div class="panel_field1">
-				<div class="panel_field2"><span id="labelHeight"></span></div>
-				<div class="panel_field3"><input type="text" id="objectHeight" onkeydown="return changeObjectHeight(event)" class="panel_textbox" disabled><input type="hidden" id="objectHeightCommaResidualData"></div>
-			</div>
-
-			<div class="panel_field1">
-				<div class="panel_field2"><span id="labelDepth"></span></div>
-				<div class="panel_field3"><input type="text" id="objectDepth" onkeydown="return changeObjectDepth(event)" class="panel_textbox" disabled><input type="hidden" id="objectDepthCommaResidualData"></div>
-			</div>
-
-			<div class="panel_field4">
-				<input type="checkbox" class="panel_checkbox" id="objectProportional" onclick="checkProportional();" disabled><label class="panel_checkboxtext_disabled" id="objectProportionalLabel" onclick="document.getElementById('objectProportional').click();"></label>
-			</div>
-
-			<div class="panel_field5">
-				<input type="submit" class="panel_button" id="resetScale" onclick="resetObjectScale();" value="" disabled>
-			</div>
-
-			<div class="panel_fieldseparator"><hr class="panel_hr"></div>
-
-			<div class="panel_field1">
-				<div class="panel_field2"><span id="labelPositionX"></span></div>
-				<div class="panel_field3"><input type="text" id="objectPositionX" onkeydown="return changeObjectPositionX(event)" class="panel_textbox" disabled></div>
-			</div>
-
-			<div class="panel_field1">
-				<div class="panel_field2"><span id="labelPositionY"></span></div>
-				<div class="panel_field3"><input type="text" id="objectPositionY" onkeydown="return changeObjectPositionY(event)" class="panel_textbox" disabled></div>
-			</div>
-
-			<div class="panel_field1b">
-				<div class="panel_field2"><span id="labelPositionZ"></span></div>
-				<div class="panel_field3"><input type="text" id="objectPositionZ" onkeydown="return changeObjectPositionZ(event)" class="panel_textbox" disabled></div>
-			</div>
-
-			<div class="panel_fieldseparator"><hr class="panel_hr"></div>
-
-			<div class="panel_field1">
-				<div class="panel_field2"><span id="labelRotationX"></span></div>
-				<div class="panel_field3"><input type="text" id="objectRotationX" onkeydown="return changeObjectRotationX(event)" class="panel_textbox" disabled></div>
-			</div>
-
-			<div class="panel_field1">
-				<div class="panel_field2"><span id="labelRotationY"></span></div>
-				<div class="panel_field3"><input type="text" id="objectRotationY" onkeydown="return changeObjectRotationY(event)" class="panel_textbox" disabled></div>
-			</div>
-
-			<div class="panel_field1b">
-				<div class="panel_field2"><span id="labelRotationZ"></span></div>
-				<div class="panel_field3"><input type="text" id="objectRotationZ" onkeydown="return changeObjectRotationZ(event)" class="panel_textbox" disabled></div>
-			</div>
-
 		</div>
 		<div id="loading" class="loading_splash">
 			<div class="loading_splash_container">
@@ -3144,6 +3163,9 @@ function getUndo()
 								  document.getElementById("buttonUndo").classList.add("menubar_button_undo_disabled");
 								  document.getElementById("buttonUndo").classList.remove("menubar_button_undo_enabled");
 								}
+
+		// SCROLLS UP THE RIGHT PANEL
+		document.getElementById("content2scroller").scrollTop = 0;
 		}
 	}
 
@@ -3210,6 +3232,9 @@ function getRedo()
 								  document.getElementById("buttonRedo").classList.add("menubar_button_redo_disabled");
 								  document.getElementById("buttonRedo").classList.remove("menubar_button_redo_enabled");
 								}
+
+		// SCROLLS UP THE RIGHT PANEL
+		document.getElementById("content2scroller").scrollTop = 0;
 		}
 	}
 
@@ -3285,12 +3310,15 @@ function init()
 	sceneRedo09GridSize = -1;
 	sceneRedo10GridSize = -1;
 
+	// SCROLLS UP THE RIGHT PANEL
+	document.getElementById("content2scroller").scrollTop = 0;
+
 	container = document.getElementById("container");
 	container.innerHTML= "";
 
 	camera = new THREE.PerspectiveCamera(37.8,container.offsetWidth/container.offsetHeight,1,100000);
 	camera.up = new THREE.Vector3(0,0,1);
-	camera.position.set(0, -325, 170);
+	camera.position.set(0, -280, 145);
 
 	renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
 	renderer.setSize(container.offsetWidth,container.offsetHeight);
@@ -3464,7 +3492,7 @@ function addModel(file)
 
 						// RELOCATING THE CAMERA
 						camera.up = new THREE.Vector3(0,0,1);
-						camera.position.set(0, -325, 170);
+						camera.position.set(0, -280, 145);
 						renderer.render(scene,camera);
 						controls.update();
 						}
@@ -3533,6 +3561,9 @@ function addModel(file)
 
 					// HIDDING THE LOADING SPLASH
 					document.getElementById("loading").style.display = "none";
+
+					// SCROLLS UP THE RIGHT PANEL
+					document.getElementById("content2scroller").scrollTop = 0;
 					}
 				}
 				else
@@ -3592,6 +3623,9 @@ function addModel(file)
 
 				// HIDDING THE LOADING SPLASH
 				document.getElementById("loading").style.display = "none";
+
+				// SCROLLS UP THE RIGHT PANEL
+				document.getElementById("content2scroller").scrollTop = 0;
 				}
 			}
 			catch(err)
@@ -3680,6 +3714,9 @@ function onDocumentMouseDown(event)
 		// DISABLING ALL THE TEXTBOXS AND BUTTONS
 		objectPropertiesPanelEnabled(false);
 		}
+
+	// SCROLLS UP THE RIGHT PANEL
+	document.getElementById("content2scroller").scrollTop = 0;
 	}
 
 function addShape(a)
@@ -3731,6 +3768,9 @@ function addShape(a)
 
 	// UPDATING THE PROPORTIONAL VALUE
 	updateProportional();
+
+	// SCROLLS UP THE RIGHT PANEL
+	document.getElementById("content2scroller").scrollTop = 0;
 	}
 
 function addText()
@@ -3783,6 +3823,9 @@ function addText()
 
 		// UPDATING THE PROPORTIONAL VALUE
 		updateProportional();
+
+		// SCROLLS UP THE RIGHT PANEL
+		document.getElementById("content2scroller").scrollTop = 0;
 		}
 	}
 
@@ -4615,6 +4658,9 @@ function newProject()
 
 		// CLEARING DIRTY SCENE CHECKER
 		sceneDirty = false;
+
+		// SCROLLS UP THE RIGHT PANEL
+		document.getElementById("content2scroller").scrollTop = 0;
 		}
 	}
 
@@ -4643,6 +4689,9 @@ function exportToSTL()
 
 		// CLEARING DIRTY SCENE CHECKER
 		sceneDirty = false;
+
+		// SCROLLS UP THE RIGHT PANEL
+		document.getElementById("content2scroller").scrollTop = 0;
 		}
 		else
 		{
@@ -4752,6 +4801,9 @@ function exportToScene()
 
 		// CLEARING DIRTY SCENE CHECKER
 		sceneDirty = false;
+
+		// SCROLLS UP THE RIGHT PANEL
+		document.getElementById("content2scroller").scrollTop = 0;
 		}
 		else
 		{
@@ -4884,6 +4936,9 @@ function deleteObject()
 
 			// DISABLING ALL THE TEXTBOXS AND BUTTONS
 			objectPropertiesPanelEnabled(false);
+
+			// SCROLLS UP THE RIGHT PANEL
+			document.getElementById("content2scroller").scrollTop = 0;
 			}
 		}
 	}
@@ -4951,11 +5006,14 @@ function cutObject()
 			}
 
 		// DISABLING ALL THE TEXTBOXS AND BUTTONS
-		objectPropertiesPanelEnabled(false);					
+		objectPropertiesPanelEnabled(false);
 
 		// ACTIVATING THE BUTTON ICON
 		document.getElementById("buttonPaste").classList.add("menubar_button_paste_enabled");
 		document.getElementById("buttonPaste").classList.remove("menubar_button_paste_disabled");
+
+		// SCROLLS UP THE RIGHT PANEL
+		document.getElementById("content2scroller").scrollTop = 0;
 		}
 	}
 
@@ -5089,6 +5147,9 @@ function pasteObject()
 
 		// UPDATING THE PROPORTIONAL VALUE
 		updateProportional();
+
+		// SCROLLS UP THE RIGHT PANEL
+		document.getElementById("content2scroller").scrollTop = 0;
 		}
 	}
 
