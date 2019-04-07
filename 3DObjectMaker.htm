@@ -117,7 +117,7 @@
 		</div>
 		<div class="content1" id="container"></div>
 		<div class="content2">
-			<div style="width:100%;height:100%;overflow-y:scroll;padding-left:8px;padding-top:10px;padding-right:20px;" id="content2">
+			<div class="content2scroller" id="content2scroller">
 			<div class="models_container1">
 				<div class="models_container2">
 					<div class="models_cube" onclick="addShape(MODEL_CUBE);"></div>
@@ -586,7 +586,7 @@
 											}
 
 					// SCROLLS UP THE RIGHT PANEL
-					document.getElementById("content2").scrollTo(0,0);
+					document.getElementById("content2scroller").scrollTo(0,0);
 					}
 				}
 
@@ -655,7 +655,7 @@
 											}
 
 					// SCROLLS UP THE RIGHT PANEL
-					document.getElementById("content2").scrollTo(0,0);
+					document.getElementById("content2scroller").scrollTo(0,0);
 					}
 				}
 
@@ -732,7 +732,7 @@
 				sceneRedo10GridSize = -1;
 
 				// SCROLLS UP THE RIGHT PANEL
-				document.getElementById("content2").scrollTo(0,0);
+				document.getElementById("content2scroller").scrollTo(0,0);
 
 				container = document.getElementById("container");
 				container.innerHTML= "";
@@ -985,7 +985,7 @@
 								}
 
 							// SCROLLS UP THE RIGHT PANEL
-							document.getElementById("content2").scrollTo(0,0);
+							document.getElementById("content2scroller").scrollTo(0,0);
 							}
 							else
 							{
@@ -1046,7 +1046,7 @@
 							document.getElementById("loading").style.display = "none";
 
 							// SCROLLS UP THE RIGHT PANEL
-							document.getElementById("content2").scrollTo(0,0);
+							document.getElementById("content2scroller").scrollTo(0,0);
 							}
 						}
 						catch(err)
@@ -1141,7 +1141,7 @@
 					}
 
 				// SCROLLS UP THE RIGHT PANEL
-				document.getElementById("content2").scrollTo(0,0);
+				document.getElementById("content2scroller").scrollTo(0,0);
 				}
 
 			function addShape(a)
@@ -1195,7 +1195,7 @@
 				updateProportional();
 
 				// SCROLLS UP THE RIGHT PANEL
-				document.getElementById("content2").scrollTo(0,0);
+				document.getElementById("content2scroller").scrollTo(0,0);
 				}
 
 			function addText()
@@ -1250,7 +1250,7 @@
 					updateProportional();
 
 					// SCROLLS UP THE RIGHT PANEL
-					document.getElementById("content2").scrollTo(0,0);
+					document.getElementById("content2scroller").scrollTo(0,0);
 					}
 				}
 
@@ -2085,7 +2085,7 @@
 					sceneDirty = false;
 
 					// SCROLLS UP THE RIGHT PANEL
-					document.getElementById("content2").scrollTo(0,0);
+					document.getElementById("content2scroller").scrollTo(0,0);
 					}
 				}
 
@@ -2116,7 +2116,7 @@
 					sceneDirty = false;
 
 					// SCROLLS UP THE RIGHT PANEL
-					document.getElementById("content2").scrollTo(0,0);
+					document.getElementById("content2scroller").scrollTo(0,0);
 					}
 					else
 					{
@@ -2227,7 +2227,7 @@
 					sceneDirty = false;
 
 					// SCROLLS UP THE RIGHT PANEL
-					document.getElementById("content2").scrollTo(0,0);
+					document.getElementById("content2scroller").scrollTo(0,0);
 					}
 					else
 					{
@@ -2361,7 +2361,7 @@
 						objectPropertiesPanelEnabled(false);
 
 						// SCROLLS UP THE RIGHT PANEL
-						document.getElementById("content2").scrollTo(0,0);
+						document.getElementById("content2scroller").scrollTo(0,0);
 						}
 					}
 				}
@@ -2436,7 +2436,7 @@
 					document.getElementById("buttonPaste").classList.remove("menubar_button_paste_disabled");
 
 					// SCROLLS UP THE RIGHT PANEL
-					document.getElementById("content2").scrollTo(0,0);
+					document.getElementById("content2scroller").scrollTo(0,0);
 					}
 				}
 
@@ -2572,7 +2572,7 @@
 					updateProportional();
 
 					// SCROLLS UP THE RIGHT PANEL
-					document.getElementById("content2").scrollTo(0,0);
+					document.getElementById("content2scroller").scrollTo(0,0);
 					}
 				}
 
