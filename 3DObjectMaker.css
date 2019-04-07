@@ -925,6 +925,7 @@ body
 	text-align:left;
 	padding-top:1px;
 	padding-left:10px;
+	overflow:hidden;
 	cursor:default;
 	-webkit-user-select:none;
 	-moz-user-select:none;
