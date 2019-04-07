@@ -969,6 +969,7 @@ var STRING_ERROR_INTEGER = "";
 var STRING_ERROR_DOUBLE = "";
 var STRING_ERROR_POSITIVE = "";
 var STRING_ERROR_MODEL = "";
+var STRING_INPUT_TEXT = "";
 
 function initLanguage()
 	{
@@ -1016,6 +1017,7 @@ function initLanguage()
 		STRING_ERROR_DOUBLE = "ERROR: Debe ingresar un n\u00famero entero o decimal.";
 		STRING_ERROR_POSITIVE = "ERROR: Debe ingresar un n\u00famero positivo.";
 		STRING_ERROR_MODEL = "ERROR: Por favor verifique que el modelo se encuentre en formato STL, OBJ, 3DS o SCENE.";
+		STRING_INPUT_TEXT = "Por favor ingrese un texto:";
 		}
 		else
 		{
@@ -1060,6 +1062,7 @@ function initLanguage()
 		STRING_ERROR_DOUBLE = "ERROR: You must input an integer or double number.";
 		STRING_ERROR_POSITIVE = "ERROR: You must input a positive number.";
 		STRING_ERROR_MODEL = "ERROR: Please check that the model is a STL, OBJ, 3DS or SCENE model.";
+		STRING_INPUT_TEXT = "Please input a text:";
 		}
 
 	document.getElementById("labelGrid").innerHTML = STRING_PLATFORM;
