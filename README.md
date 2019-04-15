@@ -5,7 +5,7 @@
 ![alt screenshot](https://raw.githubusercontent.com/lrusso/3DObjectMaker/master/3DObjectMaker.png)
 
 ## Web version
-https://3dobjectmaker.lrusso.com.ar
+https://lrusso.github.io/3DObjectMaker/3DObjectMaker.htm
 
 ## App version
 https://play.google.com/store/apps/details?id=ar.com.lrusso.dobjectmaker
