@@ -4,7 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="textAbout">About...</string>
-    <string name="textAboutMessage"><![CDATA[<h3>3D Object Maker</h3>Copyright &#169; ANOS<br /><br /><b>www.lrusso.com.ar</b><br /><br />by Leonardo Javier Russo.]]></string>
+    <string name="textAboutMessage"><![CDATA[<h3>APPNAME</h3>Copyright &#169; 2005<br /><br /><b>www.lrusso.com</b><br /><br />by Leonardo Javier Russo.]]></string>
     <string name="textOK">OK</string>
     <string name="textExit">Do want to exit the App?</string>
     <string name="textYes">Yes</string>
