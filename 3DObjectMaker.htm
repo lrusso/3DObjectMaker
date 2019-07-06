@@ -414,6 +414,7 @@
 				if (a==true)
 					{
 					sceneDirty = true;
+					window.onbeforeunload = function(e){return "Scene unsaved";};
 					}
 				}
 
@@ -505,6 +506,7 @@
 				document.getElementById("buttonRedo").classList.remove("menubar_button_redo_disabled");
 
 				sceneDirty = true;
+				window.onbeforeunload = function(e){return "Scene unsaved";};
 				}
 
 			function getUndo()
@@ -926,6 +928,7 @@
 
 								// CLEARING DIRTY SCENE CHECKER
 								sceneDirty = false;
+								window.onbeforeunload = null;
 
 								// RELOCATING THE CAMERA
 								camera.up = new THREE.Vector3(0,0,1);
@@ -2107,6 +2110,7 @@
 
 					// CLEARING DIRTY SCENE CHECKER
 					sceneDirty = false;
+					window.onbeforeunload = null;
 
 					// SCROLLS UP THE RIGHT PANEL
 					document.getElementById("content2scroller").scrollTop = 0;
@@ -2138,6 +2142,7 @@
 
 					// CLEARING DIRTY SCENE CHECKER
 					sceneDirty = false;
+					window.onbeforeunload = null;
 
 					// SCROLLS UP THE RIGHT PANEL
 					document.getElementById("content2scroller").scrollTop = 0;
@@ -2249,6 +2254,7 @@
 
 					// CLEARING DIRTY SCENE CHECKER
 					sceneDirty = false;
+					window.onbeforeunload = null;
 
 					// SCROLLS UP THE RIGHT PANEL
 					document.getElementById("content2scroller").scrollTop = 0;
