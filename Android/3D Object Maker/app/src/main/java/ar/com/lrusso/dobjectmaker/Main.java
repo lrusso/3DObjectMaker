@@ -514,11 +514,11 @@ public class Main extends Activity
 
 	public void writeFileNewLogic(String stringMessage)
 		{
-		String fileName = "3D_Project_ " + Calendar.getInstance().get(Calendar.YEAR) + "-" +
-				Calendar.getInstance().get(Calendar.MONTH) + "-" +
-				Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "-" +
-				Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + "-" +
-				Calendar.getInstance().get(Calendar.MINUTE) + "-" +
+		String fileName = "3D_Project_" + Calendar.getInstance().get(Calendar.YEAR) + "_" +
+				Calendar.getInstance().get(Calendar.MONTH) + "_" +
+				Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "_" +
+				Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + "_" +
+				Calendar.getInstance().get(Calendar.MINUTE) + "_" +
 				Calendar.getInstance().get(Calendar.SECOND);
 		String fileContent = "";
 		String mimeType = "application/octet-stream";
