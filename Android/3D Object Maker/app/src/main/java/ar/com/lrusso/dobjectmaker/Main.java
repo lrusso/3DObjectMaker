@@ -1,5 +1,8 @@
 package ar.com.lrusso.dobjectmaker;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.provider.MediaStore;
 import android.text.Html;
 
 import java.io.BufferedReader;
@@ -10,8 +13,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.Calendar;
+import java.util.Date;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -122,79 +127,13 @@ public class Main extends Activity
 
         		if (stringMessage.startsWith("STLFILE---") || stringMessage.startsWith("SCENEFILE---"))
         			{
-            	    String path = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
-
-            	    // Creates the folder
-            	    File folder = new File(path);
-            	    folder.mkdirs();
-            	    
-            	    // Getting the format and content that the file will have
-            		String fileFormat = "";
-            		String fileContent = "";
-            		if (stringMessage.startsWith("STLFILE---"))
-        				{
-            			fileFormat = ".stl";
-            			fileContent = stringMessage.substring(10,stringMessage.length());
-        				}
-            		else if (stringMessage.startsWith("SCENEFILE---"))
-        				{
-            			fileFormat = ".scene";
-            			fileContent = stringMessage.substring(12,stringMessage.length());
-        				}
-
-            	    // Getting the name that the file will have
-        			String fileName = getResources().getString(R.string.textFileName);
-            		boolean fileCanBeCreated = false;
-            		int counter = 0;
-            		while(fileCanBeCreated==false)
-            			{
-            			if (counter==0)
-            				{
-                	    	File fileChecker = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName + fileFormat);
-                	    	if (fileChecker.exists()==false)
-                	    		{
-                	    		fileName = fileName + fileFormat;
-                	    		fileCanBeCreated = true;
-                	    		}
-                	    		else
-                	    		{
-                	    		counter = counter + 1;
-                	    		}
-            				}
-            			else
-            				{
-                	    	File fileChecker = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName + "(" + counter + ")" + fileFormat);
-                	    	if (fileChecker.exists()==false)
-                	    		{
-                	    		fileName = fileName + "(" + counter + ")" + fileFormat;
-                	    		fileCanBeCreated = true;
-                	    		}
-                	    		else
-                	    		{
-                	    		counter = counter + 1;
-                	    		}
-            				}
-            			}
-
-            		// Writing the file
-            	    try
-        	    		{
-            	    	File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
-            	    	file.createNewFile();
-            	    	FileOutputStream fOut = new FileOutputStream(file);
-            	    	OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
-            	    	myOutWriter.append(fileContent);
-            	    	myOutWriter.close();
-            	    	fOut.flush();
-            	    	fOut.close();
-        	    		}
-        	    		catch(Exception e)
-        	    		{
-        	    		}
-            		
-            		// Toast message
-            		Toast.makeText(myContext, myContext.getResources().getString(R.string.textFileSaved), Toast.LENGTH_SHORT).show();
-        			}
+					// different logics for writing a file - thank you android
+					if (Build.VERSION.SDK_INT>=28) {
+						writeFileNewLogic(stringMessage);
+					} else {
+						writeFileLegacy(stringMessage);
+					}
+				}
                 return true;
         		}
         	});
@@ -510,5 +449,107 @@ public class Main extends Activity
 					}
 				}).show();
 			}
+		}
+
+	public void writeFileLegacy(String stringMessage)
+		{
+		// Creates the folder
+		File folder = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
+		if (!folder.exists()) {
+			folder.mkdirs();
+		}
+
+		// Getting the format and content that the file will have
+		String fileFormat = "";
+		String fileContent = "";
+		if (stringMessage.startsWith("STLFILE---")) {
+			fileFormat = ".stl";
+			fileContent = stringMessage.substring(10,stringMessage.length());
+		} else if (stringMessage.startsWith("SCENEFILE---")) {
+			fileFormat = ".scene";
+			fileContent = stringMessage.substring(12,stringMessage.length());
+		}
+
+		// Getting the name that the file will have
+		String fileName = getResources().getString(R.string.textFileName);
+		boolean fileCanBeCreated = false;
+		int counter = 0;
+		while(fileCanBeCreated==false) {
+			if (counter==0) {
+				File fileChecker = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName + fileFormat);
+				if (fileChecker.exists()==false) {
+					fileName = fileName + fileFormat;
+					fileCanBeCreated = true;
+				} else {
+					counter = counter + 1;
+				}
+			}
+			else {
+				File fileChecker = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName + "(" + counter + ")" + fileFormat);
+				if (fileChecker.exists()==false) {
+					fileName = fileName + "(" + counter + ")" + fileFormat;
+					fileCanBeCreated = true;
+				} else {
+					counter = counter + 1;
+				}
+			}
+		}
+
+		// Writing the file
+		try {
+			File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
+			file.createNewFile();
+			FileOutputStream fOut = new FileOutputStream(file);
+			OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+			myOutWriter.append(fileContent);
+			myOutWriter.close();
+			fOut.flush();
+			fOut.close();
+		} catch(Exception e) {
+		}
+
+		// Toast message
+		Toast.makeText(myContext, myContext.getResources().getString(R.string.textFileSaved), Toast.LENGTH_SHORT).show();
+		}
+
+	public void writeFileNewLogic(String stringMessage)
+		{
+		String fileName = "3D_Project_ " + Calendar.getInstance().get(Calendar.YEAR) + "-" +
+				Calendar.getInstance().get(Calendar.MONTH) + "-" +
+				Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "-" +
+				Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + "-" +
+				Calendar.getInstance().get(Calendar.MINUTE) + "-" +
+				Calendar.getInstance().get(Calendar.SECOND);
+		String fileContent = "";
+		String mimeType = "application/octet-stream";
+
+		if (stringMessage.startsWith("STLFILE---")) {
+			fileName = fileName + ".stl";
+			fileContent = stringMessage.substring(10,stringMessage.length());
+		} else if (stringMessage.startsWith("SCENEFILE---")) {
+			fileName = fileName + ".scene";
+			fileContent = stringMessage.substring(12,stringMessage.length());
+		}
+
+		try {
+			ContentValues values = new ContentValues();
+			OutputStream outputStream;
+
+			values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName);
+			values.put(MediaStore.MediaColumns.MIME_TYPE, mimeType);
+			values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
+
+			Uri extVolumeUri = MediaStore.Files.getContentUri("external");
+			Uri fileUri = myContext.getContentResolver().insert(extVolumeUri, values);
+
+			outputStream = myContext.getContentResolver().openOutputStream(fileUri);
+			byte[] bytes = fileContent.getBytes();
+			outputStream.write(bytes);
+			outputStream.close();
+		} catch(Exception e) {
+		}
+
+		// Toast message
+		Toast.makeText(myContext, myContext.getResources().getString(R.string.textFileSaved), Toast.LENGTH_SHORT).show();
 		}
 	}
