@@ -15,5 +15,5 @@
 	<string name="textZoomOutNoteTitle">IMPORTANT</string>
 	<string name="textZoomOutNoteText">While using this App in some devices, you may be needed of zooming out. If so, you can press the Menu icon (top-right corner) and then press the \'Zoom Out\' option.</string>
 	<string name="textFileName">3D_Project</string>
-	<string name="textFileSaved">File successfully saved in the 3DObjectMaker folder.</string>
+	<string name="textFileSaved">File successfully saved in the Downloads folder.</string>
 </resources>

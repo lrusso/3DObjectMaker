@@ -15,5 +15,5 @@
 	<string name="textZoomOutNoteTitle">IMPORTANTE</string>
 	<string name="textZoomOutNoteText">Al utilizar esta App en algunos dispositivos, tal vez necesite restablecer el zoom. De ser el caso, presione el ícono de Menú (esquina superior-derecha) y luego presione la opción \'Restablecer zoom\'.</string>
 	<string name="textFileName">3D_Proyecto</string>
-	<string name="textFileSaved">Archivo guardado exitosamente en la carpeta 3DObjectMaker.</string>
+	<string name="textFileSaved">Archivo guardado exitosamente en la carpeta Downloads.</string>
 </resources>

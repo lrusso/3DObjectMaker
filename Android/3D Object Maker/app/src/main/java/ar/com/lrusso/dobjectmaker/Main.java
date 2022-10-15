@@ -122,7 +122,7 @@ public class Main extends Activity
 
         		if (stringMessage.startsWith("STLFILE---") || stringMessage.startsWith("SCENEFILE---"))
         			{
-            	    String path = Environment.getExternalStorageDirectory() + File.separator  + "3DObjectMaker";
+            	    String path = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
 
             	    // Creates the folder
             	    File folder = new File(path);
@@ -150,7 +150,7 @@ public class Main extends Activity
             			{
             			if (counter==0)
             				{
-                	    	File fileChecker = new File(folder, fileName + fileFormat);
+                	    	File fileChecker = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName + fileFormat);
                 	    	if (fileChecker.exists()==false)
                 	    		{
                 	    		fileName = fileName + fileFormat;
@@ -163,7 +163,7 @@ public class Main extends Activity
             				}
             			else
             				{
-                	    	File fileChecker = new File(folder, fileName + "(" + counter + ")" + fileFormat);
+                	    	File fileChecker = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName + "(" + counter + ")" + fileFormat);
                 	    	if (fileChecker.exists()==false)
                 	    		{
                 	    		fileName = fileName + "(" + counter + ")" + fileFormat;
@@ -175,11 +175,11 @@ public class Main extends Activity
                 	    		}
             				}
             			}
-            		
+
             		// Writing the file
             	    try
         	    		{
-            	    	File file = new File(folder, fileName);
+            	    	File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
             	    	file.createNewFile();
             	    	FileOutputStream fOut = new FileOutputStream(file);
             	    	OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
@@ -190,7 +190,7 @@ public class Main extends Activity
         	    		}
         	    		catch(Exception e)
         	    		{
-        	    		}            		
+        	    		}
             		
             		// Toast message
             		Toast.makeText(myContext, myContext.getResources().getString(R.string.textFileSaved), Toast.LENGTH_SHORT).show();
