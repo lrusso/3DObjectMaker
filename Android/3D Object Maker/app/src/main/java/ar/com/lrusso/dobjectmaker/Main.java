@@ -128,7 +128,7 @@ public class Main extends Activity
         		if (stringMessage.startsWith("STLFILE---") || stringMessage.startsWith("SCENEFILE---"))
         			{
 					// different logics for writing a file - thank you android
-					if (Build.VERSION.SDK_INT>=28) {
+					if (Build.VERSION.SDK_INT>=29) {
 						writeFileNewLogic(stringMessage);
 					} else {
 						writeFileLegacy(stringMessage);
