@@ -15,7 +15,7 @@ jobs:
       - name: Decoding and writing the Keystore file
         run: echo ${{ secrets.ANDROID_KEYSTORE }} | base64 -di > "Android/3D Object Maker/keystore"
       - name: Making Gradlew executable
-        run: chmod +x ./android/gradlew
+        run: chmod +x "./Android/3D Object Maker/gradlew"
       - name: Building the AAB file
         run: cd Android && cd "3D Object Maker" && ./gradlew clean && ./gradlew bundleRelease
         env:
