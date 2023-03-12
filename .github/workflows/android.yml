@@ -13,7 +13,7 @@ jobs:
           distribution: "zulu"
           java-version: 11
       - name: Decoding and writing the Keystore file
-        run: echo ${{ secrets.ANDROID_KEYSTORE }} | base64 -di > android/keystore
+        run: echo ${{ secrets.ANDROID_KEYSTORE }} | base64 -di > "Android/3D Object Maker/keystore"
       - name: Making Gradlew executable
         run: chmod +x ./android/gradlew
       - name: Building the AAB file
@@ -26,7 +26,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: app-release-aab
-          path: android/app/build/outputs/bundle/release/app-release.aab
+          path: "Android/3D Object Maker/app/build/outputs/bundle/release/app-release.aab"
       - name: Building the APK file
         run: cd Android && cd "3D Object Maker" && ./gradlew clean && ./gradlew bundleRelease
         env:
@@ -37,7 +37,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: app-release-apk
-          path: android/app/build/outputs/apk/release/app-release.apk
+          path: "Android/3D Object Maker/app/build/outputs/apk/release/app-release.apk"
 
 # ------------------------------------------------------------------------------------------------------
 #
