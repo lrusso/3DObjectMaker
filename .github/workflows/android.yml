@@ -28,7 +28,7 @@ jobs:
           name: app-release-aab
           path: "Android/3D Object Maker/app/build/outputs/bundle/release/app-release.aab"
       - name: Building the APK file
-        run: cd Android && cd "3D Object Maker" && ./gradlew clean && ./gradlew bundleRelease
+        run: cd Android && cd "3D Object Maker" && ./gradlew clean && ./gradlew assembleRelease
         env:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
