@@ -9,6 +9,14 @@ android {
         versionCode 58
         versionName "1.7.7"
     }
+    signingConfigs {
+        release {
+            storeFile file("../keystore")
+            storePassword System.getenv("ANDROID_KEYSTORE_PASSWORD")
+            keyAlias System.getenv("ANDROID_KEY_ALIAS")
+            keyPassword System.getenv("ANDROID_KEY_PASSWORD")
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
