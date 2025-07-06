@@ -46,7 +46,6 @@ import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.WindowManager;
 
 public class Main extends Activity
 	{
@@ -60,14 +59,6 @@ public class Main extends Activity
 	@Override protected void onCreate(Bundle savedInstanceState)
 		{
 		super.onCreate(savedInstanceState);
-
-		// Set windowLayoutInDisplayCutoutMode to NEVER for devices with Android 9 (API 28) and above
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-			WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
-			layoutParams.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER;
-			getWindow().setAttributes(layoutParams);
-		}
-
 		setContentView(R.layout.main);
 		myContext = this;
 		myActivity = this;
