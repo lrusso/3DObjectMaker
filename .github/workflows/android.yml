@@ -11,7 +11,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: "zulu"
-          java-version: 11
+          java-version: 17
       - name: Decoding and writing the Keystore file
         env:
           COMPLETE_KEYSTORE_FILE: "${{ secrets.ANDROID_KEYSTORE_PART1 }}${{ secrets.ANDROID_KEYSTORE_PART2 }}${{ secrets.ANDROID_KEYSTORE_PART3 }}"
