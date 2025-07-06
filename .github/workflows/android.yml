@@ -13,7 +13,9 @@ jobs:
           distribution: "zulu"
           java-version: 11
       - name: Decoding and writing the Keystore file
-        run: echo ${{ secrets.ANDROID_KEYSTORE }} | base64 -di > "Android/3D Object Maker/keystore"
+        run: |
+          CONCATENATED_KEY="${{ secrets.ANDROID_KEYSTORE_PART1 }}${{ secrets.ANDROID_KEYSTORE_PART2 }}${{ secrets.ANDROID_KEYSTORE_PART3 }}"
+          echo "$CONCATENATED_KEY" | base64 -di > "Android/3D Object Maker/keystore"
       - name: Making Gradlew executable
         run: chmod +x "./Android/3D Object Maker/gradlew"
       - name: Building the AAB file
