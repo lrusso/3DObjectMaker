@@ -6,7 +6,7 @@ jobs:
   app-builder-android:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setting up the environment
         uses: actions/setup-java@v3
         with:
