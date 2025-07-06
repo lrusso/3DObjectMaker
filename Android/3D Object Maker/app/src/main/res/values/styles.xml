@@ -1,0 +1,3 @@
+<style name="MyHoloLightTheme" parent="@android:style/Theme.Holo.Light">
+    <item name="android:windowLayoutInDisplayCutoutMode">never</item>
+</style>
