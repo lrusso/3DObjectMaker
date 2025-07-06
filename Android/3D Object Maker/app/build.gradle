@@ -4,6 +4,8 @@ android {
     compileSdkVersion 35
     defaultConfig {
         applicationId "ar.com.lrusso.dobjectmaker"
+        namespace("ar.com.lrusso.dobjectmaker")
+
         minSdkVersion 21
         targetSdkVersion 35
         versionCode 61
