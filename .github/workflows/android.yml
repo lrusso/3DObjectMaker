@@ -16,7 +16,7 @@ jobs:
         env:
           COMPLETE_KEYSTORE_FILE: "${{ secrets.ANDROID_KEYSTORE_PART1 }}${{ secrets.ANDROID_KEYSTORE_PART2 }}${{ secrets.ANDROID_KEYSTORE_PART3 }}"
         run: |
-          echo "$COMPLETE_KEYSTORE_FILE" | base64 -di > "Android/3D Object Maker/keystore" && cd "./Android/3D Object Maker" && "ls -lh"
+          echo "$COMPLETE_KEYSTORE_FILE" | base64 -di > "Android/3D Object Maker/keystore" && cd "./Android/3D Object Maker" && ls "-lh"
       - name: Making Gradlew executable
         run: chmod +x "./Android/3D Object Maker/gradlew"
       - name: Building the AAB file
