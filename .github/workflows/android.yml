@@ -25,7 +25,7 @@ jobs:
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
       - name: Attaching the AAB file to this workflow
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: app-release-aab
           path: "Android/3D Object Maker/app/build/outputs/bundle/release/app-release.aab"
@@ -36,7 +36,7 @@ jobs:
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
       - name: Attaching the APK file to this workflow
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: app-release-apk
           path: "Android/3D Object Maker/app/build/outputs/apk/release/app-release.apk"
