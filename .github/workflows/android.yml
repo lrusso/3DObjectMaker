@@ -36,7 +36,7 @@ jobs:
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
       - name: Checking build name
-        run: cd ./Android/3D Object Maker/app/build/outputs && ls
+        run: cd "./Android/3D Object Maker/app/build/outputs" && ls
       - name: Attaching the APK file to this workflow
         uses: actions/upload-artifact@v4
         with:
