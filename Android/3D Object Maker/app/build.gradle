@@ -8,8 +8,8 @@ android {
 
         minSdkVersion 21
         targetSdkVersion 36
-        versionCode 64
-        versionName "1.7.13"
+        versionCode 65
+        versionName "1.7.14"
     }
     signingConfigs {
         release {
